@@ -70,7 +70,7 @@ $userID = getUserIDFromUser();
                                 echo '<li class="group flex w-full h-8 hover:bg-slate-200 cursor-pointer rounded-md">';
                                 echo '<div id="' . $projects['color_name'] . '" class="flex w-4 h-4 my-auto ml-2 rounded-md z-4 ' . $projects['color_code'] . '" value="' . $projects['color_code'] . '"></div>';
                                 echo '<div id="' . $projects['project_name'] . '_name" class="flex ml-3 my-auto select-none" value="' . $projects['project_name'] . '">' . $projects['project_name'] . '</div>';
-                                echo '<textarea id="' . $projects['project_name'] . '_edit" type="text" class="form-control w-1/2 flex h-6 bg-slate-50 text-md resize-none ml-auto my-auto hidden overflow-auto">' . $projects['project_name'] . '</textarea>';
+                                echo '<textarea id="' . $projects['project_name'] . '_edit" type="text" class="form-control px-1 w-1/2 flex h-6 bg-slate-50 text-md resize-none ml-auto my-auto hidden overflow-auto rounded-md">' . $projects['project_name'] . '</textarea>';
                                 //Buttons
                                 echo '<div id="' . $projects['project_name'] . '" class="bs flex flex-row w-fit h-8 container ml-auto">';
                                 //Edit project name button
@@ -226,7 +226,7 @@ $userID = getUserIDFromUser();
             var oldname = document.getElementById(control.id + "_name");
             var newname = document.getElementById(control.id + "_edit");
             newname.value = control.id;
-            
+
             editcontrol.classList.toggle("hidden");
             control.classList.toggle("hidden");
             newname.classList.toggle("hidden");
