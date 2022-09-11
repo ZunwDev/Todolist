@@ -54,8 +54,8 @@ $userID = getUserIDFromUser();
     <div class="app_appMain w-screen h-screen flex flex-row" onclick="closeProfileMenu()">
         <div class="app_appSidebarContainer flex flex-grow">
             <div id="sidebar" class="app_appSidebar flex bg-slate-100 expandSidebar border-2 border-slate-200">
-                <div id="tabContainer" class="app_appTabContainer flex flex-col w-48 mx-auto gap-4">
-                    <div class="app_appProjectTab flex mt-8 h-8" onclick="showProjects()">
+                <div id="tabContainer" class="app_appTabContainer flex flex-col w-48 mx-auto">
+                    <div class="app_appProjectTab flex mt-8 mb-4 h-8" onclick="showProjects()">
                         <button id="anglesymbol" type="button" class="h-8 w-full font-medium" onclick="rotateAngle('angle')"> <svg id="angle" class="h-4 w-4 ml-8 mt-1 absolute rotateAngleNormal" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
                                 <path d="M64 448c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L178.8 256L41.38 118.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l160 160c12.5 12.5 12.5 32.75 0 45.25l-160 160C80.38 444.9 72.19 448 64 448z" />
                             </svg>Projects</button>
@@ -68,15 +68,32 @@ $userID = getUserIDFromUser();
                         if (mysqli_num_rows($result) > 0) {
                             while ($projects = mysqli_fetch_assoc($result)) {
                                 echo '<li class="group flex w-full h-8 hover:bg-slate-200 cursor-pointer rounded-md">';
-                                echo '<div id="' . $projects['color_name'] . '" class="flex w-4 h-4 my-auto ml-2 rounded-md ' . $projects['color_code'] . '" value="' . $projects['color_code'] . '"></div>';
-                                echo '<div id="projectname" class="flex ml-3 my-auto" value="' . $projects['project_name'] . '">' . $projects['project_name'] . '</div>';
-                                echo '<div onclick="deleteProject()" title="Delete this project" class="z-2 flex flex-row w-8 h-8 container ml-auto rounded-tr-lg rounded-br-lg hover:bg-slate-300">';
-                                echo '<svg class="flex w-4 h-4 mx-auto my-auto fill-slate-400 opacity-0 group-hover:opacity-100 group-hover:transition group-hover:duration-500 group-hover:ease-out" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z"/></svg>';
-                                echo '<svg class="flex w-4 h-4 mx-auto my-auto fill-slate-400 opacity-0 group-hover:opacity-100 group-hover:transition group-hover:duration-500 group-hover:ease-out" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/></svg>';
+                                echo '<div id="' . $projects['color_name'] . '" class="flex w-4 h-4 my-auto ml-2 rounded-md z-4 ' . $projects['color_code'] . '" value="' . $projects['color_code'] . '"></div>';
+                                echo '<div id="' . $projects['project_name'] . '_name" class="flex ml-3 my-auto select-none" value="' . $projects['project_name'] . '">' . $projects['project_name'] . '</div>';
+                                echo '<textarea id="' . $projects['project_name'] . '_edit" type="text" class="form-control w-1/2 flex h-6 bg-slate-50 text-md resize-none ml-auto my-auto hidden overflow-auto">' . $projects['project_name'] . '</textarea>';
+                                //Buttons
+                                echo '<div id="' . $projects['project_name'] . '" class="bs flex flex-row w-fit h-8 container ml-auto">';
+                                //Edit project name button
+                                echo '<button type="button" onclick="showProjectNameEdit()" title="Change project name" class="z-2 flex w-6 h-8 hover:bg-slate-300">';
+                                echo '<svg class="flex w-3 h-3 mx-auto my-auto fill-slate-400 opacity-0 group-hover:opacity-100 group-hover:transition group-hover:duration-500 group-hover:ease-out" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M362.7 19.3L314.3 67.7 444.3 197.7l48.4-48.4c25-25 25-65.5 0-90.5L453.3 19.3c-25-25-65.5-25-90.5 0zm-71 71L58.6 323.5c-10.4 10.4-18 23.3-22.2 37.4L1 481.2C-1.5 489.7 .8 498.8 7 505s15.3 8.5 23.7 6.1l120.3-35.4c14.1-4.2 27-11.8 37.4-22.2L421.7 220.3 291.7 90.3z"/></svg></button>';
+                                //Delete project
+                                echo '<button type="button" onclick="deleteProject()" title="Delete this project" class="z-2 flex w-6 h-8 hover:bg-slate-300 rounded-tr-lg rounded-br-lg">';
+                                echo '<svg class="flex w-3 h-3 mx-auto my-auto fill-slate-400 opacity-0 group-hover:opacity-100 group-hover:transition group-hover:duration-500 group-hover:ease-out" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M135.2 17.7C140.6 6.8 151.7 0 163.8 0H284.2c12.1 0 23.2 6.8 28.6 17.7L320 32h96c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 96 0 81.7 0 64S14.3 32 32 32h96l7.2-14.3zM32 128H416V448c0 35.3-28.7 64-64 64H96c-35.3 0-64-28.7-64-64V128zm96 64c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16zm96 0c-8.8 0-16 7.2-16 16V432c0 8.8 7.2 16 16 16s16-7.2 16-16V208c0-8.8-7.2-16-16-16z"/></svg></button>';
+                                echo '</div>';
+                                // ------------------------------------------
+                                echo '<div id="' . $projects['project_name'] . '_editcontrol" class="flex flex-row w-fit h-8 container ml-auto hidden">';
+                                //Save changes
+                                echo '<button type="button" onclick="saveChanges()" title="Save changes" class="z-2 flex w-6 h-8 hover:bg-slate-300">';
+                                echo '<svg class="flex w-3 h-3 mx-auto my-auto fill-slate-400 opacity-0 group-hover:opacity-100 group-hover:transition group-hover:duration-500 group-hover:ease-out" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg></button>';
+                                //Cancel changes
+                                echo '<button type="button" onclick="cancelChanges()" title="Cancel changes" class="z-2 flex w-6 h-8 hover:bg-slate-300 rounded-tr-lg rounded-br-lg">';
+                                echo '<svg class="flex w-3 h-3 mx-auto my-auto fill-slate-400 opacity-0 group-hover:opacity-100 group-hover:transition group-hover:duration-500 group-hover:ease-out" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/></svg></button>';
+                                //End of buttons
                                 echo '</div>';
                                 echo '</li>';
                             }
                         }
+
                         ?>
                     </ul>
                 </div>
@@ -169,6 +186,67 @@ $userID = getUserIDFromUser();
                 angle.classList.add("rotateAngleNormal");
             }
         }
+
+        function showProjectNameEdit() {
+            var idOfClickedObject = event.currentTarget.parentElement.id;
+            const allEditElements = document.querySelectorAll(`textarea[id$='_edit']`);
+            const allNameElements = document.querySelectorAll(`div[id$='_name']`);
+            const allEditControlElements = document.querySelectorAll("div[id$='_editcontrol']");
+            const allBasicControlElements = document.querySelectorAll(`.bs`);
+            
+            allEditElements.forEach(element => {
+                element.classList.add("hidden");
+            }) 
+            allNameElements.forEach(element => {
+                element.classList.remove("hidden");
+            })
+            allBasicControlElements.forEach(element => {
+                element.classList.remove("hidden");
+            })
+            allEditControlElements.forEach(element => {
+                element.classList.add("hidden");
+            })
+            
+            var oldname = document.getElementById(idOfClickedObject + "_name");
+            var newname = document.getElementById(idOfClickedObject + "_edit");
+            var control = document.getElementById(idOfClickedObject);
+            var editcontrol = document.getElementById(idOfClickedObject + "_editcontrol");
+
+            oldname.classList.toggle("hidden");
+            newname.classList.toggle("hidden");
+            editcontrol.classList.toggle("hidden");
+            control.classList.toggle("hidden");
+        }
+
+        function cancelChanges() {
+            var idOfClickedObject = event.currentTarget.parentElement.id;
+            var editcontrol = document.getElementById(idOfClickedObject);
+            var elementID = document.getElementById(idOfClickedObject.slice(0, idOfClickedObject.indexOf("_"))); //element ID
+            var control = elementID 
+            var oldname = document.getElementById(control.id + "_name");
+            var newname = document.getElementById(control.id + "_edit");
+            newname.value = control.id;
+            
+            editcontrol.classList.toggle("hidden");
+            control.classList.toggle("hidden");
+            newname.classList.toggle("hidden");
+            oldname.classList.toggle("hidden");
+            
+        }
+
+        function saveChanges() {
+            var idOfClickedObject = event.currentTarget.parentElement.id;
+            var elementID = document.getElementById(idOfClickedObject.slice(0, idOfClickedObject.indexOf("_"))); //element ID
+            var getEditTextareaValue = document.getElementById(elementID.id + "_edit").value;
+            $.post("./utils/scripts/saveProjectName.php", {
+                oldName: elementID.id,
+                newName: getEditTextareaValue
+            }).done(function(data) {
+                console.log(data);
+                window.location.reload();
+            })
+        }
+
 
         document.onkeypress = function(e) {
             e = e || window.event;
