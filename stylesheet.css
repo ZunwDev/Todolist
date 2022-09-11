@@ -1,0 +1,83 @@
+.expandSidebar {
+    width: 16rem;
+    transition: width 0.2s ease-out;
+}
+
+.shrinkSidebar {
+    width: 0rem;
+    transition: width 0.2s ease-out;
+}
+
+.rotateAngleNormal {
+    transform: rotate(0deg);
+    transition: transform 0.1s ease-out;
+}
+
+.rotateAngleDown {
+    transform: rotate(90deg);
+    transition: transform 0.1s ease-out;
+}
+
+.beforeShowUp {
+    opacity: 0;
+    animation: fadeOutFromExisting 0.5s ease-out;
+}
+
+.afterShowUp {
+    opacity: 1;
+    animation: fadeInFromNone 0.5s ease-out;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    min-height: 100vh;
+    font-family: 'Raleway';
+}
+
+@media (max-width: 768px) {
+    #sidebar {
+        width: 0rem;
+        transition: width 0.2s ease-out;
+    }
+    #anglesymbol {
+        display: none;
+    }
+    #opensidebar {
+        display: none;
+    }
+}
+
+@keyframes fadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    1% {
+        display: block;
+        opacity: 0;
+    }
+
+    100% {
+        display: block;
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOutFromExisting {
+    0% {
+        display: block;
+        opacity: 1;
+    }
+
+    1% {
+        display: block;
+        opacity: 1;
+    }
+
+    100% {
+        display: none;
+        opacity: 0;
+    }
+}
