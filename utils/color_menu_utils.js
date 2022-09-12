@@ -2,19 +2,20 @@ function openColorSelectMenu() {
     var colorSelect = document.getElementById("colorSelect");
     var angle = document.getElementById("angleColor");
     if (colorSelect.style.display == "none") {
-        angle.classList.remove("rotateAngleNormal");
-        angle.classList.add("rotateAngleDown");
+        angle.classList.remove("toggle-up");
+        angle.classList.add("toggle-down");
         colorSelect.style.display = "block";
     } else {
-        angle.classList.remove("rotateAngleDown");
-        angle.classList.add("rotateAngleNormal");
+        angle.classList.remove("toggle-down");
+        angle.classList.add("toggle-up");
         colorSelect.style.display = "none";
     }
 }
 
 function saveColor() {
     var colorSelect = document.getElementById("colorSelect");
-    let id = event.target.id;
+    var angle = document.getElementById("angleColor");
+    let id = event.currentTarget.id;
     var colorCode = document.getElementById(id).firstElementChild.getAttribute("value");
     var currentColor = document.getElementById("currentColor");
     var currentColorName = document.getElementById("currentColorName");
@@ -23,5 +24,6 @@ function saveColor() {
     currentColor.classList.add(colorCode);
     currentColorName.innerText = id;
     colorSelect.style.display = "none";
-    rotateAngle("angleColor");
+    angle.classList.remove("toggle-down");
+    angle.classList.add("toggle-up");
 }

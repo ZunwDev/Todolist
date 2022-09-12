@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 
 if (isset($_SESSION['login_user'])) {
@@ -72,11 +72,14 @@ if (isset($_SESSION['login_user'])) {
 
         function checkUsername() {
             let usernameEl = document.getElementById("nameInput");
-            usernameVal = document.getElementById("nameInput").value;
+            let usernameVal = document.getElementById("nameInput").value;
             let usernameError = document.getElementById("usernameError");
             if (usernameVal.length < 4 || usernameVal.length > 30) {
                 flagInput(usernameEl);
-                showError(usernameError, "Your username should be within 4-30 characters");
+                showError(
+                    usernameError,
+                    "Your username should be within 4-30 characters"
+                );
             } else {
                 resetInput(usernameEl, usernameError);
                 return true;
@@ -85,11 +88,11 @@ if (isset($_SESSION['login_user'])) {
 
         function checkPassword() {
             let passwordEl = document.getElementById("passwordInput");
-            passwordVal = document.getElementById("passwordInput").value;
+            let passwordVal = document.getElementById("passwordInput").value;
             let passwordError = document.getElementById("passwordError");
             if (passwordVal.length < 8) {
                 flagInput(passwordEl);
-                showError(passwordError, "Your password is too short")
+                showError(passwordError, "Your password is too short");
             } else {
                 resetInput(passwordEl, passwordError);
                 return true;
@@ -106,7 +109,7 @@ if (isset($_SESSION['login_user'])) {
 
             if (isPassEqual === false || confPassInputVal.length === 0) {
                 flagInput(confPassInputEl);
-                showError(confPasswordError, "Password doesn't match")
+                showError(confPasswordError, "Password doesn't match");
             } else {
                 resetInput(confPassInputEl, confPasswordError);
                 return true;
@@ -115,7 +118,6 @@ if (isset($_SESSION['login_user'])) {
 
         function userExists() {
             let usernameEl = document.getElementById("nameInput");
-            usernameVal = document.getElementById("nameInput").value;
             let usernameError = document.getElementById("usernameError");
 
             flagInput(usernameEl);
@@ -123,20 +125,25 @@ if (isset($_SESSION['login_user'])) {
         }
 
         function signupCheckValues() {
-            if (checkUsername() === true && checkPassword() === true && checkConfirmPassword() === true) {
+            if (
+                checkUsername() === true &&
+                checkPassword() === true &&
+                checkConfirmPassword() === true
+            ) {
                 var username = $("#nameInput").val();
                 var password = $("#passwordInput").val();
                 $.post("./signup_script.php", {
                     nameInput: username,
-                    passwordInput: password
+                    passwordInput: password,
                 }).done(function(data) {
-                    if (data.includes("200")) return setTimeout(function() {
-                        window.location = "../index.php";
-                    }, 1000);
+                    if (data.includes("200"))
+                        return setTimeout(function() {
+                            window.location = "../index.php";
+                        }, 1000);
                     if (data.includes("500")) return console.log("Server side issue");
                     if (data.includes("404")) return userExists();
-                })
-            };
+                });
+            }
         }
     </script>
 </body>
