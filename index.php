@@ -1,10 +1,8 @@
 <?php
-session_start();
 include "../TodoList/utils/scripts/getUserID.php";
 include '../TodoList/utils/scripts/connectToDatabase.php';
 $userID = getUserIDFromUser();
 ?>
-
 
 <!DOCTYPE html>
 <html lang="en">
