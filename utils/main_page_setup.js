@@ -23,16 +23,14 @@ function expandSidebar() {
   }
 }
 
-function showProjects() {
-  var projectList = document.getElementById("projectList");
-  projectList.classList.toggle("hidden");
-}
+function toggleAngle() {
+  var upClass = 'toggle-up';
+  var downClass = 'toggle-down';
 
-function deleteProject() {
-    var projectName = document.getElementById("projectname").innerHTML;
-    $.post("./utils/scripts/deleteProject.php", { 
-        projectName: projectName
-    }).done(function(data) {
-        window.location.reload();
-    });
+  var angle = document.querySelector('.angle');
+  if (angle.classList.contains("toggle-down")) {
+    angle.className = angle.classList.replace(downClass, upClass);
+  } else {
+      angle.className = angle.classList.replace(upClass, downClass);
+  }
 }

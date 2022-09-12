@@ -23,7 +23,7 @@ function acceptProjectCreate() {
   }, 400);
 
   var projectName = $("#nameInput").val();
-  var colorName = document.getElementById("currentColorName").innerHTML;
+  var colorName = document.getElementById("currentColorName").innerText;
   if (projectName === "") {
     $.post("./utils/scripts/new_project.php", {
       projectName: "Project",

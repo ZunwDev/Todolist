@@ -8,15 +8,14 @@
     transition: width 0.2s ease-out;
 }
 
-.rotateAngleNormal {
+.toggle-up {
     transform: rotate(0deg);
     transition: transform 0.1s ease-out;
-}
-
-.rotateAngleDown {
+  }
+.toggle-down {
     transform: rotate(90deg);
     transition: transform 0.1s ease-out;
-}
+  }
 
 .beforeShowUp {
     opacity: 0;
