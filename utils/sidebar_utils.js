@@ -1,6 +1,6 @@
 function toggleHidden(id) {
     for (var i = 0; i < id.length; i++) {
-        id.classList.toggle("hidden");
+        id[i].classList.toggle("hidden");
     }
 }
 
