@@ -40,3 +40,9 @@ function acceptProjectCreate() {
     });
   }
 }
+
+function openProject() {
+  let getProjectID = event.currentTarget.id;
+  let getProjectElementText = document.getElementById(getProjectID).lastChild.innerText;
+  location.href = `http://localhost/TodoList/project/${getProjectID}/${getProjectElementText}`;
+}
