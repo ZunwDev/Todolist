@@ -22,27 +22,37 @@ function acceptProjectCreate() {
     newProjectWindow.style.display = "none";
   }, 400);
 
-  var projectName = $("#nameInput").val();
-  var colorName = document.getElementById("currentColorName").innerText;
-  if (projectName === "") {
-    $.post("./utils/scripts/new_project.php", {
-      projectName: "Project",
-      color: colorName,
-    }).done(function (data) {
-      window.location.reload();
-    });
-  } else {
+  function postCreateProject(projectName, projectDescription, colorName) {
     $.post("./utils/scripts/new_project.php", {
       projectName: projectName,
+      projectDescription: projectDescription,
       color: colorName,
     }).done(function (data) {
       window.location.reload();
     });
   }
+
+  var projectName = document.getElementById("nameInput").value;
+  var projectDescription = document.getElementById("descriptionInput").value;
+  var colorName = document.getElementById("currentColorName").innerText;
+
+  if (projectDescription != "" && projectName === "") {
+    postCreateProject("Project", projectDescription, colorName);
+  }
+  if (projectName === "" && projectDescription === "") {
+    postCreateProject("Project", "", colorName);
+  }
+  if (projectName != "" && projectDescription != "") {
+    postCreateProject(projectName, projectDescription, colorName);
+  }
+  if (projectName != "" && projectDescription === "") {
+    postCreateProject(projectName, "", colorName);
+  }
 }
 
 function openProject() {
   let getProjectID = event.currentTarget.id;
-  let getProjectElementText = document.getElementById(getProjectID).lastChild.innerText;
+  let getProjectElementText =
+    document.getElementById(getProjectID).lastChild.innerText;
   location.href = `http://localhost/TodoList/project/${getProjectID}/${getProjectElementText}`;
 }

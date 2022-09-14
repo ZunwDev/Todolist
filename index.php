@@ -65,7 +65,11 @@ $userID = getUserIDFromUser();
             <form class="app_appDialogForm flex flex-col w-full h-full bg-slate-50 rounded-b-lg" method="post">
                 <div class="app_appFormField mt-4 px-6 flex flex-col gap-1">
                     <label for="nameInput" class="font-bold">Name</label>
-                    <input type="text" id="nameInput" class="flex shadow-md form-control block w-full px-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-md transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" autocomplete="none">
+                    <input placeholder="e.g Work, Bussiness" type="text" id="nameInput" class="flex shadow-md form-control block w-full px-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-md transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" autocomplete="none">
+                </div>
+                <div class="app_appFormField mt-4 px-6 flex flex-col gap-1">
+                    <label for="descriptionInputLabel" class="font-bold">Description</label>
+                    <textarea id="descriptionInput" maxlength="128" class="flex shadow-md h-[2.87rem] form-control block w-full px-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-md transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none resize-none overflow-y-hidden" autocomplete="none"></textarea>
                 </div>
                 <div class="app_appFormField mt-4 px-6 flex flex-col gap-1">
                     <label for="colorChoose" class="font-bold">Color</label>
@@ -139,6 +143,14 @@ $userID = getUserIDFromUser();
                 };
             }
         }
+
+        $("#descriptionInput").on("input", function() {
+            this.style.height = "48px";
+            this.style.height = this.scrollHeight + "px";
+        });
+        $("descriptionInput").on("keypress", function() {
+            this.style.height = this.scrollHeight + "px";
+        });
     </script>
 </body>
 

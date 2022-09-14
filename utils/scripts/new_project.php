@@ -4,6 +4,7 @@ include './connectToDatabase.php';
 session_start();
 
 $projectName = $_POST["projectName"];
+$projectDescription = $_POST["projectDescription"];
 $color = $_POST["color"];
 $username = $_SESSION['login_user'];
 
@@ -22,10 +23,9 @@ $projectNameCount = $projectNameFetch['count(project_name)'];
 if ($projectNameCount > 0) {
     $dupeNumber = " " ."(".($projectNameCount + 1).")";
     $newProjectName = $projectName . $dupeNumber. " ";
-    $q = "insert into project (userID, project_name, colorID) values ('$userID', '$newProjectName', '$colorID')";
+    $q = "insert into project (userID, project_name, colorID, project_description) values ('$userID', '$newProjectName', '$colorID', '$projectDescription')";
     $res = mysqli_query($conn, $q);
 } else {
-    $q = "insert into project (userID, project_name, colorID) values ('$userID', '$projectName', '$colorID')";
+    $q = "insert into project (userID, project_name, colorID, project_description) values ('$userID', '$projectName', '$colorID', '$projectDescription')";
     $res = mysqli_query($conn, $q);
 }
-?>

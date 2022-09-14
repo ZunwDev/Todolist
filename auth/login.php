@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 
 if (isset($_SESSION['login_user'])) {
@@ -56,7 +56,6 @@ if (isset($_SESSION['login_user'])) {
         </form>
     </div>
     <script>
-
         $(".inputData").on({
             keydown: function(e) {
                 if (e.which === 32)

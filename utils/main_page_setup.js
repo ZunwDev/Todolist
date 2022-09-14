@@ -24,13 +24,13 @@ function expandSidebar() {
 }
 
 function toggleAngle() {
-  var upClass = 'toggle-up';
-  var downClass = 'toggle-down';
+  var upClass = "toggle-up";
+  var downClass = "toggle-down";
 
-  var angle = document.querySelector('.angle');
+  var angle = document.querySelector(".angle");
   if (angle.classList.contains("toggle-down")) {
     angle.className = angle.classList.replace(downClass, upClass);
   } else {
-      angle.className = angle.classList.replace(upClass, downClass);
+    angle.className = angle.classList.replace(upClass, downClass);
   }
 }
