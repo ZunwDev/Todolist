@@ -22,7 +22,7 @@ $userID = getUserIDFromUser();
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway" />
 </head>
 
-<body class="flex w-screen h-screen flex-col" onload="resetStyling()">
+<body id="body" class="flex w-screen h-screen flex-col" onload="resetStyling()">
     <?php
     include "./utils/loadNavbar.php";
     ?>
@@ -43,11 +43,11 @@ $userID = getUserIDFromUser();
                 </div>
             </div>
         </section>
-        <section class="app_appProjectsContainer flex flex-col flex-grow w-screen bg-slate-50 pl-16">
-            <div class="flex h-8 pt-16 w-full font-bold text-xl text-gray-500 bg-slate-50 select-none">
+        <section class="app_appProjectsContainer flex flex-col flex-grow w-screen bg-slate-50">
+            <div id="projects_nameEl" class="flex h-8 pt-16 w-full font-bold text-xl text-gray-500 bg-slate-50 select-none">
                 YOUR PROJECTS
             </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-16 w-fit">
+            <div id="project_grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-16 w-fit">
                 <?php
                 include "./utils/loadProjects.php";
                 ?>
@@ -57,8 +57,8 @@ $userID = getUserIDFromUser();
             </div>
         </section>
     </section>
-    <section id="newProj" class="app_appNewProjectDialogBlur fixed w-screen h-screen flex beforeShowUp" style="background: rgba(255,255,255,0.8);">
-        <div id="newProjDialog" class="app_appNewProjectDialogWindow flex flex-col w-96 max-w-full h-fit mx-auto mt-16 shadow-lg rounded-lg">
+    <section id="newProj" class="app_appNewProjectDialogBlur fixed w-screen h-screen flex beforeShowUp" style="background: rgba(255,255,255,0.6);">
+        <div id="newProjDialog" class="app_appNewProjectDialogWindow flex flex-col w-96 max-w-full h-fit mx-auto mt-16 shadow-xl rounded-lg">
             <div id="title-background" class="app_appDialogTitle flex pl-6 py-2 bg-slate-100 w-full font-bold text-gray-500 rounded-t-lg border-b-2">
                 New Project
             </div>

@@ -52,7 +52,21 @@ function acceptProjectCreate() {
 
 function openProject() {
   let getProjectID = event.currentTarget.id;
-  let getProjectElementText =
-    document.getElementById(getProjectID).lastChild.innerText;
-  location.href = `http://localhost/TodoList/project/${getProjectID}/${getProjectElementText}`;
+  let getProjectGrid = document.getElementById("project_grid");
+  let getProjectGridName = document.getElementById("projects_nameEl");
+  getProjectGrid.style.display = "none";
+  getProjectGridName.style.display = "none";
+
+  let getProjectWindow = document.getElementsByClassName("app_appProjectsContainer");
+  var html = `
+    <div class="bg-slate-300 relative w-full h-full flex flex-row">
+      <div class="flex bg-slate-500 w-full h-full mb-auto"></div>
+      <div id="project_sidebar" class="flex h-full w-48 bg-slate-400 ml-auto"></div>
+    </div>`;
+  getProjectWindow[0].insertAdjacentHTML('beforeend', html);
+
+  /*   history.replaceState({
+      id: 'TodoList',
+      source: 'web'
+    }, 'TodoList', `http://localhost/TodoList/${getProjectID}/${requiredDiv}`); */
 }

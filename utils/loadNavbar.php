@@ -1,5 +1,5 @@
 <?php
-echo '<nav class="app_navbarContainer h-fit pb-2 pt-2 shadow-bottom shadow-lg flex w-screen relative">';
+echo '<nav class="app_navbarContainer h-fit pb-2 pt-2 shadow-bottom shadow-lg flex w-screen relative z-10">';
     echo '<div class="app_mainNavContainer flex flex-grow mx-12 justify-between w-screen">';
     echo '<div class="app_mainNav flex flex-shrink my-auto gap-3 justify-start">';
     echo '<button id="opensidebar" title="Open/close - M" type="button" class="h-9 w-9 hover:bg-slate-100 transition ease-out duration-200 rounded-lg" onclick="expandSidebar()">';

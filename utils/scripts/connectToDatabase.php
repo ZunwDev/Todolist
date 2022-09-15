@@ -1,6 +1,7 @@
 <?php
 
-$host = "192.168.1.110";
+$host = "localhost";
+//$host = "192.168.1.110";
 $user = "myuser";
 $password = "abc";
 $databaseName = "todolist";
