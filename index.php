@@ -28,7 +28,7 @@ $userID = getUserIDFromUser();
     ?>
     <section class="app_appMain w-screen h-screen flex flex-row" onclick="closeProfileMenu()">
         <section class="app_appSidebarContainer flex flex-grow">
-            <div id="sidebar" class="app_appSidebar flex bg-slate-100 expandSidebar border-2 border-slate-200">
+            <div id="sidebar" class="app_appSidebar flex bg-slate-100 expandSidebar border-slate-200">
                 <div id="tabContainer" class="app_appTabContainer flex flex-col w-48 mx-auto">
                     <div class="app_appProjectTab flex mt-8 mb-4 h-8" onclick="showProjects()">
                         <button id="anglesymbol" type="button" class="h-8 w-full font-medium" onclick="toggleAngle()"> <svg class="angle h-4 w-4 ml-8 mt-1 absolute toggle-up" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
@@ -43,7 +43,7 @@ $userID = getUserIDFromUser();
                 </div>
             </div>
         </section>
-        <section class="app_appProjectsContainer flex flex-col flex-grow w-screen bg-slate-50">
+        <section class="app_appProjectsContainer flex flex-col flex-grow w-screen bg-slate-50 pl-16">
             <div id="projects_nameEl" class="flex h-8 pt-16 w-full font-bold text-xl text-gray-500 bg-slate-50 select-none">
                 YOUR PROJECTS
             </div>

@@ -58,10 +58,11 @@ function openProject() {
   getProjectGridName.style.display = "none";
 
   let getProjectWindow = document.getElementsByClassName("app_appProjectsContainer");
+  getProjectWindow[0].classList.remove("pl-16");
   var html = `
     <div class="bg-slate-300 relative w-full h-full flex flex-row">
       <div class="flex bg-slate-500 w-full h-full mb-auto"></div>
-      <div id="project_sidebar" class="flex h-full w-48 bg-slate-400 ml-auto"></div>
+      <div id="project_sidebar" class="flex h-full w-64 bg-slate-400 ml-auto"></div>
     </div>`;
   getProjectWindow[0].insertAdjacentHTML('beforeend', html);
 
