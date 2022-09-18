@@ -1,6 +1,6 @@
 <?php
-include "../TodoList/utils/scripts/getUserID.php";
 include '../TodoList/utils/scripts/connectToDatabase.php';
+include "../TodoList/utils/scripts/getUserID.php";
 $userID = getUserIDFromUser();
 ?>
 
@@ -26,11 +26,11 @@ $userID = getUserIDFromUser();
     <?php
     include "./utils/loadNavbar.php";
     ?>
-    <section class="app_appMain w-screen h-screen flex flex-row" onclick="closeProfileMenu()">
+    <section class="app_appMain w-screen h-screen flex flex-row">
         <section class="app_appSidebarContainer flex flex-grow">
             <div id="sidebar" class="app_appSidebar flex bg-slate-100 expandSidebar border-slate-200">
                 <div id="tabContainer" class="app_appTabContainer flex flex-col w-48 mx-auto">
-                    <div class="app_appProjectTab flex mt-8 mb-4 h-8" onclick="showProjects()">
+                    <div class="app_appProjectTab flex mt-8 mb-4 transition ease-in-out duration-200 h-8 hover:bg-slate-200 rounded-lg" onclick="showProjects()">
                         <button id="anglesymbol" type="button" class="h-8 w-full font-medium" onclick="toggleAngle()"> <svg class="angle h-4 w-4 ml-8 mt-1 absolute toggle-up" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
                                 <path d="M64 448c-8.188 0-16.38-3.125-22.62-9.375c-12.5-12.5-12.5-32.75 0-45.25L178.8 256L41.38 118.6c-12.5-12.5-12.5-32.75 0-45.25s32.75-12.5 45.25 0l160 160c12.5 12.5 12.5 32.75 0 45.25l-160 160C80.38 444.9 72.19 448 64 448z" />
                             </svg>Projects</button>
@@ -51,7 +51,7 @@ $userID = getUserIDFromUser();
                 <?php
                 include "./utils/loadProjects.php";
                 ?>
-                <button type="button" class="flex justify-center w-40 h-20 rounded-lg bg-slate-200 hover:bg-slate-300" title="Create a new project - C" onclick="openProjectCreate()">
+                <button type="button" class="flex justify-center w-40 h-20 rounded-lg transition ease-in-out duration-200 bg-slate-200 hover:bg-slate-300" title="Create a new project - C" onclick="openProjectCreate()">
                     <div class="flex container mx-auto my-auto justify-center text-3xl text-gray-600 select-none">+</div>
                 </button>
             </div>
@@ -65,11 +65,11 @@ $userID = getUserIDFromUser();
             <form class="app_appDialogForm flex flex-col w-full h-full bg-slate-50 rounded-b-lg" method="post">
                 <div class="app_appFormField mt-4 px-6 flex flex-col gap-1">
                     <label for="nameInput" class="font-bold">Name</label>
-                    <input placeholder="e.g Work, Bussiness" type="text" id="nameInput" class="flex shadow-md form-control block w-full px-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-md transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" autocomplete="none">
+                    <input placeholder="e.g Work, Bussiness" type="text" id="nameInput" class="flex shadow-md form-control block w-full px-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-md transition ease-in-out duration-200 m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" autocomplete="none">
                 </div>
                 <div class="app_appFormField mt-4 px-6 flex flex-col gap-1">
                     <label for="descriptionInputLabel" class="font-bold">Description</label>
-                    <textarea id="descriptionInput" maxlength="128" class="flex shadow-md h-[2.87rem] form-control block w-full px-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-md transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none resize-none overflow-y-hidden" autocomplete="none"></textarea>
+                    <textarea id="descriptionInput" maxlength="128" class="flex shadow-md h-[1.85rem] form-control block w-full px-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-md transition ease-in-out duration-200 m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none resize-none overflow-y-hidden" autocomplete="none"></textarea>
                 </div>
                 <div class="app_appFormField mt-4 px-6 flex flex-col gap-1">
                     <label for="colorChoose" class="font-bold">Color</label>
@@ -83,7 +83,7 @@ $userID = getUserIDFromUser();
                                 </svg>
                             </div>
                         </div>
-                        <div id="colorSelect" class="app_colorChoose flex relative w-[21rem] h-fit bg-slate-100 mt-4">
+                        <div id="colorSelect" class="app_colorChoose flex relative w-[21rem] h-0 opacity-0 duration-100 bg-slate-100 mt-4 transition-[height]">
                             <ul class="flex flex-col">
                                 <?php
                                 include "./utils/loadColors.php";
@@ -93,10 +93,10 @@ $userID = getUserIDFromUser();
                     </button>
                 </div>
                 <div class="app_appFormControl flex flex-row gap-2 justify-end mr-2">
-                    <button title="Cancel - C" type="button" class="app_appFormCancel mt-4 py-1 px-3 mb-3 bg-slate-200 rounded-lg border border-slate-300 hover:bg-slate-300 select-none" onclick="closeProjectCreate()">
+                    <button title="Cancel - Esc" type="button" class="app_appFormCancel mt-4 py-1 px-3 mb-3 bg-slate-200 rounded-lg border border-slate-300 hover:bg-slate-300 select-none" onclick="closeProjectCreate()">
                         Cancel
                     </button>
-                    <button title="Accept - A" type="button" class="app_appFormAccept mt-4 py-1 px-3 mb-3 bg-blue-500 text-white rounded-lg border border-blue-400 hover:bg-blue-600 select-none" onclick="acceptProjectCreate()">
+                    <button title="Accept - Enter" type="button" class="app_appFormAccept mt-4 py-1 px-3 mb-3 bg-blue-500 text-white rounded-lg border border-blue-400 hover:bg-blue-600 select-none" onclick="acceptProjectCreate()">
                         Accept
                     </button>
                 </div>
@@ -104,6 +104,24 @@ $userID = getUserIDFromUser();
         </div>
     </section>
     <script>
+        $(document).keyup(function(e) {
+            if (e.key === "Escape") {
+                var newProj = document.getElementById("newProj");
+                var colorSelect = document.getElementById("colorSelect");
+                var allEditElements = document.querySelectorAll(`textarea[id$='_edit']`);
+                if (newProj.style.display === "block") {
+                    if (colorSelect.style.display === "block") {
+                        openColorSelectMenu();
+                    } else {
+                        closeProjectCreate();
+                    }
+                }
+                if (allEditElements.length > 0) {
+                    sidebarDefault();
+                }
+            }
+        })
+
         document.onkeypress = function(e) {
             e = e || window.event;
             var charCode = e.charCode || e.keyCode,
@@ -120,18 +138,17 @@ $userID = getUserIDFromUser();
 
             if (character == 'c') {
                 var newProj = document.getElementById("newProj");
-                var input = document.getElementById("nameInput");
+                var project_grid = document.getElementById("project_grid");
+                if (project_grid.style.display === "none") {
+                    return
+                }
                 if (newProj.style.display === "none") {
                     openProjectCreate();
                 } else {
-                    if (input === document.activeElement) {
-                        return true
-                    } else {
-                        closeProjectCreate();
-                    }
+                    return
                 }
             }
-            if (character == 'a') {
+            if (e.keyCode == 13) {
                 var newProj = document.getElementById("newProj");
                 var input = document.getElementById("nameInput");
                 if (newProj.style.display === "block") {
@@ -145,7 +162,6 @@ $userID = getUserIDFromUser();
         }
 
         $("#descriptionInput").on("input", function() {
-            this.style.height = "48px";
             this.style.height = this.scrollHeight + "px";
         });
         $("descriptionInput").on("keypress", function() {

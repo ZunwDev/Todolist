@@ -1,5 +1,4 @@
 <?php 
-
 include './connectToDatabase.php';
 
 $projectName = $_POST["projectName"];

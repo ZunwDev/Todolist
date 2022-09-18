@@ -1,31 +1,36 @@
+function toggleClassesHeight() {
+  $("#colorSelect").toggleClass("h-0");
+  $("#colorSelect").toggleClass("h-96");
+}
+
 function openColorSelectMenu() {
-  var colorSelect = document.getElementById("colorSelect");
-  var angle = document.getElementById("angleColor");
-  if (colorSelect.style.display == "none") {
-    angle.classList.remove("toggle-up");
-    angle.classList.add("toggle-down");
-    colorSelect.style.display = "block";
+  if ($("#colorSelect").css('display') === "none") {
+    $("#colorSelect").show();
+    $("#angleColor").removeClass("toggle-up");
+    $("#angleColor").addClass("toggle-down");
+    $("#colorSelect").toggleClass("opacity-0");
+    toggleClassesHeight();
   } else {
-    angle.classList.remove("toggle-down");
-    angle.classList.add("toggle-up");
-    colorSelect.style.display = "none";
+    $("#angleColor").addClass("toggle-up");
+    $("#angleColor").removeClass("toggle-down");
+    toggleClassesHeight();
+    setTimeout(function () {
+      $("#colorSelect").toggleClass("opacity-0");
+      $("#colorSelect").hide();
+    }, 50)
+    
   }
 }
 
 function saveColor() {
-  var colorSelect = document.getElementById("colorSelect");
-  var angle = document.getElementById("angleColor");
   let id = event.currentTarget.id;
-  var colorCode = document
-    .getElementById(id)
-    .firstElementChild.getAttribute("value");
+  var colorCode = document.getElementById(id).firstChild.getAttribute("value");
   var currentColor = document.getElementById("currentColor");
-  var currentColorName = document.getElementById("currentColorName");
   var lastClass = currentColor.classList.toString().split(" ").pop();
-  currentColor.classList.remove(lastClass);
-  currentColor.classList.add(colorCode);
-  currentColorName.innerText = id;
-  colorSelect.style.display = "none";
-  angle.classList.remove("toggle-down");
-  angle.classList.add("toggle-up");
+  $("#currentColor").removeClass(lastClass);
+  $("#currentColor").addClass(colorCode);
+  $("#currentColorName").text(id);
+  $("#colorSelect").hide();
+  $("#angleColor").removeClass("toggle-down");
+  $("#angleColor").addClass("toggle-up");
 }

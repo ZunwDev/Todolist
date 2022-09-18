@@ -4,10 +4,10 @@ function toggleHidden(id) {
   }
 }
 
-function showProjectNameEdit() {
-  var idOfClickedObject = event.currentTarget.parentElement.id;
+function sidebarDefault() {
   const allEditElements = document.querySelectorAll(`textarea[id$='_edit']`);
-  const allNameElements = document.querySelectorAll(`div[id$='_name']`);
+  const allLinkElements = document.querySelectorAll(`a[id$='_link']`);
+  const allNameElements = document.querySelectorAll(`div[id$='_projectName']`);
   const allEditControlElements = document.querySelectorAll(
     "div[id$='_editcontrol']"
   );
@@ -15,6 +15,9 @@ function showProjectNameEdit() {
 
   allEditElements.forEach((element) => {
     element.classList.add("hidden");
+  });
+  allLinkElements.forEach((element) => {
+    element.classList.remove("hidden");
   });
   allNameElements.forEach((element) => {
     element.classList.remove("hidden");
@@ -25,13 +28,24 @@ function showProjectNameEdit() {
   allEditControlElements.forEach((element) => {
     element.classList.add("hidden");
   });
+}
 
-  var oldname = document.getElementById(idOfClickedObject + "_name");
+function showProjectNameEdit() {
+  var idOfClickedObject = event.currentTarget.parentElement.id;
+  var getEditName = idOfClickedObject + "_edit";
+  sidebarDefault();
+  setTimeout(function () {
+    $(`#${getEditName}`).focus();
+    $(`#${getEditName}`).select();
+  }, 0);
+
+  var oldname = document.getElementById(idOfClickedObject + "_projectName");
   var newname = document.getElementById(idOfClickedObject + "_edit");
+  var link = document.getElementById(idOfClickedObject + "_link");
   var control = document.getElementById(idOfClickedObject);
   var editcontrol = document.getElementById(idOfClickedObject + "_editcontrol");
 
-  toggleHidden([oldname, newname, editcontrol, control]);
+  toggleHidden([oldname, newname, link, editcontrol, control]);
 }
 
 function cancelChanges() {
@@ -41,11 +55,12 @@ function cancelChanges() {
     idOfClickedObject.slice(0, idOfClickedObject.indexOf("_"))
   ); //element ID
   var control = elementID;
-  var oldname = document.getElementById(control.id + "_name");
+  var oldname = document.getElementById(control.id + "_projectName");
   var newname = document.getElementById(control.id + "_edit");
+  var link = document.getElementById(control.id + "_link");
   newname.value = control.id;
 
-  toggleHidden([editcontrol, control, newname, oldname]);
+  toggleHidden([editcontrol, control, link, newname, oldname]);
 }
 
 function saveChanges() {
@@ -56,18 +71,17 @@ function saveChanges() {
   var getEditTextareaValue = document.getElementById(
     elementID.id + "_edit"
   ).value;
-  $.post("./utils/scripts/saveProjectName.php", {
+  $.post("http://localhost/TodoList/utils/scripts/saveProjectName.php", {
     oldName: elementID.id,
     newName: getEditTextareaValue,
   }).done(function (data) {
     console.log(data);
-    window.location.reload();
+    window.location.href = "http://localhost/TodoList/index.php";
   });
 }
 
 function showProjects() {
-  var projectList = document.getElementById("projectList");
-  projectList.classList.toggle("hidden");
+  $("#projectList").toggleClass("hidden");
 }
 
 function deleteProject() {

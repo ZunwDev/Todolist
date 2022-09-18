@@ -4,7 +4,7 @@ $result = mysqli_query($conn, $q);
 
 if (mysqli_num_rows($result) > 0) {
     while ($projects = mysqli_fetch_assoc($result)) {
-        echo '<button type="button" id="' . $projects['projectID'] . '" class="flex flex-col w-40 h-fit rounded-lg bg-slate-200 hover:bg-slate-300" onclick="openProject()">';
+        echo '<button type="button" class="flex flex-col w-40 h-fit transition ease-in-out duration-200 rounded-lg bg-slate-200 hover:bg-slate-300" onclick="openProject(`'.$projects['projectID'].'`, `'.$projects['project_name'].'`, `'.$projects['project_description'].'`)">';
         echo '<div class="flex h-5 w-full ' . $projects['color_code'] . ' rounded-tr-lg rounded-tl-lg"></div>';
         echo '<div class="flex text-xl w-full px-4 mt-2 h-[3.2rem] text-gray-600 select-none" title=' . $projects['project_name'] . '><strong>' . $projects['project_name'] . '</strong></div>';
         if (strlen($projects['project_description']) > 0) {

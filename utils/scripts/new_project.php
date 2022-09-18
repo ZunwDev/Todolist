@@ -1,7 +1,7 @@
 <?php  
-include './connectToDatabase.php';
-
 session_start();
+
+include "./connectToDatabase.php";
 
 $projectName = $_POST["projectName"];
 $projectDescription = $_POST["projectDescription"];

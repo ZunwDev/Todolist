@@ -1,5 +1,4 @@
 <?php 
-
 $q = "select color_name, color_code from colors";
 $result = mysqli_query($conn, $q);
 if (mysqli_num_rows($result) > 0) {
