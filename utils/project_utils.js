@@ -48,6 +48,7 @@ function closeProjectSidebar() {
   projectSections[0].remove();
   openProject();
 }
+
 function closeProject() {
   window.location.href = "http://localhost/TodoList/index.php";
 }

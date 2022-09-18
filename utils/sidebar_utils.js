@@ -33,10 +33,11 @@ function sidebarDefault() {
 function showProjectNameEdit() {
   var idOfClickedObject = event.currentTarget.parentElement.id;
   var getEditName = idOfClickedObject + "_edit";
+  var input = document.getElementById(getEditName);
   sidebarDefault();
   setTimeout(function () {
-    $(`#${getEditName}`).focus();
-    $(`#${getEditName}`).select();
+    input.focus();
+    input.select();
   }, 0);
 
   var oldname = document.getElementById(idOfClickedObject + "_projectName");
