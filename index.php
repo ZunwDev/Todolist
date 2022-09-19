@@ -43,7 +43,7 @@ $userID = getUserIDFromUser();
                 </div>
             </div>
         </section>
-        <section class="app_appProjectsContainer flex flex-col flex-grow w-screen bg-slate-50 pl-16">
+        <section class="app_appProjectsContainer flex flex-col h-full w-screen bg-slate-50 pl-16">
             <div id="projects_nameEl" class="flex h-8 pt-16 w-full font-bold text-xl text-gray-500 bg-slate-50 select-none">
                 YOUR PROJECTS
             </div>
@@ -57,7 +57,7 @@ $userID = getUserIDFromUser();
             </div>
         </section>
     </section>
-    <section id="newProj" class="app_appNewProjectDialogBlur fixed w-screen h-screen flex beforeShowUp" style="background: rgba(255,255,255,0.6);">
+    <section id="newProj" class="app_appNewProjectDialogBlur fixed w-screen h-full flex beforeShowUp" style="background: rgba(255,255,255,0.6);">
         <div id="newProjDialog" class="app_appNewProjectDialogWindow flex flex-col w-96 max-w-full h-fit mx-auto mt-16 shadow-xl rounded-lg">
             <div id="title-background" class="app_appDialogTitle flex pl-6 py-2 bg-slate-100 w-full font-bold text-gray-500 rounded-t-lg border-b-2">
                 New Project
@@ -73,8 +73,8 @@ $userID = getUserIDFromUser();
                 </div>
                 <div class="app_appFormField mt-4 px-6 flex flex-col gap-1">
                     <label for="colorChoose" class="font-bold">Color</label>
-                    <button type="button" id="colorChoose" class="flex flex-col h-[1.7rem] border border-slate-200 bg-white">
-                        <div class="currentColorBar flex flex-row w-full h-[1.7rem]" onclick="openColorSelectMenu()">
+                    <div id="colorChoose" class="flex flex-col h-[1.7rem] border border-slate-200 bg-white">
+                        <div class="currentColorBar flex flex-row w-full h-[1.7rem] cursor-pointer" onclick="openColorSelectMenu()">
                             <div id="currentColor" class="flex w-4 h-4 mt-[0.3rem] ml-2 rounded-md bg-red-800"></div>
                             <div id="currentColorName" class="flex h-4 mt-[0.1rem] pl-3">Dark Red</div>
                             <div class="flex h-4 w-4 ml-auto my-auto mt-1 mr-2">
@@ -83,14 +83,12 @@ $userID = getUserIDFromUser();
                                 </svg>
                             </div>
                         </div>
-                        <div id="colorSelect" class="app_colorChoose flex relative w-[21rem] h-0 opacity-0 duration-100 bg-slate-100 mt-4 transition-[height]">
-                            <ul class="flex flex-col">
-                                <?php
-                                include "./utils/loadColors.php";
-                                ?>
-                            </ul>
+                        <div id="colorSelect" class="flex flex-wrap mx-auto py-3 px-3 gap-2 relative w-[21rem] h-0 opacity-0 duration-100 bg-slate-100 rounded-lg mt-4 transition-[height]">
+                            <?php
+                            include "./utils/loadColors.php";
+                            ?>
                         </div>
-                    </button>
+                    </div>
                 </div>
                 <div class="app_appFormControl flex flex-row gap-2 justify-end mr-2">
                     <button title="Cancel - Esc" type="button" class="app_appFormCancel mt-4 py-1 px-3 mb-3 bg-slate-200 rounded-lg border border-slate-300 hover:bg-slate-300 select-none" onclick="closeProjectCreate()">
