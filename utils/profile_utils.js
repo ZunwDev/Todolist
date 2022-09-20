@@ -1,6 +1,6 @@
 function showProfileMenu() {
   if ($("#profile_dropdown").css('display') === 'none') {
-    $("#profile_dropdown").show();
+    show("profile_dropdown");
   } else {
     $("#profile_dropdown").hide();
   }

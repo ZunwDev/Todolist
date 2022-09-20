@@ -14,7 +14,7 @@ function setBeginningClass() {
 function openColorSelectMenu() {
   if ($("#colorSelect").css('display') === "none") {
     setBeginningClass();
-    $("#colorSelect").show();
+    showFlex("colorSelect");
     $("#angleColor").removeClass("toggle-up");
     $("#angleColor").addClass("toggle-down");
     $("#colorSelect").toggleClass("opacity-0");

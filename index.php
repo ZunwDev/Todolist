@@ -51,7 +51,7 @@ $userID = getUserIDFromUser();
                 <?php
                 include "./utils/loadProjects.php";
                 ?>
-                <button type="button" class="flex justify-center w-40 h-20 rounded-lg transition ease-in-out duration-200 bg-slate-200 hover:bg-slate-300" title="Create a new project - C" onclick="openProjectCreate()">
+                <button type="button" class="flex justify-center w-40 h-20 rounded-lg transition ease-in-out duration-200 bg-slate-200 hover:bg-slate-300" title="Create a new project" onclick="openProjectCreate()">
                     <div class="flex container mx-auto my-auto justify-center text-3xl text-gray-600 select-none">+</div>
                 </button>
             </div>
@@ -104,11 +104,9 @@ $userID = getUserIDFromUser();
     <script>
         $(document).keyup(function(e) {
             if (e.key === "Escape") {
-                var newProj = document.getElementById("newProj");
-                var colorSelect = document.getElementById("colorSelect");
                 var allEditElements = document.querySelectorAll(`textarea[id$='_edit']`);
-                if (newProj.style.display === "block") {
-                    if (colorSelect.style.display === "block") {
+                if (checkDisplay("#newProj")) {
+                    if (checkDisplayFlex("#colorSelect")) {
                         openColorSelectMenu();
                     } else {
                         closeProjectCreate();
@@ -131,19 +129,6 @@ $userID = getUserIDFromUser();
                     return true
                 } else {
                     expandSidebar();
-                }
-            }
-
-            if (character == 'c') {
-                var newProj = document.getElementById("newProj");
-                var project_grid = document.getElementById("project_grid");
-                if (project_grid.style.display === "none") {
-                    return
-                }
-                if (newProj.style.display === "none") {
-                    openProjectCreate();
-                } else {
-                    return
                 }
             }
             if (e.keyCode == 13) {

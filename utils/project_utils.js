@@ -1,5 +1,5 @@
 function openProjectCreate() {
-  $("#newProj").show();
+  show("newProj");
   $("#newProj").removeClass("beforeShowUp");
   $("#newProj").addClass("afterShowUp");
 }
