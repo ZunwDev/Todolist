@@ -80,7 +80,6 @@ function addBoardData(name) {
     return data;
   });
   let getBoardArea = document.getElementById("boards");
-  console.log(getBoardArea);
   getBoardArea.insertAdjacentHTML("afterbegin", board.responseText);
 }
 
