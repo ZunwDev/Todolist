@@ -1,7 +1,6 @@
 <?php
 include '../TodoList/utils/scripts/connectToDatabase.php';
 include "../TodoList/utils/scripts/getUserID.php";
-$userID = getUserIDFromUser();
 ?>
 
 <!DOCTYPE html>
@@ -19,6 +18,8 @@ $userID = getUserIDFromUser();
     <script src="./utils/profile_utils.js"></script>
     <script src="./utils/project_utils.js"></script>
     <script src="./utils/sidebar_utils.js"></script>
+    <script src="./utils/board_utils.js"></script>
+    <script src="./utils/class/Color.js"></script>
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway" />
 </head>
 
@@ -43,17 +44,19 @@ $userID = getUserIDFromUser();
                 </div>
             </div>
         </section>
-        <section class="app_appProjectsContainer flex flex-col h-full w-screen bg-slate-50 pl-16">
-            <div id="projects_nameEl" class="flex h-8 pt-16 w-full font-bold text-xl text-gray-500 bg-slate-50 select-none">
-                YOUR PROJECTS
-            </div>
-            <div id="project_grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-6 mt-16 w-fit">
-                <?php
-                include "./utils/loadProjects.php";
-                ?>
-                <button type="button" class="flex justify-center w-40 h-20 rounded-lg transition ease-in-out duration-200 bg-slate-200 hover:bg-slate-300" title="Create a new project" onclick="openProjectCreate()">
-                    <div class="flex container mx-auto my-auto justify-center text-3xl text-gray-600 select-none">+</div>
-                </button>
+        <section class="app_appProjectsContainer flex flex-col h-full w-screen bg-slate-50">
+            <div class="project_wrapper pl-16 pt-16">
+                <div id="projects_nameEl" class="flex h-8 w-full font-bold text-xl text-gray-500 bg-slate-50 select-none">
+                    YOUR PROJECTS
+                </div>
+                <div id="project_grid" class="flex flex-wrap gap-6 mt-16 w-3/4">
+                    <?php
+                    include "./utils/loadProjects.php";
+                    ?>
+                    <button type="button" class="flex justify-center w-40 h-20 rounded-lg transition ease-in-out duration-200 bg-slate-200 hover:bg-slate-300" title="Create a new project" onclick="openProjectCreate()">
+                        <div class="flex container mx-auto my-auto justify-center text-3xl text-gray-600 select-none">+</div>
+                    </button>
+                </div>
             </div>
         </section>
     </section>

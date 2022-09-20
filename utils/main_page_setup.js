@@ -43,3 +43,18 @@ function checkDisplay(element) {
 function checkDisplayFlex(element) {
   return $(element).css('display') === 'flex';
 }
+
+function URL(url) {
+  history.pushState(
+    {
+      id: "TodoList",
+      source: "web",
+    },
+    `TodoList`,
+    `http://localhost/TodoList/${url}`
+    );
+}
+
+function title(title) {
+  document.title = title;
+}

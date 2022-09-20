@@ -4,8 +4,5 @@ $result = mysqli_query($conn, $q);
 if (mysqli_num_rows($result) > 0) {
     while ($options = mysqli_fetch_assoc($result)) {
         echo '<div title="Save this color" id="' . $options['color_name'] . '" value="'.$options['color_name'].'" class="flex w-8 '.$options['color_code'].' rounded-xl h-8 cursor-pointer hover:opacity-90" onclick="saveColor(`'.$options['color_name'].'`, `'.$options['color_code'].'`)"></div>';
-        //echo '<div class="flex w-4 h-4 my-auto ml-2 rounded-md ' . $options['color_code'] . '" value="' . $options['color_code'] . '"></div>';
-        //echo '<div class="flex ml-3 my-auto" value="' . $options['color_name'] . '">' . $options['color_name'] . '</div>';
-        //echo '</div>';
     };
 }
