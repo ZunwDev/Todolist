@@ -27,7 +27,7 @@ include "../TodoList/utils/scripts/getUserID.php";
     <?php
     include "./utils/loadNavbar.php";
     ?>
-    <section class="app_appMain w-screen h-screen flex flex-row">
+    <section class="app_appMain w-screen h-screen flex flex-row overflow-x-hidden">
         <section class="app_appSidebarContainer flex flex-grow">
             <div id="sidebar" class="app_appSidebar flex bg-slate-100 expandSidebar border-slate-200">
                 <div id="tabContainer" class="app_appTabContainer flex flex-col w-48 mx-auto">
@@ -44,12 +44,12 @@ include "../TodoList/utils/scripts/getUserID.php";
                 </div>
             </div>
         </section>
-        <section class="app_appProjectsContainer flex flex-col h-full w-screen bg-slate-50">
-            <div class="project_wrapper pl-16 pt-16">
-                <div id="projects_nameEl" class="flex h-8 w-full font-bold text-xl text-gray-500 bg-slate-50 select-none">
+        <section class="app_appProjectsContainer flex flex-col bg-slate-50 w-full">
+            <div class="project_wrapper pl-16 overflow-y-auto py-16 hideScrollbar">
+                <div id="projects_nameEl" class="flex h-8 w-fit font-bold text-xl text-gray-500 bg-slate-50 select-none">
                     YOUR PROJECTS
                 </div>
-                <div id="project_grid" class="flex flex-wrap gap-6 mt-16 w-3/4">
+                <div id="project_grid" class="flex flex-wrap gap-6 pt-16 w-3/4">
                     <?php
                     include "./utils/loadProjects.php";
                     ?>
