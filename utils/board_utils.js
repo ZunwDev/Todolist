@@ -13,13 +13,13 @@ function addBoard() {
 
 function addNewTask(boardName) {
     var board = document.getElementById(boardName + "_name");
-    var existingTasks = document.querySelectorAll(`[class*='board_']`);
+    var existingTasks = document.querySelectorAll(`[class*='board_${boardName}']`);
     board.insertAdjacentHTML("beforeend",
-        `<div class="board_${existingTasks.length + 1} w-full h-8 mt-0.5 bg-slate-200 flex-row">
-            <textarea class="task flex form-control h-full resize-none bg-transparent overflow-y-hidden pt-1 pl-2 w-full focus:text-gray-700 focus:bg-white focus:border focus:outline-none focus:border-blue-600">Task #${existingTasks.length + 1}</textarea>
+        `<div class="board_${boardName} w-full h-8 mt-0.5 bg-slate-200 flex-row">
+            <textarea class="task_${boardName} flex form-control h-full resize-none bg-transparent overflow-y-hidden pt-1 pl-2 w-full focus:text-gray-700 focus:bg-white focus:border focus:outline-none focus:border-blue-600">Task #${existingTasks.length + 1}</textarea>
         </div>
     `)
-    let input = document.getElementsByClassName('task');
+    let input = document.getElementsByClassName(`task_${boardName}`);
     setTimeout(function () {
         input[input.length - 1].focus();
         input[input.length - 1].select();
