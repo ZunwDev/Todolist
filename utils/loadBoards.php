@@ -6,7 +6,7 @@ $projectIDQuery = "select projectID from project where project_name = '$project_
 $projectIDFetch = mysqli_fetch_assoc(mysqli_query($conn, $projectIDQuery));
 $projectID = $projectIDFetch['projectID'];
 
-$q = "select board_name, board_description from board where projectID = '$projectID'";
+$q = "select project.project_name, board.boardID, board.board_name, board.board_description from board join project on project.projectID = board.projectID where board.projectID = '$projectID'";
 $result = mysqli_query($conn, $q);
 
 if (mysqli_num_rows($result) > 0) {
@@ -15,15 +15,49 @@ if (mysqli_num_rows($result) > 0) {
         echo '<div class="flex flex-col ml-4 mt-4">';
         //Board name 
         echo '<div class="flex w-56 transition ease-in-out duration-200 h-8 text-lg bg-slate-200 hover:bg-slate-300 rounded-tr-md rounded-tl-md cursor-pointer">';
-        echo '<div class="flex px-2 my-auto">'.$boards['board_name'].'</div>';
+        echo '<div class="flex px-2 my-auto">' . $boards['board_name'] . '</div>';
         echo '</div>';
-        echo '<div id="'.$boards['board_name'].'_name" class="flex flex-col w-full">';
+        //Start of boards
+        echo '<div id="' . $boards['boardID'] . '_name" class="flex flex-col w-full">';
+        $q = "select dataID, board_data, board_check from board_data where boardID = " . $boards['boardID'] . "";
+        $resultBD = mysqli_query($conn, $q);
+        while ($board_data = mysqli_fetch_array($resultBD)) {
+            if ($board_data['board_check'] == 0) {
+                //Unchecked checkboxes
+                echo '<div class="w-full h-8 mt-0.5 bg-slate-200 flex-row">';
+                echo '<div class="form-check absolute ml-1">';
+                echo '<input class="form-check-input appearance-none h-6 w-6 mt-1 border border-gray-300 rounded-sm bg-white checked:bg-lime-600 checked:border-lime-600 focus:outline-none transition duration-200 cursor-pointer" type="checkbox" value="" id="checkbox_' . $board_data['board_data'] . '" onclick="isChecked(`' . $board_data['board_data'] . '`, `' . $board_data['dataID'] . '`, `' . $boards['project_name'] . '`)">';
+                echo '</div>';
+                echo '<div class="board_' . $boards['boardID'] . ' flex ml-10 h-8 mt-1.5">' . $board_data['board_data'] . '</div>';
+                echo '</div>';
+                //Checked out checkboxes
+            } else {
+                echo '<div class="w-full h-8 mt-0.5 bg-slate-200 flex-row">';
+                echo '<div class="form-check absolute ml-1">';
+                echo '<input class="form-check-input appearance-none h-6 w-6 mt-1 border border-gray-300 rounded-sm bg-white checked:bg-lime-600 checked:border-lime-600 focus:outline-none transition duration-200 cursor-pointer" type="checkbox" value="" id="checkbox_' . $board_data['board_data'] . '"  onclick="isChecked(`' . $board_data['board_data'] . '`, `' . $board_data['dataID'] . '`, `' . $boards['project_name'] . '`)" checked>';
+                echo '</div>';
+                echo '<div class="board_' . $boards['boardID'] . ' line-through flex ml-10 h-8 mt-1.5">' . $board_data['board_data'] . '</div>';
+                echo '</div>';
+            }
+        }
+        //End of board
         echo '</div>';
         //Adding new task
-        echo '<div class="flex my-2 w-56 h-8 bg-slate-200 hover:bg-slate-300 rounded-md cursor-pointer" onclick="addNewTask(`'.$boards['board_name'].'`)">';
+        echo '<div class="flex my-2 w-56 h-8 bg-slate-200 hover:bg-slate-300 rounded-md cursor-pointer" onclick="addNewTask(`' . $boards['boardID'] . '`)">';
         echo '<div class="flex mx-auto my-auto">Add new task</div>';
+        echo '</div>';
+        //Confirm adding new tasks
+        echo '<div id="' . $boards['boardID'] . '_confirm" class="flex w-56 mb-2 h-8 bg-lime-400 hover:bg-lime-500 rounded-md cursor-pointer hidden" onclick="saveAllAtOnce(`' . $boards['boardID'] . '`, `' . $boards['project_name'] . '`)">';
+        echo '<div class="flex mx-auto my-auto">Confirm changes</div>';
+        echo '</div>';
+        //Cancel adding tasks
+        echo '<div id="' . $boards['boardID'] . '_cancel" class="flex w-56 mb-2 h-8 bg-red-400 hover:bg-red-500 rounded-md cursor-pointer hidden" onclick="cancelChanges(`' . $boards['boardID'] . '`)">';
+        echo '<div class="flex mx-auto my-auto">Cancel changes</div>';
         echo '</div>';
         //End of flex area
         echo '</div>';
     }
+    echo '<div title="Create a new column" class="newBoard flex mt-4 ml-4 w-56 transition ease-in-out duration-200 h-8 my-auto text-lg bg-slate-200 hover:bg-slate-300 rounded-md cursor-pointer" onclick="addBoard(' . $project_name . ')">';
+    echo '<span class="mx-auto text-2xl">+</span>';
+    echo '</div>';
 }

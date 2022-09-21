@@ -69,7 +69,7 @@ function closeProject() {
   title("TodoList");
 }
 
-function addBoardData(name) {
+function loadBoardData(name) {
   var board = $.ajax("./utils/loadBoards.php", {
     async: false,
     type: "post",
@@ -101,9 +101,6 @@ function getHTML(name, light, color, dark, description) {
               </div>
             </div>
                 <section id="boards" class="flex flex-row bg-slate-50 overflow-x-auto">
-                  <div title="Create new column" class="newBoard flex mt-4 ml-4 w-56 transition ease-in-out duration-200 h-8 my-auto text-lg bg-slate-200 hover:bg-slate-300 rounded-md cursor-pointer" onclick='addBoard()'>
-                <span class="mx-auto text-2xl">+</span>
-              </div>
             </section>
           </section>`;
 }
@@ -132,7 +129,7 @@ function openProjectSidebar(id, name, description, color) {
         description
       )
     );
-    addBoardData(name);
+    loadBoardData(name);
     URL(`${id}/${name}`);
     title(`TodoList: ${name}`);
   }
@@ -160,7 +157,7 @@ function openProject(id, name, description, color) {
       description
     )
   );
-  addBoardData(name);
+  loadBoardData(name);
   URL(`${id}/${name}`);
   title(`TodoList: ${name}`);
 }
