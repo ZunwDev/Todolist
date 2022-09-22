@@ -1,20 +1,17 @@
-function getSectionID() {
-  var projectSections = document.querySelectorAll(`section[id$='_id']`);
-  var project_name = projectSections[0].slice(
-    0,
-    projectSections[0].indexOf("_")
-  );
-  return $.post("./scripts/getProjectID.php", {
-    project_name: project_name,
-  });
-}
-
+/**
+ * It shows the div with the id "newProj" and removes the class "beforeShowUp" and adds the class
+ * "afterShowUp".
+ */
 function openProjectCreate() {
   show("newProj");
   $("#newProj").removeClass("beforeShowUp");
   $("#newProj").addClass("afterShowUp");
 }
 
+/**
+ * It removes the class "afterShowUp" and adds the class "beforeShowUp" to the element with the id
+ * "newProj". Then it hides the element with the id "newProj" after 400 milliseconds.
+ */
 function closeProjectCreate() {
   $("#newProj").removeClass("afterShowUp");
   $("#newProj").addClass("beforeShowUp");
@@ -22,6 +19,14 @@ function closeProjectCreate() {
     $("#newProj").hide();
   }, 400);
 }
+
+/**
+ * It takes the project name, project description, and color name and sends it to a PHP script that
+ * creates a new project.
+ * @param projectName - The name of the project
+ * @param projectDescription - projectDescription,
+ * @param colorName - The name of the color that the user selected.
+ */
 
 function postCreateProject(projectName, projectDescription, colorName) {
   $.post("./utils/scripts/new_project.php", {
@@ -33,6 +38,13 @@ function postCreateProject(projectName, projectDescription, colorName) {
   });
 }
 
+/**
+ * If the user has entered a project name, use that as the project name. If the user has entered a
+ * project description, use that as the project description. If the user has entered a color name, use
+ * that as the color name. If the user has not entered a project name, use "Project" as the project
+ * name. If the user has not entered a project description, use "" as the project description. If the
+ * user has not entered a color name, use "Red" as the color name.
+ */
 function acceptProjectCreate() {
   closeProjectCreate();
   var projectName = document.getElementById("nameInput").value;
@@ -53,12 +65,24 @@ function acceptProjectCreate() {
   }
 }
 
+/**
+ * It removes the first element in the NodeList returned by the querySelectorAll() method, then calls
+ * the openProjectSidebar() function.
+ * @param id - the id of the project
+ * @param name - The name of the project
+ * @param description - The description of the project
+ * @param color - the color of the project
+ */
 function closeProjectSidebar(id, name, description, color) {
   var projectSections = document.querySelectorAll(`section[id$='_id']`);
   projectSections[0].remove();
-  openProject(id, name, description, color);
+  openProjectSidebar(id, name, description, color);
 }
 
+/**
+ * It removes the first element in the projectSections array, shows the project_grid, projects_nameEl,
+ * and project_wrapper elements, and changes the URL and title of the page.
+ */
 function closeProject() {
   var projectSections = document.querySelectorAll(`section[id$='_id']`);
   projectSections[0].remove();
@@ -67,20 +91,6 @@ function closeProject() {
   $(".project_wrapper").show();
   URL("index.php");
   title("TodoList");
-}
-
-function loadBoardData(name) {
-  var board = $.ajax("./utils/loadBoards.php", {
-    async: false,
-    type: "post",
-    data: {
-      project_name: name
-    },
-  }).done(function (data) {
-    return data;
-  });
-  let getBoardArea = document.getElementById("boards");
-  getBoardArea.insertAdjacentHTML("afterbegin", board.responseText);
 }
 
 function getHTML(name, light, color, dark, description) {
@@ -129,7 +139,18 @@ function openProjectSidebar(id, name, description, color) {
         description
       )
     );
-    loadBoardData(name);
+    setTimeout(function () {
+      document.getElementById("boards").innerText = "";
+      var board = $.ajax("../utils/loadBoards.php", {
+        async: false,
+        type: "post",
+        data: {
+          project_name: name,
+        },
+      });
+      let getBoardArea = document.getElementById("boards");
+      getBoardArea.insertAdjacentHTML("afterbegin", board.responseText);
+    }, 50);
     URL(`${id}/${name}`);
     title(`TodoList: ${name}`);
   }
@@ -157,11 +178,25 @@ function openProject(id, name, description, color) {
       description
     )
   );
-  loadBoardData(name);
+  setTimeout(function () {
+    document.getElementById("boards").innerText = "";
+    var board = $.ajax("../utils/loadBoards.php", {
+      async: false,
+      type: "post",
+      data: {
+        project_name: name,
+      },
+    });
+    let getBoardArea = document.getElementById("boards");
+    getBoardArea.insertAdjacentHTML("afterbegin", board.responseText);
+  }, 50);
   URL(`${id}/${name}`);
   title(`TodoList: ${name}`);
 }
 
+/* Checking if the browser supports the history API. If it does, it adds an event listener to the
+window object that listens for the popstate event. When the popstate event is fired, it calls the
+closeProject() function. */
 if (window.history && window.history.pushState) {
   $(window).on("popstate", function () {
     closeProject();

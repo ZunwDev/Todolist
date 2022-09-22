@@ -1,7 +1,3 @@
-.hideScrollbar {
-    scrollbar-width: none;
-}
-
 /* Let's get this party started */
 ::-webkit-scrollbar {
     width: 6px;
@@ -79,6 +75,10 @@ body {
     #opensidebar {
         display: none;
     }
+    #tabContainer {
+        display: none;
+    }
+
 }
 
 @keyframes fadeInFromNone {

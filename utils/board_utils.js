@@ -1,20 +1,25 @@
 function addBoard(projectName) {
-  var findProjectID = document.querySelectorAll(`section[id$='_id']`);
-  var projectID = findProjectID[0].id.slice(
-    0,
-    findProjectID[0].id.indexOf("_")
-  );
+  /* Getting the project ID from the database. */
+  var projectID = $.ajax("../utils/scripts/getProjectID.php", {
+    async: false,
+    type: "post",
+    data: {
+      project_name: projectName.id,
+    },
+  });
 
+  /* Adding a new board to the database. */
   $.post("../utils/scripts/addNewBoard.php", {
-    projectID: projectID,
+    projectID: projectID.responseText,
     board_name: "Column",
     board_description: "",
   }).done(function (data) {
-    reloadBoardData(projectName);
+    reloadBoardData(projectName.id);
   });
 }
 
 function reloadBoardData(projectName) {
+  /* Reloading the board data. */
   document.getElementById("boards").innerText = "";
   var board = $.ajax("../utils/loadBoards.php", {
     async: false,
@@ -28,22 +33,23 @@ function reloadBoardData(projectName) {
 }
 
 function addNewTask(boardID) {
-  //Data
+  /* Getting the board ID, confirm button, cancel button and existing tasks. */
   var board = document.getElementById(boardID + "_name");
   var confirmButton = document.getElementById(boardID + "_confirm");
   var cancelButton = document.getElementById(boardID + "_cancel");
   var existingTasks = document.querySelectorAll(`[class*='board_${boardID}']`);
-  //Inserting new task
+  /* Inserting a temporary task into the board. */
   board.insertAdjacentHTML(
     "beforeend",
     `<div class="board_${boardID}_edit w-full h-8 mt-0.5 bg-slate-200 flex-row">
-            <textarea class="task_${boardID}_edit flex form-control h-full resize-none bg-transparent overflow-y-hidden pt-1 pl-2 w-full focus:text-gray-700 focus:bg-white focus:border focus:outline-none focus:border-blue-600">Task #${
+            <textarea maxlength="64" class="task_${boardID}_edit flex form-control h-full resize-none bg-transparent overflow-y-hidden pt-1 pl-2 w-full focus:text-gray-700 focus:bg-white focus:border focus:outline-none focus:border-blue-600">Task #${
       existingTasks.length + 1
     }</textarea>
         </div>
     `
   );
-  //Showing confirm button
+  /* Checking if there are any tasks that are being edited. If there are, it will show the confirm and
+  cancel buttons. */
   var existingTasks = document.querySelectorAll(
     `[class*='board_${boardID}_edit']`
   );
@@ -51,7 +57,7 @@ function addNewTask(boardID) {
     confirmButton.classList.remove("hidden");
     cancelButton.classList.remove("hidden");
   }
-  //Focus & select input
+  /* Focusing and select the the last input element. */
   let input = document.getElementsByClassName(`task_${boardID}_edit`);
   setTimeout(function () {
     input[input.length - 1].focus();
@@ -60,20 +66,19 @@ function addNewTask(boardID) {
 }
 
 function saveAllAtOnce(boardID, projectName) {
-  //Data
+  /* Getting all the task names from the input fields. */
   var taskNames = [];
   var confirmButton = document.getElementById(boardID + "_confirm");
   var cancelButton = document.getElementById(boardID + "_cancel");
   let existingTasks = document.getElementsByClassName(`task_${boardID}_edit`);
-  //Getting all task names
+  /* Getting all the task names from the input fields. */
   for (var i = 0; i < existingTasks.length; i++) {
     taskNames.push(existingTasks[i].value);
   }
-  console.log(taskNames);
-  //Hiding confirm button
+  /* Hiding the confirm and cancel buttons. */
   confirmButton.classList.add("hidden");
   cancelButton.classList.add("hidden");
-  //Adding to database
+  /* Adding the tasks to the database. */
   for (var i = 0; i < taskNames.length; i++) {
     $.post("../utils/scripts/addNewTask.php", {
       boardID: boardID,
@@ -85,6 +90,7 @@ function saveAllAtOnce(boardID, projectName) {
 }
 
 function cancelChanges(boardID) {
+  /* Removing the input fields. */
   var findAllEditTasks = document.getElementsByClassName(
     `board_${boardID}_edit`
   );
@@ -97,23 +103,26 @@ function cancelChanges(boardID) {
   cancelButton.classList.add("hidden");
 }
 
-function isChecked(taskName, taskID, projectName) {
-  var state = document.getElementById("checkbox_" + taskName).checked;
-  console.log(state);
-  if (state === true) {
-    console.log("a");
-    $.post("../utils/scripts/updateCheckboxState.php", {
-      state: 1,
+function isChecked(taskID, projectName) {
+  /* Getting the state of the checkbox and then updating it. */
+  var state = $.ajax("../utils/scripts/getCheckStatus.php", {
+    async: false,
+    type: "POST",
+    data: {
       dataID: taskID,
-    }).done(function (data) {
-    });
-    reloadBoardData(projectName);
+    },
+  }).done(function (data) {
+    return data;
+  });
+  if (state.responseText == 1) {
+    state = 0;
   } else {
-    $.post("../utils/scripts/updateCheckboxState.php", {
-      state: 0,
-      dataID: taskID,
-    }).done(function (data) {
-    });
-    reloadBoardData(projectName);
+    state = 1;
   }
+  $.post("../utils/scripts/updateCheckboxState.php", {
+    state: state,
+    dataID: taskID,
+  }).done(function (data) {
+    reloadBoardData(projectName);
+  });
 }
