@@ -8,24 +8,26 @@ function expandSidebar() {
   if ($("#sidebar").hasClass("shrinkSidebar")) {
     $("#sidebar").removeClass("shrinkSidebar");
     $("#sidebar").addClass("expandSidebar");
+    setTimeout(() => {
+      $(".app_appProjectsContainer").addClass("pl-64");
+    }, 100)
     show("tabContainer");
   } else {
     $("#sidebar").removeClass("expandSidebar");
     $("#sidebar").addClass("shrinkSidebar");
+    setTimeout(() => {
+      $(".app_appProjectsContainer").removeClass("pl-64");
+    }, 100)
     $("#tabContainer").hide();
   }
 }
 
 function toggleAngle() {
-  var upClass = "toggle-up";
-  var downClass = "toggle-down";
+  const upClass = "toggle-up";
+  const downClass = "toggle-down";
 
-  var angle = document.querySelector(".angle");
-  if (angle.classList.contains("toggle-down")) {
-    angle.className = angle.classList.replace(downClass, upClass);
-  } else {
-    angle.className = angle.classList.replace(upClass, downClass);
-  }
+  const angle = document.querySelector(".angle");
+  angle.className = angle.classList.contains("toggle-down") ? angle.classList.replace(downClass, upClass) : angle.classList.replace(upClass, downClass);
 }
 
 function show(element) {

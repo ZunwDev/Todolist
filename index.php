@@ -27,9 +27,9 @@ include "../TodoList/utils/scripts/getUserID.php";
     <?php
     include "./utils/loadNavbar.php";
     ?>
-    <section class="app_appMain w-screen h-screen flex flex-row overflow-x-hidden">
-        <section class="app_appSidebarContainer flex flex-grow">
-            <div id="sidebar" class="app_appSidebar flex bg-slate-100 expandSidebar border-slate-200">
+    <section class="app_appMain w-screen h-screen flex flex-row overflow-x-hidden relative">
+        <section class="app_appSidebarContainer flex flex-grow absolute h-full">
+            <div id="sidebar" class="app_appSidebar flex bg-slate-100 expandSidebar border-slate-200 ">
                 <div id="tabContainer" class="app_appTabContainer flex flex-col w-48 mx-auto">
                     <div class="app_appProjectTab flex mt-8 mb-4 transition ease-in-out duration-200 h-8 hover:bg-slate-200 rounded-lg" onclick="showProjects()">
                         <button id="anglesymbol" type="button" class="h-8 w-full font-medium" onclick="toggleAngle()"> <svg class="angle h-4 w-4 ml-8 mt-1 absolute toggle-up" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
@@ -44,7 +44,7 @@ include "../TodoList/utils/scripts/getUserID.php";
                 </div>
             </div>
         </section>
-        <section class="app_appProjectsContainer flex flex-col bg-slate-50 w-full">
+        <section class="app_appProjectsContainer flex flex-col bg-slate-50 w-full flex-shrink pl-64">
             <div class="project_wrapper pl-16 overflow-y-auto py-16 hideScrollbar">
                 <div id="projects_nameEl" class="flex h-8 w-fit font-bold text-xl text-gray-500 bg-slate-50 select-none">
                     YOUR PROJECTS

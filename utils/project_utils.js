@@ -15,7 +15,7 @@ function openProjectCreate() {
 function closeProjectCreate() {
   $("#newProj").removeClass("afterShowUp");
   $("#newProj").addClass("beforeShowUp");
-  setTimeout(function () {
+  setTimeout(() => {
     $("#newProj").hide();
   }, 400);
 }
@@ -33,7 +33,7 @@ function postCreateProject(projectName, projectDescription, colorName) {
     projectName: projectName,
     projectDescription: projectDescription,
     color: colorName,
-  }).done(function (data) {
+  }).done((data) => {
     window.location.reload();
   });
 }
@@ -47,9 +47,9 @@ function postCreateProject(projectName, projectDescription, colorName) {
  */
 function acceptProjectCreate() {
   closeProjectCreate();
-  var projectName = document.getElementById("nameInput").value;
-  var projectDescription = document.getElementById("descriptionInput").value;
-  var colorName = document.getElementById("currentColorName").innerText;
+  const projectName = document.getElementById("nameInput").value;
+  const projectDescription = document.getElementById("descriptionInput").value;
+  const colorName = document.getElementById("currentColorName").innerText;
 
   if (projectDescription != "" && projectName === "") {
     postCreateProject("Project", projectDescription, colorName);
@@ -74,7 +74,7 @@ function acceptProjectCreate() {
  * @param color - the color of the project
  */
 function closeProjectSidebar(id, name, description, color) {
-  var projectSections = document.querySelectorAll(`section[id$='_id']`);
+  const projectSections = document.querySelectorAll(`section[id$='_id']`);
   projectSections[0].remove();
   openProjectSidebar(id, name, description, color);
 }
@@ -84,7 +84,7 @@ function closeProjectSidebar(id, name, description, color) {
  * and project_wrapper elements, and changes the URL and title of the page.
  */
 function closeProject() {
-  var projectSections = document.querySelectorAll(`section[id$='_id']`);
+  const projectSections = document.querySelectorAll(`section[id$='_id']`);
   projectSections[0].remove();
   $("#project_grid").show();
   $("#projects_nameEl").show();
@@ -94,34 +94,32 @@ function closeProject() {
 }
 
 function getHTML(name, light, color, dark, description) {
-  return `<section id="${name}_id" class="w-full">
-            <div class="flex flex-row ${light} h-10 space-x-2">
-            <div class="flex w-full justify-start gap-2">
-              <div class="flex flex-shrink h-full ${color}">
+  return `
+          <section id="${name}_id" class="flex flex-shrink flex-col">
+            <div class="flex flex-row ${light} h-10 gap-2">
+              <div class="flex w-64 h-full ${color} ml-2">
                 <textarea title="Change project name" class="flex form-control text-2xl resize-none pt-1 pl-2 h-8 mx-2 my-auto transition ease-in-out duration-200 overflow-y-hidden rounded-lg bg-transparent hover:${dark} truncate focus:text-gray-700 focus:bg-white focus:border focus:outline-none focus:border-blue-600">${name}</textarea>
               </div>
-              <div class="flex flex-grow h-full ${color}">
-                <textarea title="Change project description" class="flex form-control text-sm resize-none w-full pt-2 pl-2 h-8 mx-2 my-auto transition ease-in-out overflow-y-hidden rounded-lg bg-transparent hover:${dark} truncate focus:text-gray-700 focus:bg-white focus:border focus:outline-none focus:border-blue-600">${description}</textarea>
+              <div class="flex w-96 h-full ${color}">
+                <textarea title="Change project description" class="flex form-control text-sm w-full resize-none pt-2 pl-2 h-8 mx-2 my-auto transition ease-in-out overflow-y-hidden rounded-lg bg-transparent hover:${dark} truncate focus:text-gray-700 focus:bg-white focus:border focus:outline-none focus:border-blue-600">${description}</textarea>
               </div>
-            </div>
-              <div class="flex justify-end">
+              <div class="flex ml-auto">
                 <div title="Close project" class="flex w-16 h-full bg-slate-200 hover:bg-red-300 transition ease-in-out duration-200 cursor-pointer group" onclick="closeProject()">
                   <svg class="flex w-4 h-4 mx-auto my-auto fill-slate-400 transition ease-in-out duration-200 group-hover:fill-red-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/></svg>
                 </div>
               </div>
             </div>
-                <section id="boards" class="flex flex-row bg-slate-50 overflow-x-auto">
-            </section>
+            <section id="boards" class="flex flex-row bg-slate-50 overflow-x-auto"></section>
           </section>`;
 }
 
 function openProjectSidebar(id, name, description, color) {
   //Data
-  let checkIfProjectIsOpen = document.querySelectorAll(`section[id$='_id']`);
-  let getProjectWindow = document.getElementsByClassName(
+  const checkIfProjectIsOpen = document.querySelectorAll(`section[id$='_id']`);
+  const getProjectWindow = document.getElementsByClassName(
     "app_appProjectsContainer"
   );
-  var colorClass = new Color(color);
+  const colorClass = new Color(color);
   if (checkIfProjectIsOpen.length > 0) {
     closeProjectSidebar(id, name, description, color);
   } else {
@@ -139,16 +137,16 @@ function openProjectSidebar(id, name, description, color) {
         description
       )
     );
-    setTimeout(function () {
+    setTimeout(() => {
       document.getElementById("boards").innerText = "";
-      var board = $.ajax("../utils/loadBoards.php", {
+      const board = $.ajax("../utils/loadBoards.php", {
         async: false,
         type: "post",
         data: {
           project_name: name,
         },
       });
-      let getBoardArea = document.getElementById("boards");
+      const getBoardArea = document.getElementById("boards");
       getBoardArea.insertAdjacentHTML("afterbegin", board.responseText);
     }, 50);
     URL(`${id}/${name}`);
@@ -158,8 +156,8 @@ function openProjectSidebar(id, name, description, color) {
 
 function openProject(id, name, description, color) {
   //Data
-  var colorClass = new Color(color);
-  let getProjectWindow = document.getElementsByClassName(
+  const colorClass = new Color(color);
+  const getProjectWindow = document.getElementsByClassName(
     "app_appProjectsContainer"
   );
   //Hiding projects
@@ -178,16 +176,16 @@ function openProject(id, name, description, color) {
       description
     )
   );
-  setTimeout(function () {
+  setTimeout(() => {
     document.getElementById("boards").innerText = "";
-    var board = $.ajax("../utils/loadBoards.php", {
+    const board = $.ajax("../utils/loadBoards.php", {
       async: false,
       type: "post",
       data: {
         project_name: name,
       },
     });
-    let getBoardArea = document.getElementById("boards");
+    const getBoardArea = document.getElementById("boards");
     getBoardArea.insertAdjacentHTML("afterbegin", board.responseText);
   }, 50);
   URL(`${id}/${name}`);
@@ -197,8 +195,8 @@ function openProject(id, name, description, color) {
 /* Checking if the browser supports the history API. If it does, it adds an event listener to the
 window object that listens for the popstate event. When the popstate event is fired, it calls the
 closeProject() function. */
-if (window.history && window.history.pushState) {
-  $(window).on("popstate", function () {
+if (window.history?.pushState) {
+  $(window).on("popstate", () => {
     closeProject();
   });
 }

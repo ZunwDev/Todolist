@@ -15,16 +15,16 @@ function flagInput(element) {
 }
 
 function passwordVerifyFailed() {
-  let passwordEl = document.getElementById("passwordInput");
-  let passwordError = document.getElementById("passwordError");
+  const passwordEl = document.getElementById("passwordInput");
+  const passwordError = document.getElementById("passwordError");
 
   flagInput(passwordEl);
   showError(passwordError, "Incorrect password");
 }
 
 function userDoesntExist() {
-  let usernameEl = document.getElementById("nameInput");
-  let usernameError = document.getElementById("usernameError");
+  const usernameEl = document.getElementById("nameInput");
+  const usernameError = document.getElementById("usernameError");
 
   flagInput(usernameEl);
   showError(usernameError, "User doesn't exist/invalid username");
@@ -39,19 +39,19 @@ function successfulLogin() {
     document.getElementById("passwordInput"),
     document.getElementById("passwordError")
   );
-  setTimeout(function () {
+  setTimeout(() => {
     window.location = "../index.php";
   }, 1000);
 }
 
 function logIn() {
-  var username = $("#nameInput").val();
-  var password = $("#passwordInput").val();
+  const username = $("#nameInput").val();
+  const password = $("#passwordInput").val();
 
   $.post("./login_script.php", {
     nameInput: username,
     passwordInput: password,
-  }).done(function (data) {
+  }).done((data) => {
     if (data.includes("200")) successfulLogin();
     if (data.includes("403"))
       resetInput(

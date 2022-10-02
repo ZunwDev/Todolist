@@ -64,23 +64,6 @@ body {
     font-family: 'Raleway';
 }
 
-@media (max-width: 768px) {
-    #sidebar {
-        width: 0rem;
-        transition: width 0.2s ease-out;
-    }
-    #anglesymbol {
-        display: none;
-    }
-    #opensidebar {
-        display: none;
-    }
-    #tabContainer {
-        display: none;
-    }
-
-}
-
 @keyframes fadeInFromNone {
     0% {
         display: none;
