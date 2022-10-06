@@ -39,12 +39,12 @@
 
 .beforeShowUp {
     opacity: 0;
-    animation: fadeOutFromExisting 0.5s ease-out;
+    animation: fadeOutFromExisting 0.2s ease-out;
 }
 
 .afterShowUp {
     opacity: 1;
-    animation: fadeInFromNone 0.5s ease-out;
+    animation: fadeInFromNone 0.2s ease-out;
 }
 
 /* .beforeOpening {
@@ -61,7 +61,7 @@ body {
     display: flex;
     align-items: center;
     min-height: 100vh;
-    font-family: 'Raleway';
+    font-family: 'Roboto Mono', monospace;
 }
 
 @keyframes fadeInFromNone {

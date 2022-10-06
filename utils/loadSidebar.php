@@ -6,7 +6,7 @@ $result = mysqli_query($conn, $q);
 if (mysqli_num_rows($result) > 0) {
     while ($projects = mysqli_fetch_assoc($result)) {
         echo '<li class="group flex w-full h-8 transition ease-in-out duration-200 hover:bg-slate-200 rounded-md">';
-        echo '<a id="'.$projects['project_name'].'_link" class="absolute cursor-pointer z-10 h-8 w-[8.5rem]" onclick="openProjectSidebar(`'.$projects['projectID'].'`, `'.$projects['project_name'].'`, `'.$projects['project_description'].'`, `'.$projects['color_code'].'`)"></a>';
+        echo '<div id="'.$projects['project_name'].'_link" class="absolute cursor-pointer z-10 h-8 w-[8.5rem]" onclick="openProjectSidebar(`'.$projects['projectID'].'`, `'.$projects['project_name'].'`, `'.$projects['project_description'].'`, `'.$projects['color_code'].'`)"></div>';
         echo '<div class="flex w-4 h-4 my-auto ml-2 rounded-md z-10 ' . $projects['color_code'] . '"></div>';
         echo '<div id="' . $projects['project_name'] . '_projectName" class="flex ml-3 my-auto select-none">' . $projects['project_name'] . '</div>';
         echo '<textarea id="' . $projects['project_name'] . '_edit" type="text" class="form-control px-1 w-1/2 flex h-6 text-md resize-none ml-auto my-auto hidden overflow-auto rounded-md transition ease-in-out focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-blue-600">' . $projects['project_name'] . '</textarea>';

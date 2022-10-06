@@ -20,16 +20,18 @@ include "../TodoList/utils/scripts/getUserID.php";
     <script src="./utils/sidebar_utils.js"></script>
     <script src="./utils/board_utils.js"></script>
     <script src="./utils/class/Color.js"></script>
-    <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 </head>
 
 <body id="body" class="flex w-screen h-screen flex-col" onload="resetStyling()">
     <?php
     include "./utils/loadNavbar.php";
     ?>
-    <section class="app_appMain w-screen h-screen flex flex-row overflow-x-hidden relative">
+    <section class="app_appMain w-screen h-screen flex flex-row overflow-x-hidden relative bg-slate-100">
         <section class="app_appSidebarContainer flex flex-grow absolute h-full">
-            <div id="sidebar" class="app_appSidebar flex bg-slate-100 expandSidebar border-slate-200 ">
+            <div id="sidebar" class="app_appSidebar flex bg-slate-100 expandSidebar border-slate-200">
                 <div id="tabContainer" class="app_appTabContainer flex flex-col w-48 mx-auto">
                     <div class="app_appProjectTab flex mt-8 mb-4 transition ease-in-out duration-200 h-8 hover:bg-slate-200 rounded-lg" onclick="showProjects()">
                         <button id="anglesymbol" type="button" class="h-8 w-full font-medium" onclick="toggleAngle()"> <svg class="angle h-4 w-4 ml-8 mt-1 absolute toggle-up" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512">
@@ -61,7 +63,7 @@ include "../TodoList/utils/scripts/getUserID.php";
         </section>
     </section>
     <section id="newProj" class="app_appNewProjectDialogBlur fixed w-screen h-full flex beforeShowUp" style="background: rgba(255,255,255,0.6);">
-        <div id="newProjDialog" class="app_appNewProjectDialogWindow flex flex-col w-96 max-w-full h-fit mx-auto mt-16 shadow-xl rounded-lg">
+        <div id="newProjDialog" class="app_appNewProjectDialogWindow flex z-30 flex-col w-96 max-w-full h-fit mx-auto mt-16 shadow-xl rounded-lg">
             <div id="title-background" class="app_appDialogTitle flex pl-6 py-2 bg-slate-100 w-full font-bold text-gray-500 rounded-t-lg border-b-2">
                 New Project
             </div>
