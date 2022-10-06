@@ -1,10 +1,14 @@
+/**
+ * It gets the project ID from the database, then adds a new board to the database.
+ * @param projectName - The name of the project that the board is being added to.
+ */
 function addBoard(projectName) {
   /* Getting the project ID from the database. */
   const projectID = $.ajax("../utils/scripts/getProjectID.php", {
     async: false,
     type: "post",
     data: {
-      project_name: projectName,
+      project_name: projectName.id,
     },
   });
 
@@ -16,7 +20,7 @@ function addBoard(projectName) {
       board_name: newProjectName,
       board_description: "",
     }).done((data) => {
-      reloadBoardData(projectName);
+      reloadBoardData(projectName.id);
     });
   } else {
     /* Adding a new board to the database. */
@@ -25,7 +29,7 @@ function addBoard(projectName) {
       board_name: "Column",
       board_description: "",
     }).done((data) => {
-      reloadBoardData(projectName);
+      reloadBoardData(projectName.id);
     });
   }
 }
@@ -37,10 +41,10 @@ function expandBoardCreate() {
   $(".newBoard").toggleClass("h-8");
   $(".newBoard").toggleClass("h-20");
   $(".newBoard").toggleClass("bg-slate-100");
-  $(".newBoardButton").toggleClass("w-56");
-  $(".newBoardButton").toggleClass("w-[11rem]");
-  $(".acceptBoard").toggleClass("w-56");
-  $(".acceptBoard").toggleClass("w-[11rem]");
+  $(".newBoardButton").toggleClass("w-64");
+  $(".newBoardButton").toggleClass("w-[13rem]");
+  $(".acceptBoard").toggleClass("w-64");
+  $(".acceptBoard").toggleClass("w-[13rem]");
   $(".newBoardButton").toggleClass("hidden");
   $(".acceptBoard").toggleClass("hidden");
   $(".newBoardCancel").toggleClass("hidden");
@@ -91,6 +95,131 @@ function resetAllNewTasks() {
   }
 }
 
+function showPriorityList() {
+  closePriorityList();
+  const list = $.ajax("../utils/loadPriorityList.php", {
+    async: false,
+    type: "post",
+  });
+  body.insertAdjacentHTML("beforeend", list.responseText);
+  const priorityPopup = document.getElementById("priorityListPopup");
+  priorityPopup.classList.add(`left-[${mouse.x + 4}px]`);
+  priorityPopup.classList.add(`top-[${mouse.y + 4}px]`);
+  priorityPopup.classList.toggle('beforeShowUp');
+  priorityPopup.classList.toggle('afterShowUp');
+  const priorityModal = document.getElementById("priorityListOverlay");
+  priorityModal.addEventListener("click", closePriorityModalWindowOnBlur);
+}
+
+function closePriorityList() {
+  const findPriorityList = document.getElementById("priorityListOverlay");
+  if (findPriorityList != null) {
+    findPriorityList.remove();
+  }
+}
+
+function savePriority(name) {
+  switch (name) {
+    case "High":
+      var color = "bg-red-100";
+      break;
+    case "Medium":
+      var color = "bg-amber-100";
+      break;
+    case "Low":
+      var color = "bg-slate-100";
+      break;
+    case "None":
+      var color = "bg-transparent";
+      break;
+    default:
+      var color = "bg-transparent";
+      break;
+  }
+  const prioritySel = document.getElementById("priorityList");
+  for (let i = 0; i < 2; i++) {
+    prioritySel.classList.remove(
+      prioritySel.classList.toString().split(" ").pop()
+    );
+  }
+  prioritySel.classList.add(color);
+  const priorityName = document.getElementById("priorityListText");
+  if (name !== "None") {
+    prioritySel.classList.add("border-slate-300");
+    priorityName.innerText = name;
+  } else {
+    prioritySel.classList.add("border-transparent");
+    priorityName.innerText = "";
+  }
+  closePriorityList();
+}
+
+function showTaskManagePopup(dataID, projectName) {
+  closeTaskManagePopup();
+  const manage = $.ajax("../utils/loadTaskManage.php", {
+    async: false,
+    type: "post",
+    data: {
+      dataID: dataID,
+      projectName: projectName
+    }
+  });
+  body.insertAdjacentHTML("beforeend", manage.responseText);
+  const taskManagePopup = document.getElementById("taskManagePopup");
+  taskManagePopup.classList.add(`left-[${mouse.x + 4}px]`);
+  taskManagePopup.classList.add(`top-[${mouse.y + 4}px]`);
+  taskManagePopup.classList.toggle('beforeShowUp');
+  taskManagePopup.classList.toggle('afterShowUp');
+  const taskModal = document.getElementById("taskManageOverlay");
+  taskModal.addEventListener("click", closeTaskModalWindowOnBlur);
+
+}
+
+function closeTaskManagePopup() {
+  const findTaskManagePopup = document.getElementById("taskManageOverlay");
+  if (findTaskManagePopup != null) {
+    findTaskManagePopup.remove();
+  }
+}
+
+function deleteTask(taskID, projectName) {
+  closeTaskManagePopup();
+  body.insertAdjacentHTML('beforeend',
+  `
+  <div id="taskDeletionOverlay" class="flex w-screen h-screen absolute bg-white/25">
+    <div class="flex flex-col w-80 h-fit top-28 bg-slate-50 shadow-xl absolute left-1/2 rounded-lg">
+      <div class="deleteHeader flex flex-row w-full h-8 border-b border-slate-200 gap-4">
+        <div class="my-1 ml-4 w-full h-full font-bold">Task deletion</div>
+        <div class="ml-auto mt-1 mr-1 flex h-fit w-fit px-1 py-1 rounded-lg hover:bg-slate-200 cursor-pointer" onclick="cancelTaskDeletion()"><svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/></svg></div>
+      </div>
+      <div class="w-full py-2 px-4 h-fit text-sm">Are you sure you want to delete this task?</div>
+      <div class="flex flex-row gap-2 py-2 ml-auto mr-2">
+        <div class="w-fit h-fit px-3 py-1 bg-slate-100 border border-slate-200 hover:bg-slate-300 rounded-lg cursor-pointer" onclick="cancelTaskDeletion()">Cancel</div>
+        <div class="w-fit h-fit px-3 py-1 bg-blue-500 border border-blue-400 hover:bg-blue-600 rounded-lg cursor-pointer text-white" onclick="confirmTaskDelete(${taskID}, ${projectName})">Delete</div>
+      </div>
+    </div>
+  </div>
+  `)
+  const taskDeleteModal = document.getElementById("taskDeletionOverlay");
+  taskDeleteModal.addEventListener("click", closeTaskDeleteModalWindowOnBlur);
+}
+
+function cancelTaskDeletion() { 
+  const getOverlay = document.getElementById("taskDeletionOverlay");
+  if (getOverlay != null) {
+    getOverlay.remove();
+  }
+}
+
+function confirmTaskDelete(taskID, projectName) {
+  $.post("../utils/scripts/deleteTask.php", {
+    taskID: taskID,
+  }).done(data => {
+    cancelTaskDeletion();
+    reloadBoardData(projectName);
+  });
+}
+
 function addNewTask(boardID) {
   resetAllNewTasks();
   /* Getting the board ID, confirm button, cancel button and existing tasks. */
@@ -101,11 +230,21 @@ function addNewTask(boardID) {
   /* Inserting a temporary task into the board. */
   board.insertAdjacentHTML(
     "beforeend",
-    `<div class="board_${boardID}_edit edit w-full h-8 mt-0.5 bg-slate-200 flex-row">
-            <textarea maxlength="64" class="task_${boardID}_edit flex form-control h-full resize-none bg-transparent overflow-y-hidden pt-1 pl-2 w-full focus:text-gray-700 focus:bg-white focus:border focus:outline-none focus:border-blue-600">Task #${
+    `
+    <div class="board_${boardID}_edit edit w-full h-fit mt-1 bg-slate-200 flex-col border border-slate-400 rounded-md">
+      <textarea maxlength="64" class="task_${boardID}_edit border-b border-slate-300 flex mt-[0.2px] form-control h-8 resize-none bg-transparent overflow-y-hidden pt-1 pl-2 w-full focus:text-gray-700 focus:bg-white focus:rounded-tr-md focus:rounded-tl-md focus:border focus:outline-none focus:border-blue-600">Task #${
       existingTasks.length + 1
     }</textarea>
+      <input class="dueTo flex w-full mt-0.5 mx-[0.1px] form-control pl-4 bg-transparent focus:text-gray-700 border-b border-slate-300 focus:bg-white focus:rounded-br-md focus:rounded-bl-md focus:border focus:outline-none focus:border-blue-600" type="date"></input>
+      <div class="flex flex-row w-full h-8">
+        <div title="Add priority" id="priorityButton" class="flex ml-1 my-1 h-fit w-fit px-1 py-1 hover:bg-slate-300 rounded-lg cursor-pointer" onclick="showPriorityList()">
+          <svg class="flex w-4 h-4 fill-black"xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M96 64c0-17.7-14.3-32-32-32S32 46.3 32 64V320c0 17.7 14.3 32 32 32s32-14.3 32-32V64zM64 480c22.1 0 40-17.9 40-40s-17.9-40-40-40s-40 17.9-40 40s17.9 40 40 40z"/></svg>
         </div>
+        <div id="priorityList" class="flex w-fit ml-4 h-fit my-1 rounded-lg border border-transparent bg-transparent" onclick="showPriorityList()">
+          <div id="priorityListText" class="flex mx-auto px-2 cursor-pointer"></div>
+        </div>
+      </div>
+    </div>
     `
   );
   const addNewTaskButton = document.getElementById(`${boardID}_add`);
@@ -132,23 +271,30 @@ function saveData(boardID, projectName) {
   const taskNames = [];
   const confirmButton = document.getElementById(`${boardID}_confirm`);
   const cancelButton = document.getElementById(`${boardID}_cancel`);
+  const getDate = document.getElementsByClassName("dueTo");
+  const date = getDate[0].value;
   const existingTasks = document.getElementsByClassName(`task_${boardID}_edit`);
+  const priority = document.getElementById("priorityListText").innerText;
   /* Getting all the task names from the input fields. */
-  for (var i = 0; i < existingTasks.length; i++) {
-    taskNames.push(existingTasks[i].value);
+  for (const existingTask of existingTasks) {
+    taskNames.push(existingTask.value);
   }
   /* Hiding the confirm and cancel buttons. */
   confirmButton.classList.add("hidden");
   cancelButton.classList.add("hidden");
   /* Adding the tasks to the database. */
-  for (var i = 0; i < taskNames.length; i++) {
-    $.post("../utils/scripts/addNewTask.php", {
-      boardID: boardID,
-      nameOfTask: taskNames[i],
-    }).done((data) => {
-      reloadBoardData(projectName);
-    });
-  }
+  setTimeout(() => {
+    for (const taskName of taskNames) {
+      $.post("../utils/scripts/addNewTask.php", {
+        boardID: boardID,
+        nameOfTask: taskName,
+        date: date,
+        priority: priority,
+      }).done((data) => {
+        reloadBoardData(projectName);
+      });
+    }
+  }, 50);
 }
 
 function cancelChanges(boardID) {
@@ -196,3 +342,21 @@ $(document).keyup((e) => {
     }
   }
 });
+
+const mouse = { x: 0, y: 0 };
+document.addEventListener("mousemove", (e) => {
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
+});
+
+const closePriorityModalWindowOnBlur = (e) => {
+  if (e.target === e.currentTarget) closePriorityList();
+};
+
+const closeTaskModalWindowOnBlur = (e) => {
+  if (e.target === e.currentTarget) closeTaskManagePopup();
+}
+;
+const closeTaskDeleteModalWindowOnBlur = (e) => {
+  if (e.target === e.currentTarget) cancelTaskDeletion();
+};
