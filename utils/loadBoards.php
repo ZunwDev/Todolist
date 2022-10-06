@@ -96,7 +96,7 @@ if (mysqli_num_rows($result) > 0) {
                 echo '      </div>';
                 echo '  </div>';
                 echo '</div>';
-                echo '<div class="board_' . $boards['boardID'] . ' w-full flex text-sm my-auto py-1 px-2 break-words"">' . $board_data['board_data'] . '</div>';
+                echo '<div class="board_' . $boards['boardID'] . ' w-full flex line-through text-sm my-auto py-1 px-2 break-words"">' . $board_data['board_data'] . '</div>';
                 echo '<div title="More actions" class="flex w-fit px-2 h-fit py-1 mr-1 my-1 opacity-0 transition ease-in-out hover:bg-lime-500 rounded-lg group-hover:opacity-100" onclick="showTaskManagePopup(`' . $board_data['dataID'] . '`, `' . $project_name . '`)"><svg class="w-4 px-auto h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M120 256c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm160 0c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm104 56c-30.9 0-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56s-25.1 56-56 56z"/></svg></div>';
                 echo '</div>';
             }
