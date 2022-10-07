@@ -27,7 +27,7 @@ if (mysqli_num_rows($result) > 0) {
         while ($board_data = mysqli_fetch_array($resultBD)) {
             if ($board_data['board_check'] == 0) {
                 //Unchecked checkboxes
-                echo '<section class="flex flex-shrink-0 flex-col bg-slate-200 hover:bg-slate-300 cursor-pointer rounded-md group shadow-md relative">';
+                echo '<section class="flex flex-shrink-0 flex-col bg-slate-200 hover:bg-slate-300 cursor-pointer rounded-md group shadow-md relative" onclick="showTaskEditPopup(`'.$board_data['dataID'].'`, `'.$project_name.'`)">';
                 echo '  <div class="flex-shrink-0 px-1 py-1 flex flex-row break-words">';
                 echo '          <div class="flex h-6 w-6 border border-gray-300 rounded-full bg-slate-50 cursor-pointer" onclick="isChecked(`' . $board_data['dataID'] . '`, `' . $boards['project_name'] . '`)"></div>';
                 echo '  <div class="board_' . $boards['boardID'] . ' w-full flex text-sm my-auto py-1 px-2 break-words">' . $board_data['board_data'] . '</div>';

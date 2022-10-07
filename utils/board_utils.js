@@ -211,6 +211,13 @@ function cancelTaskDeletion() {
   }
 }
 
+function cancelTaskEdit() { 
+  const getOverlay = document.getElementById("taskEditOverlay");
+  if (getOverlay != null) {
+    getOverlay.remove();
+  }
+}
+
 function confirmTaskDelete(taskID, projectName) {
   $.post("../utils/scripts/deleteTask.php", {
     taskID: taskID,
@@ -220,21 +227,64 @@ function confirmTaskDelete(taskID, projectName) {
   });
 }
 
-function showTaskEditPopup() {
+function showTaskEditPopup(dataID, projectName) {
   closeTaskManagePopup();
   const edit = $.ajax("../utils/loadTaskEditPopup.php", {
     async: false,
     type: "post",
+    data: {
+      dataID: dataID,
+      projectName: projectName
+    },
   }).done(data => {
-    console.log(data);
   });
   body.insertAdjacentHTML("beforeend", edit.responseText);
   const taskEditPopup = document.getElementById("taskEditPopup");
-  console.log(taskEditPopup);
   taskEditPopup.classList.toggle('beforeShowUp');
   taskEditPopup.classList.toggle('afterShowUp');
   const editTaskModal = document.getElementById("taskEditOverlay");
   editTaskModal.addEventListener("click", closeTaskEditModalWindowOnBlur);
+}
+
+function saveTaskEdit(dataID, projectName, boardID) {
+  let newTaskName = document.getElementById("taskNameEdit").value;
+  switch (newTaskName) {
+    case "":
+      newTaskName = `Task ${document.querySelectorAll(`[class*='board_${boardID}']`)+1}`;
+      break;
+  }
+  let newTaskDescription = document.getElementById("taskDescriptionEdit").value;
+  switch (newTaskDescription) {
+    case "":
+      newTaskDescription = "";
+      break;
+  }
+  let newDueTo = document.getElementById("taskDueToEdit").value;
+  switch (newDueTo) {
+    case "":
+      newDueTo = "0000-00-00";
+      break;
+  }
+  let newPriority = document.getElementById("priorityListText").innerText;
+  switch (newPriority) {
+    case "":
+      newPriority = "None";
+      break;
+  }
+
+  setTimeout(() =>{
+    $.post("../utils/scripts/saveTaskEdit.php", {
+      dataID: dataID,
+      task_name: newTaskName,
+      task_description: newTaskDescription,
+      task_dueTo: newDueTo,
+      task_priority: newPriority,
+    }).done((data) => {
+      console.log(data)
+      cancelTaskEdit();
+      reloadBoardData(projectName);
+    });
+  }, 30)
 }
 
 function cancelOverlay(overlayName) { 

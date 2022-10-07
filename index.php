@@ -127,15 +127,6 @@ include "../TodoList/utils/scripts/getUserID.php";
             e = e || window.event;
             var charCode = e.charCode || e.keyCode,
                 character = String.fromCharCode(charCode);
-
-            if (character == 'm') {
-                var newProj = document.getElementById("newProj");
-                if (newProj.style.display === "block") {
-                    return true
-                } else {
-                    expandSidebar();
-                }
-            }
             if (e.keyCode == 13) {
                 var newProj = document.getElementById("newProj");
                 var input = document.getElementById("nameInput");
@@ -148,13 +139,6 @@ include "../TodoList/utils/scripts/getUserID.php";
                 };
             }
         }
-
-        $("#descriptionInput").on("input", function() {
-            this.style.height = this.scrollHeight + "px";
-        });
-        $("descriptionInput").on("keypress", function() {
-            this.style.height = this.scrollHeight + "px";
-        });
     </script>
 </body>
 
