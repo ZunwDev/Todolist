@@ -33,15 +33,15 @@ if (isset($_SESSION['login_user'])) {
         <form class="app_appSignupBox flex flex-col w-full bg-slate-100 shadow-lg rounded-b-lg" method="post">
             <div class="app_appSignupBoxCredentials flex flex-col w-[20rem] gap-3 my-auto mx-auto bg-slate-100">
                 <div class="app_appFormField ml-2 mt-12 flex flex-col">
-                    <input placeholder="Username" type="text" name="nameInput" id="nameInput" class="inputData shadow-md form-control block w-full px-4 py-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-md transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" autocomplete="none">
+                    <input placeholder="Username" type="text" name="nameInput" id="nameInput" class="inputData shadow-md form-control block w-full px-4 py-2 text-lg font-normal text-gray-700 bg-slate-50 bg-clip-padding border border-solid border-gray-300 rounded-md transition ease-in-out m-0 focus:text-gray-700 focus:bg-slate-50 focus:border-blue-600 focus:outline-none" autocomplete="none">
                     <p id="usernameError" class="text-pink-500 mt-1 text-sm"></p>
                 </div>
                 <div class="app_appFormField ml-2 flex flex-col">
-                    <input placeholder="Password" type="password" name="passwordInput" id="passwordInput" class="inputData shadow-md form-control block w-full px-4 py-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-md transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" autocomplete="none">
+                    <input placeholder="Password" type="password" name="passwordInput" id="passwordInput" class="inputData shadow-md form-control block w-full px-4 py-2 text-lg font-normal text-gray-700 bg-slate-50 bg-clip-padding border border-solid border-gray-300 rounded-md transition ease-in-out m-0 focus:text-gray-700 focus:bg-slate-50 focus:border-blue-600 focus:outline-none" autocomplete="none">
                     <p id="passwordError" class="text-pink-500 mt-1 text-sm"></p>
                 </div>
                 <div class="app_appFormField ml-2 flex flex-col">
-                    <input placeholder="Confirm Password" type="password" id="confPasswordInput" class="inputData shadow-md form-control block w-full px-4 py-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-md transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" autocomplete="none">
+                    <input placeholder="Confirm Password" type="password" id="confPasswordInput" class="inputData shadow-md form-control block w-full px-4 py-2 text-lg font-normal text-gray-700 bg-slate-50 bg-clip-padding border border-solid border-gray-300 rounded-md transition ease-in-out m-0 focus:text-gray-700 focus:bg-slate-50 focus:border-blue-600 focus:outline-none" autocomplete="none">
                     <p id="confPasswordError" class="text-pink-500 mt-1 text-sm"></p>
                 </div>
             </div>

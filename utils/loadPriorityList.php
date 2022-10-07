@@ -5,7 +5,7 @@ include "./scripts/connectToDatabase.php";
 $q = "select priority_name from priority";
 $result = mysqli_query($conn, $q);
 
-echo '<div id="priorityListOverlay" class="w-screen h-screen absolute bg-white/25">';
+echo '<div id="priorityListOverlay" class="w-screen h-screen absolute bg-slate-50/25">';
 echo '  <div id="priorityListPopup" class="absolute h-fit beforeShowUp flex flex-col flex-shrink-0 w-fit shadow-lg bg-slate-100 pb-2 rounded-lg">';
 echo '      <div class="flex w-full bg-slate-100 h-fit rounded-tr-lg rounded-tl-lg">';
 echo '          <div class="flex h-fit flex-row my-1 gap-3 mx-2">';

@@ -33,23 +33,23 @@ if (isset($_SESSION['login_user'])) {
         <form class="app_appSignupBox flex flex-col w-full bg-slate-100 shadow-lg rounded-b-lg" method="post">
             <div class="app_appSignupBoxCredentials flex flex-col w-[20rem] gap-3 my-auto mx-auto bg-slate-100">
                 <div class="app_appFormField ml-2 mt-12 flex flex-col">
-                    <input placeholder="Username" type="text" name="nameInput" id="nameInput" class="inputData shadow-md form-control block w-full px-4 py-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-md transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" autocomplete="none">
+                    <input placeholder="Username" type="text" name="nameInput" id="nameInput" class="inputData shadow-md form-control block w-full px-4 py-2 text-lg font-normal text-slate-700 bg-slate-50 bg-clip-padding border border-solid border-slate-300 rounded-md transition ease-in-out m-0 focus:text-gray-700 focus:bg-slate-50 focus:border-blue-600 focus:outline-none" autocomplete="none">
                     <p id="usernameError" class="text-pink-500 mt-1 text-sm"></p>
                 </div>
                 <div class="app_appFormField ml-2 flex flex-col">
-                    <input placeholder="Password" type="password" name="passwordInput" id="passwordInput" class="inputData shadow-md form-control block w-full px-4 py-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-md transition ease-in-out m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" autocomplete="none">
+                    <input placeholder="Password" type="password" name="passwordInput" id="passwordInput" class="inputData shadow-md form-control block w-full px-4 py-2 text-lg font-normal text-slate-700 bg-slate-50 bg-clip-padding border border-solid border-slate-300 rounded-md transition ease-in-out m-0 focus:text-gray-700 focus:bg-slate-50 focus:border-blue-600 focus:outline-none" autocomplete="none">
                     <p id="passwordError" class="text-pink-500 mt-1 text-sm"></p>
                 </div>
             </div>
             <div class="app_appSignupBoxButtons flex flex-row mx-auto py-8">
-                <button type="button" class="app_appSignupButton flex w-28 h-10 ml-16 my-auto bg-blue-600 hover:bg-blue-700 rounded-lg">
+                <button type="button" class="app_appSignupButton flex w-28 h-10 ml-16 my-auto bg-slate-600 hover:bg-slate-700 rounded-lg">
                     <div class="mx-auto my-auto text-white" onclick="logIn()">
                         Log in
                     </div>
                 </button>
                 <div class="flex w-36 h-10 my-auto">
                     <div class="ml-2 my-auto text-white">
-                        <span class="text-gray-700">or&nbsp</span><span class="text-blue-600 hover:text-blue-700"><a href="signup.php">Sign up</a></span>
+                        <span class="text-slate-700">or&nbsp</span><span class="text-slate-600 hover:text-slate-700"><a href="signup.php">Sign up</a></span>
                     </div>
                 </div>
             </div>

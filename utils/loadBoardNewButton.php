@@ -2,7 +2,7 @@
 
 //Start of new board button
 echo '<div class="newBoard flex flex-col flex-shrink-0 transition-[height] ease-in-out duration-200 h-8 w-64 mx-4 mt-4 rounded-lg">';
-echo '<textarea id="newBoardInput" class="form-control rounded-tr-lg rounded-tl-lg pl-2 pt-1 h-8 transition ease-in-out duration-200 overflow-y-hidden bg-transparent hover:bg-slate-200 truncate focus:text-gray-700 focus:bg-white focus:border focus:outline-none focus:border-blue-600 hidden resize-none">Column</textarea>';
+echo '<textarea id="newBoardInput" class="form-control rounded-tr-lg rounded-tl-lg pl-2 pt-1 h-8 transition ease-in-out duration-200 overflow-y-hidden bg-transparent hover:bg-slate-200 truncate focus:text-gray-700 focus:bg-slate-50 focus:border focus:outline-none focus:border-blue-600 hidden resize-none">Column</textarea>';
 echo '<div class="w-full flex flex-row mt-auto mb-1 ml-1 gap-2">';
 echo '<div title="Create a new column" class="newBoardButton flex w-64 transition-[width] ease-in-out duration-200 text-lg bg-slate-200 hover:bg-slate-300 rounded-md cursor-pointer" onclick="expandBoardCreate()">';
 echo '<span class="mx-auto text-2xl">+</span>';

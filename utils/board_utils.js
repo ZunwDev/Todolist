@@ -186,7 +186,7 @@ function deleteTask(taskID, projectName) {
   closeTaskManagePopup();
   body.insertAdjacentHTML('beforeend',
   `
-  <div id="taskDeletionOverlay" class="flex w-screen h-screen absolute bg-white/25">
+  <div id="taskDeletionOverlay" class="flex w-screen h-screen absolute bg-slate-50/25">
     <div class="flex flex-col w-80 h-fit top-28 bg-slate-50 shadow-xl absolute left-1/2 rounded-lg">
       <div class="deleteHeader flex flex-row w-full h-8 border-b border-slate-200 gap-4">
         <div class="my-1 ml-4 w-full h-full font-bold">Task deletion</div>
@@ -232,10 +232,10 @@ function addNewTask(boardID) {
     "beforeend",
     `
     <div class="board_${boardID}_edit edit w-full h-fit mt-1 bg-slate-200 flex-col border border-slate-400 rounded-md">
-      <textarea maxlength="64" class="task_${boardID}_edit border-b border-slate-300 flex mt-[0.2px] form-control h-8 resize-none bg-transparent overflow-y-hidden pt-1 pl-2 w-full focus:text-gray-700 focus:bg-white focus:rounded-tr-md focus:rounded-tl-md focus:border focus:outline-none focus:border-blue-600">Task #${
+      <textarea maxlength="64" class="task_${boardID}_edit border-b border-slate-300 flex mt-[0.2px] form-control h-8 resize-none bg-transparent overflow-y-hidden pt-1 pl-2 w-full focus:text-gray-700 focus:bg-slate-50 focus:rounded-tr-md focus:rounded-tl-md focus:border focus:outline-none focus:border-blue-600">Task #${
       existingTasks.length + 1
     }</textarea>
-      <input class="dueTo flex w-full mt-0.5 mx-[0.1px] form-control pl-4 bg-transparent focus:text-gray-700 border-b border-slate-300 focus:bg-white focus:rounded-br-md focus:rounded-bl-md focus:border focus:outline-none focus:border-blue-600" type="date"></input>
+      <input class="dueTo flex w-full mt-0.5 mx-[0.1px] form-control pl-4 bg-transparent focus:text-gray-700 border-b border-slate-300 focus:bg-slate-50 focus:rounded-br-md focus:rounded-bl-md focus:border focus:outline-none focus:border-blue-600" type="date"></input>
       <div class="flex flex-row w-full h-8">
         <div title="Add priority" id="priorityButton" class="flex ml-1 my-1 h-fit w-fit px-1 py-1 hover:bg-slate-300 rounded-lg cursor-pointer" onclick="showPriorityList()">
           <svg class="flex w-4 h-4 fill-black"xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M96 64c0-17.7-14.3-32-32-32S32 46.3 32 64V320c0 17.7 14.3 32 32 32s32-14.3 32-32V64zM64 480c22.1 0 40-17.9 40-40s-17.9-40-40-40s-40 17.9-40 40s17.9 40 40 40z"/></svg>
@@ -291,10 +291,11 @@ function saveData(boardID, projectName) {
         date: date,
         priority: priority,
       }).done((data) => {
+        console.log(data);
         reloadBoardData(projectName);
       });
     }
-  }, 50);
+  }, 20);
 }
 
 function cancelChanges(boardID) {

@@ -7,7 +7,7 @@ $dataID = $_POST['dataID'];
 $projectName = $_POST['projectName'];
 
 //Start of overlay
-echo '<div id="taskManageOverlay" class="w-screen h-screen absolute bg-white/25">';
+echo '<div id="taskManageOverlay" class="w-screen h-screen absolute bg-slate-50/25">';
 echo '    <div id="taskManagePopup" class="absolute flex beforeShowUp flex-col h-fit shadow-lg bg-slate-100 pb-2 rounded-lg">';
 echo '        <div class="flex w-full bg-slate-100 h-fit rounded-tr-lg rounded-tl-lg">';
 echo '            <div class="flex h-fit w-fit flex-row my-1 gap-3 mx-2">';

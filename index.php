@@ -29,7 +29,7 @@ include "../TodoList/utils/scripts/getUserID.php";
     <?php
     include "./utils/loadNavbar.php";
     ?>
-    <section class="app_appMain w-screen h-screen flex flex-row overflow-x-hidden relative bg-slate-100">
+    <section class="app_appMain w-screen h-screen flex flex-row overflow-hidden relative bg-slate-100">
         <section class="app_appSidebarContainer flex flex-grow absolute h-full">
             <div id="sidebar" class="app_appSidebar flex bg-slate-100 expandSidebar border-slate-200">
                 <div id="tabContainer" class="app_appTabContainer flex flex-col w-48 mx-auto">
@@ -47,7 +47,7 @@ include "../TodoList/utils/scripts/getUserID.php";
             </div>
         </section>
         <section class="app_appProjectsContainer flex flex-col bg-slate-50 w-full flex-shrink pl-64">
-            <div class="project_wrapper pl-16 overflow-y-auto py-16 hideScrollbar">
+            <div class="project_wrapper pl-16 overflow-y-auto py-16">
                 <div id="projects_nameEl" class="flex h-8 w-fit font-bold text-xl text-gray-500 bg-slate-50 select-none">
                     YOUR PROJECTS
                 </div>
@@ -70,15 +70,15 @@ include "../TodoList/utils/scripts/getUserID.php";
             <form class="app_appDialogForm flex flex-col w-full h-full bg-slate-50 rounded-b-lg" method="post">
                 <div class="app_appFormField mt-4 px-6 flex flex-col gap-1">
                     <label for="nameInput" class="font-bold">Name</label>
-                    <input placeholder="e.g Work, Bussiness" type="text" id="nameInput" class="flex shadow-md form-control block w-full px-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-md transition ease-in-out duration-200 m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" autocomplete="none">
+                    <input placeholder="e.g Work, Bussiness" type="text" id="nameInput" class="flex shadow-md form-control block w-full px-2 text-lg font-normal text-slate-700 bg-slate-50 bg-clip-padding border border-solid border-slate-300 rounded-md transition ease-in-out duration-200 m-0 focus:text-slate-700 focus:bg-slate-50 focus:border-slate-600 focus:outline-none" autocomplete="none">
                 </div>
                 <div class="app_appFormField mt-4 px-6 flex flex-col gap-1">
                     <label for="descriptionInputLabel" class="font-bold">Description</label>
-                    <textarea id="descriptionInput" maxlength="128" class="flex shadow-md h-[1.85rem] form-control block w-full px-2 text-lg font-normal text-gray-700 bg-white bg-clip-padding border border-solid border-gray-300 rounded-md transition ease-in-out duration-200 m-0 focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none resize-none overflow-y-hidden" autocomplete="none"></textarea>
+                    <textarea id="descriptionInput" maxlength="128" class="flex shadow-md h-[1.85rem] form-control block w-full px-2 text-lg font-normal text-slate-700 bg-slate-50 bg-clip-padding border border-solid border-slate-300 rounded-md transition ease-in-out duration-200 m-0 focus:text-slate-700 focus:bg-slate-50 focus:border-slate-600 focus:outline-none resize-none overflow-y-hidden" autocomplete="none"></textarea>
                 </div>
                 <div class="app_appFormField mt-4 px-6 flex flex-col gap-1">
                     <label for="colorChoose" class="font-bold">Color</label>
-                    <div id="colorChoose" class="flex flex-col h-[1.7rem] border border-slate-200 bg-white">
+                    <div id="colorChoose" class="flex flex-col h-[1.7rem] border border-slate-200 bg-slate-50">
                         <div class="currentColorBar flex flex-row w-full h-[1.7rem] cursor-pointer" onclick="openColorSelectMenu()">
                             <div id="currentColor" class="flex w-4 h-4 mt-[0.3rem] ml-2 rounded-md bg-red-800"></div>
                             <div id="currentColorName" class="flex h-4 mt-[0.1rem] pl-3">Dark Red</div>
@@ -99,7 +99,7 @@ include "../TodoList/utils/scripts/getUserID.php";
                     <button title="Cancel - Esc" type="button" class="app_appFormCancel mt-4 py-1 px-3 mb-3 bg-slate-200 rounded-lg border border-slate-300 hover:bg-slate-300 select-none" onclick="closeProjectCreate()">
                         Cancel
                     </button>
-                    <button title="Accept - Enter" type="button" class="app_appFormAccept mt-4 py-1 px-3 mb-3 bg-blue-500 text-white rounded-lg border border-blue-400 hover:bg-blue-600 select-none" onclick="acceptProjectCreate()">
+                    <button title="Accept - Enter" type="button" class="app_appFormAccept mt-4 py-1 px-3 mb-3 bg-slate-500 text-white rounded-lg border border-slate-400 hover:bg-slate-600 select-none" onclick="acceptProjectCreate()">
                         Accept
                     </button>
                 </div>

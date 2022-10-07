@@ -95,10 +95,10 @@ function closeProject() {
 
 function getHTML(name, light, color, dark, description) {
   return `
-          <section id="${name}_id" class="flex flex-shrink flex-col">
-            <div class="flex flex-row ${light} h-10 gap-2">
+          <section id="${name}_id" class="flex flex-col overflow-x-auto overflow-y-hidden w-full">
+            <div class="flex flex-row ${light} h-10 gap-2 w-full">
               <div class="flex w-64 h-full ${color} ml-2">
-                <textarea title="Change project name" class="flex form-control text-2xl resize-none pt-1 pl-2 h-8 mx-2 my-auto transition ease-in-out duration-200 overflow-y-hidden rounded-lg bg-transparent hover:${dark} truncate focus:text-gray-700 focus:bg-white focus:border focus:outline-none focus:border-blue-600">${name}</textarea>
+                <textarea title="Change project name" class="flex form-control text-2xl resize-none pt-1 pl-2 h-8 mx-2 my-auto transition ease-in-out duration-200 overflow-y-hidden rounded-lg bg-transparent hover:${dark} truncate focus:text-gray-700 focus:bg-slate-50 focus:border focus:outline-none focus:border-blue-600">${name}</textarea>
               </div>
               <div class="flex ml-auto">
                 <div title="Close project" class="flex w-16 h-full bg-slate-200 hover:bg-red-300 transition ease-in-out duration-200 cursor-pointer group" onclick="closeProject()">
@@ -106,7 +106,7 @@ function getHTML(name, light, color, dark, description) {
                 </div>
               </div>
             </div>
-            <section id="boards" class="flex flex-row bg-slate-50 overflow-x-auto"></section>
+            <section id="boards" class="flex flex-row bg-slate-50 mt-4 ml-4 gap-4 overflow-x-auto overflow-y-hidden"></section>
           </section>`;
 }
 

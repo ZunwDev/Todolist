@@ -42,20 +42,16 @@
     animation: fadeOutFromExisting 0.2s ease-out;
 }
 
+.taskList {
+    overflow-y: auto;
+    overflow-x: hidden;
+    min-height: 0;
+}
+
 .afterShowUp {
     opacity: 1;
     animation: fadeInFromNone 0.2s ease-out;
 }
-
-/* .beforeOpening {
-    transform: scale(0);
-    transition: transform 0.2s ease-out;
-}
-
-.afterOpening {
-    transform: scale(1);
-    transition: transform 0.2s ease-out;
-} */
 
 body {
     display: flex;
