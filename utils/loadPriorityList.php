@@ -22,7 +22,6 @@ echo '      <div class="flex flex-col mt-2">';
                 echo '<div class="flex pl-2 py-1 mx-2 text-sm bg-slate-100 hover:bg-slate-200 cursor-pointer rounded-md" onclick="savePriority(`'.$priorities['priority_name'].'`)">'.$priorities['priority_name'].'</div>';
                 //End of list
 }
-echo '          <div class="flex pl-2 py-1 text-sm mx-2 bg-slate-100 hover:bg-slate-200 cursor-pointer rounded-md" onclick="savePriority(`None`)">None</div>';
 echo '      </div>';
 echo '  </div>';
 echo '</div>';
