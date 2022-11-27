@@ -12,7 +12,7 @@ function setBeginningClass() {
 }
 
 function openColorSelectMenu() {
-  if ($("#colorSelect").css('display') === "none") {
+  if (document.getElementById("colorSelect").style.display === "none"){
     setBeginningClass();
     showFlex("colorSelect");
     $("#angleColor").removeClass("toggle-up");
@@ -26,7 +26,7 @@ function openColorSelectMenu() {
     setTimeout(() => {
       $("#colorSelect").toggleClass("opacity-0");
       $("#colorSelect").hide();
-    }, 50)
+    }, 50);
   }
 }
 

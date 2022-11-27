@@ -85,15 +85,3 @@ function saveChanges() {
 function showProjects() {
   $("#projectList").toggleClass("hidden");
 }
-
-function deleteProject() {
-  const idOfClickedObject = event.currentTarget.parentElement.id;
-  const projectName = document.getElementById(
-    idOfClickedObject + "_name"
-  ).innerText;
-  $.post("./utils/scripts/deleteProject.php", {
-    projectName: projectName,
-  }).done((data) => {
-    window.location.reload();
-  });
-}

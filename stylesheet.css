@@ -1,89 +1,93 @@
 /* Let's get this party started */
 ::-webkit-scrollbar {
-    width: 6px;
-    height: 6px;
+  width: 6px;
+  height: 6px;
 }
- 
+
 /* Track */
 ::-webkit-scrollbar-track {
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-    background: lightgray;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: lightgray;
 }
- 
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    -webkit-border-radius: 10px;
-    border-radius: 10px;
-    background: gray; 
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  background: gray;
 }
 
 .expandSidebar {
-    width: 16rem;
-    transition: width 0.2s ease-out;
+  width: 16rem;
+  transition: width 0.2s ease-out;
 }
 
 .shrinkSidebar {
-    width: 0rem;
-    transition: width 0.2s ease-out;
+  width: 0rem;
+  transition: width 0.2s ease-out;
 }
 
 .toggle-up {
-    transform: rotate(0deg);
-    transition: transform 0.1s ease-out;
-  }
+  transform: rotate(0deg);
+  transition: transform 0.1s ease-out;
+}
 .toggle-down {
-    transform: rotate(90deg);
-    transition: transform 0.1s ease-out;
-  }
+  transform: rotate(90deg);
+  transition: transform 0.1s ease-out;
+}
 
 .beforeShowUp {
-    opacity: 0;
-    animation: fadeOutFromExisting 0.2s ease-out;
+  opacity: 0;
+  animation: fadeOutFromExisting 0.2s ease-out;
 }
 
 .afterShowUp {
-    opacity: 1;
-    animation: fadeInFromNone 0.2s ease-out;
+  opacity: 1;
+  animation: fadeInFromNone 0.2s ease-out;
+}
+
+.element-percent-right {
+  clip-path: polygon(0 0, 100% 0%, 75% 100%, 0% 100%);
 }
 
 body {
-    display: flex;
-    align-items: center;
-    min-height: 100vh;
-    font-family: 'Roboto Mono', monospace;
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  font-family: "Roboto Mono", monospace;
 }
 
 @keyframes fadeInFromNone {
-    0% {
-        display: none;
-        opacity: 0;
-    }
+  0% {
+    display: none;
+    opacity: 0;
+  }
 
-    1% {
-        display: block;
-        opacity: 0;
-    }
+  1% {
+    display: block;
+    opacity: 0;
+  }
 
-    100% {
-        display: block;
-        opacity: 1;
-    }
+  100% {
+    display: block;
+    opacity: 1;
+  }
 }
 
 @keyframes fadeOutFromExisting {
-    0% {
-        display: block;
-        opacity: 1;
-    }
+  0% {
+    display: block;
+    opacity: 1;
+  }
 
-    1% {
-        display: block;
-        opacity: 1;
-    }
+  1% {
+    display: block;
+    opacity: 1;
+  }
 
-    100% {
-        display: none;
-        opacity: 0;
-    }
+  100% {
+    display: none;
+    opacity: 0;
+  }
 }

@@ -1,25 +1,25 @@
-function resetStyling() {
-  $("#newProj").hide();
-  $("#colorSelect").hide();
-  $("#profile_dropdown").hide();
-}
+function setClassToBeggining(element, classToAdd){
+  let splittedClass = $(`#${element}`).attr('class').split(' ');
+  splittedClass.unshift(classToAdd);
+  document.getElementById(element).classList = splittedClass.join(' ');
+} 
 
 function expandSidebar() {
   if ($("#sidebar").hasClass("shrinkSidebar")) {
-    $("#sidebar").removeClass("shrinkSidebar");
-    $("#sidebar").addClass("expandSidebar");
+    sidebar.classList.remove("shrinkSidebar");
+    setClassToBeggining("sidebar", "expandSidebar");
     setTimeout(() => {
       $(".app_appProjectsContainer").addClass("pl-64");
     }, 100)
     show("tabContainer");
-  } else {
-    $("#sidebar").removeClass("expandSidebar");
-    $("#sidebar").addClass("shrinkSidebar");
-    setTimeout(() => {
-      $(".app_appProjectsContainer").removeClass("pl-64");
-    }, 100)
-    $("#tabContainer").hide();
+    return;
   }
+  sidebar.classList.remove("expandSidebar");
+  setClassToBeggining("sidebar", "shrinkSidebar");
+  setTimeout(() => {
+    $(".app_appProjectsContainer").removeClass("pl-64");
+  }, 100)
+  $("#tabContainer").hide();
 }
 
 function toggleAngle() {
