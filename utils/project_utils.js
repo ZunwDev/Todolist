@@ -2,17 +2,15 @@
  * It shows the div with the id "newProj" and removes the class "beforeShowUp" and adds the class
  * "afterShowUp".
  */
-function openProjectCreate() {
-  const loadColorSelection = $.ajax("./utils/loadColors.php", {
-    async: false,
-    type: "post",
-    data: {},
-  });
-  body.insertAdjacentHTML("beforeend", `
+function openProjectCreate(projectID) {
+  let colorSelect = getColorSelect();
+  body.insertAdjacentHTML(
+    "beforeend",
+    `
     <section id="newProj" class="w-screen h-screen absolute bg-slate-50/25 beforeShowUp" style="display: none">
       <div id="projectCreatePopup" class="absolute flex left-0 right-0 ml-auto mr-auto top-28 flex-col h-fit w-80 shadow-lg bg-slate-50 rounded-lg">
         <div class="deleteHeader flex flex-row w-full h-8 border-b border-slate-200 gap-4">
-          <div class="my-1 ml-4 w-full h-full font-bold select-none">New project</div>
+          <div class="my-1 ml-4 w-full h-full font-bold">New project</div>
           <div class="ml-auto mt-1 mr-1 flex h-fit w-fit px-1 py-1 rounded-lg hover:bg-slate-200 cursor-pointer" onclick="closeProjectCreate()"><svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/></svg></div>
       </div>
       <form id="newProjectForm" class="app_appDialogForm flex flex-col w-full h-full bg-slate-50 rounded-b-lg" method="post">
@@ -41,22 +39,23 @@ function openProjectCreate() {
               </div>
           </div>
           <div class="app_appFormControl flex flex-row gap-2 justify-end mr-2">
-              <button title="Cancel - Esc" type="button" class="app_appFormCancel mt-4 py-1 px-3 mb-3 bg-slate-200 rounded-lg border border-slate-300 hover:bg-slate-300 select-none" onclick="closeProjectCreate()">
+              <button title="Cancel - Esc" type="button" class="app_appFormCancel mt-4 py-1 px-3 mb-3 bg-slate-200 rounded-lg border border-slate-300 hover:bg-slate-300" onclick="closeProjectCreate()">
                   Cancel
               </button>
-              <button title="Add - Enter" type="button" class="app_appFormAccept mt-4 py-1 px-3 mb-3 bg-slate-500 text-white rounded-lg border border-slate-400 hover:bg-slate-600 select-none" onclick="acceptProjectCreate()">
+              <button title="Add - Enter" type="button" class="app_appFormAccept mt-4 py-1 px-3 mb-3 bg-slate-500 text-white rounded-lg border border-slate-400 hover:bg-slate-600" onclick="acceptProjectCreate('${projectID}')">
                   Add
               </button>
           </div>
       </form>
   </div>
 </section>
-  `);
+  `
+  );
   show("newProj");
   $("#newProj").removeClass("beforeShowUp");
   $("#newProj").addClass("afterShowUp");
   let getColorSelect = document.getElementById("colorSelect");
-  getColorSelect.insertAdjacentHTML("afterbegin", loadColorSelection.responseText);
+  getColorSelect.insertAdjacentHTML("afterbegin", colorSelect);
 }
 
 /**
@@ -81,11 +80,17 @@ function closeProjectCreate() {
  * @param colorName - The name of the color that the user selected.
  */
 
-function postCreateProject(projectName, projectDescription, colorName) {
+function postCreateProject(
+  projectName,
+  projectDescription,
+  colorName,
+  projectID
+) {
   $.post("./utils/scripts/new_project.php", {
     projectName,
     projectDescription,
     color: colorName,
+    projectID: projectID,
   }).done((data) => {
     window.location.reload();
   });
@@ -98,23 +103,17 @@ function postCreateProject(projectName, projectDescription, colorName) {
  * name. If the user has not entered a project description, use "" as the project description. If the
  * user has not entered a color name, use "Red" as the color name.
  */
-function acceptProjectCreate() {
+function acceptProjectCreate(projectID) {
   const projectName = document.getElementById("nameInputCreate").value;
-  const projectDescription = document.getElementById("projectDescriptionCreate").value;
+  const projectDescription = document.getElementById(
+    "projectDescriptionCreate"
+  ).value;
   const colorName = document.getElementById("currentColorName").innerText;
-  
-  if (projectDescription != "" && projectName === "") {
-    postCreateProject("Project", projectDescription, colorName);
-  }
-  if (projectName === "" && projectDescription === "") {
-    postCreateProject("Project", "", colorName);
-  }
-  if (projectName != "" && projectDescription != "") {
-    postCreateProject(projectName, projectDescription, colorName);
-  }
-  if (projectName != "" && projectDescription === "") {
-    postCreateProject(projectName, "", colorName);
-  }
+
+  let finalProjectName = projectName == "" ? "Project" : projectName;
+  let finalDescription = projectDescription == "" ? "" : projectDescription;
+
+  postCreateProject(finalProjectName, finalDescription, colorName, projectID);
   closeProjectCreate();
 }
 
@@ -126,10 +125,10 @@ function acceptProjectCreate() {
  * @param description - The description of the project
  * @param color - the color of the project
  */
-function closeProjectSidebar(id, name, description, color) {
+function closeProjectSidebar(id, color, projectName) {
   const projectSections = document.querySelectorAll(`section[id$='_id']`);
   projectSections[0].remove();
-  openProjectSidebar(id, name, description, color);
+  openProjectSidebar(id, color, projectName);
 }
 
 /**
@@ -150,19 +149,19 @@ function closeProject() {
   title("TodoList");
 }
 
-function getHTML(name, light, lightplus, lightlow, color) {
+function getHTML(name, light, lightplus, lightlow, color, id) {
   const getSidebar = document.getElementById("sidebar");
-  const getLastClass = sidebar.classList.toString().split(" ").pop();
+  const getLastClass = getSidebar.classList.toString().split(" ").pop();
   getSidebar.classList.remove(getLastClass);
   getSidebar.classList.add(lightlow);
   return `
           <section id="${name}_id" class="flex flex-col ${lightplus} overflow-x-auto overflow-y-hidden h-full w-full">
             <div class="flex flex-row ${light} h-10 gap-2 w-full">
-              <div class="flex w-fit h-full px-4 pr-12 element-percent-right ${color}">
-                <div class="flex text-2xl text-white h-8 mx-2 my-auto">${name}</div>
+              <div class="flex w-fit h-full px-4 pr-20 element-percent-right ${color}">
+                <div class="flex text-2xl truncate text-white h-8 mx-2 my-auto">${name}</div>
               </div>
               <div class="flex flex-row gap-1 ml-auto mr-1">
-                <div title="Project settings" class="flex w-12 h-full bg-slate-200 hover:bg-slate-300 transition ease-in-out duration-200 cursor-pointer group" onclick="showProjectEdit('${name.trim()}')">
+                <div title="Project settings" class="flex w-12 h-full bg-slate-200 hover:bg-slate-300 transition ease-in-out duration-200 cursor-pointer group" onclick="showProjectEdit('${id}')">
                   <svg class="flex w-4 h-4 mx-auto my-auto fill-slate-400 transition ease-in-out duration-200 group-hover:fill-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M495.9 166.6c3.2 8.7 .5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6c-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2c-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8c-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4L83.1 425.9c-8.8 2.8-18.6 .3-24.5-6.8c-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3c-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4C64.6 273.1 64 264.6 64 256s.6-17.1 1.7-25.4L22.4 191.2c-6.9-6.2-9.6-15.9-6.4-24.6c4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2c5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8c8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336c44.2 0 80-35.8 80-80s-35.8-80-80-80s-80 35.8-80 80s35.8 80 80 80z"/></svg>
                 </div>
                 <div title="Close project" class="flex w-12 h-full bg-slate-200 hover:bg-red-300 transition ease-in-out duration-200 cursor-pointer group" onclick="closeProject()">
@@ -174,17 +173,18 @@ function getHTML(name, light, lightplus, lightlow, color) {
           </section>`;
 }
 
-function openProjectSidebar(id, name, description, color) {
-  //Data
+function openProjectSidebar(id, color, projectName) {
+  console.log(color);
   const checkIfProjectIsOpen = document.querySelectorAll(`section[id$='_id']`);
+  console.log(checkIfProjectIsOpen);
+  if (checkIfProjectIsOpen.length > 0) {
+    closeProjectSidebar(id, color, projectName);
+    return;
+  }
   const getProjectWindow = document.getElementsByClassName(
     "app_appProjectsContainer"
   );
   const colorClass = new Color(color);
-  if (checkIfProjectIsOpen.length > 0) {
-    closeProjectSidebar(id, name, description, color);
-    return;
-  }
   $("#project_grid").hide();
   $("#projects_nameEl").hide();
   $(".project_wrapper").hide();
@@ -192,32 +192,30 @@ function openProjectSidebar(id, name, description, color) {
   getProjectWindow[0].insertAdjacentHTML(
     "beforeend",
     getHTML(
-      name,
+      projectName,
       colorClass.getLighter(100),
       colorClass.getLighter(300),
       colorClass.getLighter(400),
-      color
+      color,
+      id
     )
   );
   setTimeout(() => {
     document.getElementById("boards").innerText = "";
-    const board = $.ajax("../utils/loadBoards.php", {
-      async: false,
-      type: "post",
-      data: {
-        project_name: name,
-      },
-    });
+    let board = getBoardData(id);
     const getBoardArea = document.getElementById("boards");
-    getBoardArea.insertAdjacentHTML("afterbegin", board.responseText);
+    getBoardArea.insertAdjacentHTML("afterbegin", board);
   }, 50);
-  URL(`${id}/${name}`);
-  title(`TodoList: ${name}`);
+  URL(`${id}/${projectName}`);
+  title(`TodoList: ${projectName}`);
 }
 
-function openProject(id, name, color) {
+function openProject(id) {
   //Data
-  const colorClass = new Color(color);
+  let colorCode = getColorCode(id);
+  let projectName = getProjectName(id);
+
+  const colorClass = new Color(colorCode);
   const getProjectWindow = document.getElementsByClassName(
     "app_appProjectsContainer"
   );
@@ -230,27 +228,22 @@ function openProject(id, name, color) {
   getProjectWindow[0].insertAdjacentHTML(
     "beforeend",
     getHTML(
-      name,
+      projectName,
       colorClass.getLighter(100),
       colorClass.getLighter(300),
       colorClass.getLighter(400),
-      color
+      colorCode,
+      id
     )
   );
   setTimeout(() => {
     document.getElementById("boards").innerText = "";
-    const board = $.ajax("../utils/loadBoards.php", {
-      async: false,
-      type: "post",
-      data: {
-        project_name: name,
-      },
-    });
+    let board = getBoardData(id);
     const getBoardArea = document.getElementById("boards");
-    getBoardArea.insertAdjacentHTML("afterbegin", board.responseText);
+    getBoardArea.insertAdjacentHTML("afterbegin", board);
   }, 50);
-  URL(`${id}/${name}`);
-  title(`TodoList: ${name}`);
+  URL(`${id}/${projectName}`);
+  title(`TodoList: ${projectName}`);
 }
 
 /* Checking if the browser supports the history API. If it does, it adds an event listener to the

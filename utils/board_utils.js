@@ -1,37 +1,14 @@
-/**
- * It gets the project ID from the database, then adds a new board to the database.
- * @param projectName - The name of the project that the board is being added to.
- */
-function addBoard(projectName) {
-  /* Getting the project ID from the database. */
-  const projectID = $.ajax("../utils/scripts/getProjectID.php", {
-    async: false,
-    type: "post",
-    data: {
-      project_name: projectName,
-    },
-  });
-
+/* Getting the project ID from the database. */
+function addBoard(id) {
   const newProjectName = document.getElementById("newBoardInput").value;
-  if (newProjectName.length > 0) {
-    /* Adding a new board to the database. */
-    $.post("../utils/scripts/addNewBoard.php", {
-      projectID: projectID.responseText,
-      board_name: newProjectName,
-      board_description: "",
-    }).done((data) => {
-      reloadBoardData(projectName);
-    });
-  } else {
-    /* Adding a new board to the database. */
-    $.post("../utils/scripts/addNewBoard.php", {
-      projectID: projectID.responseText,
-      board_name: "Column",
-      board_description: "",
-    }).done((data) => {
-      reloadBoardData(projectName);
-    });
-  }
+  let finalProjectName = newProjectName.length > 0 ? newProjectName : "Column";
+  /* Adding a new board to the database. */
+  $.post("../utils/scripts/addNewBoard.php", {
+    projectID: id,
+    board_name: finalProjectName,
+  }).done((data) => {
+    reloadBoardData(id);
+  });
 }
 
 /**
@@ -57,18 +34,12 @@ function expandBoardCreate() {
   }, 0);
 }
 
-function reloadBoardData(projectName) {
+function reloadBoardData(id) {
   /* Reloading the board data. */
   document.getElementById("boards").innerText = "";
-  const board = $.ajax("../utils/loadBoards.php", {
-    async: false,
-    type: "post",
-    data: {
-      project_name: projectName,
-    },
-  });
+  let board = getBoardData(id);
   const getBoardArea = document.getElementById("boards");
-  getBoardArea.insertAdjacentHTML("afterbegin", board.responseText);
+  getBoardArea.insertAdjacentHTML("afterbegin", board);
 }
 
 /**
@@ -97,11 +68,9 @@ function resetAllNewTasks() {
 
 function showPriorityList() {
   closePriorityList();
-  const list = $.ajax("../utils/loadPriorityList.php", {
-    async: false,
-    type: "post",
-  });
-  body.insertAdjacentHTML("beforeend", list.responseText);
+  let priorityList = getPriorityListPopup();
+
+  body.insertAdjacentHTML("beforeend", priorityList);
   const priorityPopup = document.getElementById("priorityListPopup");
   priorityPopup.classList.add(`left-[${mouse.x + 8}px]`);
   priorityPopup.classList.add(`top-[${mouse.y - 128}px]`);
@@ -154,17 +123,11 @@ function savePriority(name) {
   closePriorityList();
 }
 
-function showTaskManagePopup(dataID, projectName) {
+function showTaskManagePopup(dataID) {
   closeTaskManagePopup();
-  const manage = $.ajax("../utils/loadTaskManage.php", {
-    async: false,
-    type: "post",
-    data: {
-      dataID,
-      projectName,
-    },
-  });
-  body.insertAdjacentHTML("beforeend", manage.responseText);
+  let loadTaskManagePopup = getTaskManagePopup(dataID);
+
+  body.insertAdjacentHTML("beforeend", loadTaskManagePopup);
   const taskManagePopup = document.getElementById("taskManagePopup");
   taskManagePopup.classList.add(`left-[${mouse.x + 8}px]`);
   taskManagePopup.classList.add(`top-[${mouse.y - 128}px]`);
@@ -181,7 +144,7 @@ function closeTaskManagePopup() {
   }
 }
 
-function deleteTask(taskID, projectName) {
+function deleteTask(taskID) {
   closeTaskManagePopup();
   body.insertAdjacentHTML(
     "beforeend",
@@ -195,7 +158,7 @@ function deleteTask(taskID, projectName) {
       <div class="w-full py-2 px-4 h-fit text-sm">Are you sure you want to delete this task?</div>
       <div class="flex flex-row gap-2 py-2 ml-auto mr-2">
         <div class="w-fit h-fit px-3 py-1 bg-slate-100 border border-slate-200 hover:bg-slate-300 rounded-lg cursor-pointer" onclick="cancelTaskDeletion()">Cancel</div>
-        <div class="w-fit h-fit px-3 py-1 bg-slate-500 border border-slate-400 hover:bg-slate-600 rounded-lg cursor-pointer text-slate-50" onclick="confirmTaskDelete(${taskID}, ${projectName})">Delete</div>
+        <div class="w-fit h-fit px-3 py-1 bg-slate-500 border border-slate-400 hover:bg-slate-600 rounded-lg cursor-pointer text-slate-50" onclick="confirmTaskDelete('${taskID}')">Delete</div>
       </div>
     </div>
   </div>
@@ -219,26 +182,21 @@ function cancelTaskEdit() {
   }
 }
 
-function confirmTaskDelete(taskID, projectName) {
+function confirmTaskDelete(taskID) {
+  let projectID = getProjectIdFromTaskId(taskID);
   $.post("../utils/scripts/deleteTask.php", {
-    taskID: taskID,
+    taskID,
   }).done((data) => {
     cancelTaskDeletion();
-    reloadBoardData(projectName);
+    reloadBoardData(projectID);
   });
 }
 
-function showTaskEditPopup(dataID, projectName) {
+function showTaskEditPopup(dataID) {
   closeTaskManagePopup();
-  const edit = $.ajax("../utils/loadTaskEditPopup.php", {
-    async: false,
-    type: "post",
-    data: {
-      dataID,
-      projectName,
-    },
-  }).done((data) => {});
-  body.insertAdjacentHTML("beforeend", edit.responseText);
+  let loadTaskEditPopup = getTaskEditPopup(dataID);
+
+  body.insertAdjacentHTML("beforeend", loadTaskEditPopup);
   const taskEditPopup = document.getElementById("taskEditPopup");
   taskEditPopup.classList.toggle("beforeShowUp");
   taskEditPopup.classList.toggle("afterShowUp");
@@ -246,32 +204,25 @@ function showTaskEditPopup(dataID, projectName) {
   editTaskModal.addEventListener("click", closeTaskEditModalWindowOnBlur);
 }
 
-function saveTaskEdit(dataID, projectName, boardID) {
+function saveTaskEdit(dataID, boardID) {
+  let projectID = getProjectIdFromBoardId(boardID);
   let newTaskName = document.getElementById("taskNameEdit").value;
-  switch (newTaskName) {
-    case "":
-      newTaskName = `Task ${
-        document.querySelectorAll(`[class*='board_${boardID}']`) + 1
-      }`;
-      break;
-  }
   let newTaskDescription = document.getElementById("taskDescriptionEdit").value;
-  switch (newTaskDescription) {
-    case "":
-      newTaskDescription = "";
-      break;
-  }
   let newDueTo = document.getElementById("taskDueToEdit").value;
-  switch (newDueTo) {
-    case "":
-      newDueTo = "0000-00-00";
-      break;
-  }
   let newPriority = document.getElementById("priorityListText").innerText;
-  switch (newPriority) {
-    case "":
-      newPriority = "None";
-      break;
+  if (newTaskName == "") {
+    let getTaskAmount =
+      document.querySelectorAll(`[class*='board_${boardID}']`) + 1;
+    newTaskName = `Task ${getTaskAmount}`;
+  }
+  if (newTaskDescription == "") {
+    newTaskDescription = "";
+  }
+  if (newDueTo == "") {
+    newDueTo = "0000-00-00";
+  }
+  if (newPriority == "") {
+    newPriority = "None";
   }
 
   setTimeout(() => {
@@ -283,21 +234,15 @@ function saveTaskEdit(dataID, projectName, boardID) {
       task_priority: newPriority,
     }).done((data) => {
       cancelTaskEdit();
-      reloadBoardData(projectName);
+      reloadBoardData(projectID);
     });
   }, 30);
 }
 
-function showColumnEdit(boardID, projectName) {
-  const editColumn = $.ajax("../utils/loadColumnEdit.php", {
-    async: false,
-    type: "post",
-    data: {
-      boardID,
-      projectName,
-    },
-  });
-  body.insertAdjacentHTML("beforeend", editColumn.responseText);
+function showColumnEdit(boardID) {
+  let loadColumnEditPopup = getColumnEditPopup(boardID);
+
+  body.insertAdjacentHTML("beforeend", loadColumnEditPopup);
   const columnEditPopup = document.getElementById("columnEditPopup");
   columnEditPopup.classList.toggle("beforeShowUp");
   columnEditPopup.classList.toggle("afterShowUp");
@@ -312,18 +257,10 @@ function cancelColumnEdit() {
   }
 }
 
-function showProjectEdit(projectName) {
-  console.log(projectName)
-  const editProject = $.ajax("../utils/loadProjectEdit.php", {
-    async: false,
-    type: "post",
-    data: {
-      projectName,
-    },
-  })/* .done((data) => {
-    console.log(data);
-  }); */
-  body.insertAdjacentHTML("beforeend", editProject.responseText);
+function showProjectEdit(id) {
+  let loadProjectEditPopup = getProjectEditPopup(id);
+
+  body.insertAdjacentHTML("beforeend", loadProjectEditPopup);
   const projectEditPopup = document.getElementById("projectEditPopup");
   projectEditPopup.classList.toggle("beforeShowUp");
   projectEditPopup.classList.toggle("afterShowUp");
@@ -331,18 +268,24 @@ function showProjectEdit(projectName) {
   editProjectModal.addEventListener("click", closeProjectEditModalWindowOnBlur);
 }
 
-function postUpdateProject(projectName, projectDescription, colorName, oldName) {
+function postUpdateProject(
+  projectName,
+  projectDescription,
+  colorName,
+  projectID
+) {
   $.post("../utils/scripts/saveProjectEdit.php", {
     projectName,
     projectDescription,
     color: colorName,
-    oldName
+    projectID: projectID,
   }).done((data) => {
+    //console.log(data);
     window.location.reload();
   });
 }
 
-function showProjectDeleteWarning(projectName) {
+function showProjectDeleteWarning(id) {
   cancelProjectEdit();
   body.insertAdjacentHTML(
     "beforeend",
@@ -356,7 +299,7 @@ function showProjectDeleteWarning(projectName) {
       <div class="w-full py-2 px-4 h-fit text-sm">Are you sure you want to delete this project? You will lose all data.</div>
       <div class="flex flex-row gap-2 py-2 ml-auto mr-2">
         <div class="w-fit h-fit px-3 py-1 bg-slate-100 border border-slate-200 hover:bg-slate-300 rounded-lg cursor-pointer" onclick="cancelProjectDeletion()">Cancel</div>
-        <div class="w-fit h-fit px-3 py-1 bg-slate-500 border border-slate-400 hover:bg-slate-600 rounded-lg cursor-pointer text-slate-50" onclick="confirmProjectDelete('${projectName}')">Delete</div>
+        <div class="w-fit h-fit px-3 py-1 bg-slate-500 border border-slate-400 hover:bg-slate-600 rounded-lg cursor-pointer text-slate-50" onclick="confirmProjectDelete('${id}')">Delete</div>
       </div>
     </div>
   </div>
@@ -364,13 +307,12 @@ function showProjectDeleteWarning(projectName) {
   );
 }
 
-function confirmProjectDelete(projectName) {
-    $.post("../utils/scripts/deleteProject.php", {
-      projectName
-    }).done((data) => {
-      //console.log(data);
-      window.location.reload();
-    });
+function confirmProjectDelete(id) {
+  $.post("../utils/scripts/deleteProject.php", {
+    projectID: id,
+  }).done((data) => {
+    window.location.reload();
+  });
 }
 
 function cancelProjectDeletion() {
@@ -380,23 +322,17 @@ function cancelProjectDeletion() {
   }
 }
 
-function saveProjectChanges(oldName) {
-  const newProjectName = document.getElementById("projectNameEdit").value;
-  const newProjectDescription = document.getElementById("projectDescriptionEdit").value;
+function saveProjectChanges(id) {
+  let newProjectName = document.getElementById("projectNameEdit").value;
+  let newProjectDescription = document.getElementById(
+    "projectDescriptionEdit"
+  ).value;
   const newColorName = document.getElementById("currentColorName").innerText;
 
-  if (newProjectDescription != "" && newProjectName === "") {
-    postUpdateProject("Project", newProjectDescription, newColorName, oldName);
-  }
-  if (newProjectName === "" && newProjectDescription === "") {
-    postUpdateProject("Project", "", newColorName, oldName);
-  }
-  if (newProjectName != "" && newProjectDescription != "") {
-    postUpdateProject(newProjectName, newProjectDescription, newColorName, oldName);
-  }
-  if (newProjectName != "" && newProjectDescription === "") {
-    postUpdateProject(newProjectName, "", newColorName, oldName);
-  }
+  let finalName = newProjectName == "" ? "Project" : newProjectName;
+  let finalDescription = newProjectDescription == "" ? "" : newProjectDescription;
+
+  postUpdateProject(finalName, finalDescription, newColorName, id);
 }
 
 function cancelProjectEdit() {
@@ -406,32 +342,30 @@ function cancelProjectEdit() {
   }
 }
 
-function saveColumnChanges(boardID, projectName) {
+function saveColumnChanges(boardID) {
+  let projectID = getProjectIdFromBoardId(boardID);
   let newBoardName = document.getElementById("columnNameEdit").value;
-  const newBoardDescription = document.getElementById("columnDescriptionEdit").value;
-  if (newBoardName == "") newBoardName = "Column";
+  const newBoardDescription = document.getElementById(
+    "columnDescriptionEdit"
+  ).value;
+  if (newBoardName == "" || newBoardName == null) newBoardName = "Column";
   $.post("../utils/scripts/saveColumnEdit.php", {
     boardID,
     board_name: newBoardName,
     board_description: newBoardDescription,
   }).done((data) => {
     cancelColumnEdit();
-    reloadBoardData(projectName);
+    reloadBoardData(projectID);
   });
 }
 
-function cancelOverlay(overlayName) {
-  const getOverlay = document.getElementById(overlayName);
-  if (getOverlay != null) {
-    getOverlay.remove();
-  }
-}
-
-function addNewTask(boardID, projectName) {
+function addNewTask(boardID) {
   resetAllNewTasks();
   /* Getting the board ID, confirm button, cancel button and existing tasks. */
   const board = document.getElementById(`${boardID}_name`);
-  const existingTasks = document.querySelectorAll(`[class*='board_${boardID}']`);
+  const existingTasks = document.querySelectorAll(
+    `[class*='board_${boardID}']`
+  );
   /* Inserting a temporary task into the board. */
   board.insertAdjacentHTML(
     "beforeend",
@@ -452,10 +386,10 @@ function addNewTask(boardID, projectName) {
       </div>
     </div>
     <div class="flex flex-row gap-2">
-    <div class="flex h-8 w-full bg-red-400 hover:bg-red-500 rounded-md cursor-pointer" onclick="cancelChanges(${boardID})">
+    <div class="flex h-8 w-full bg-red-400 hover:bg-red-500 rounded-md cursor-pointer" onclick="cancelChanges('${boardID}')">
       <div class="flex mx-auto my-auto">Cancel</div>
     </div>
-      <div class="flex h-8 w-full bg-lime-400 hover:bg-lime-500 rounded-md cursor-pointer" onclick="saveData(${boardID}, '${projectName}')">
+      <div class="flex h-8 w-full bg-lime-400 hover:bg-lime-500 rounded-md cursor-pointer" onclick="saveData('${boardID}')">
         <div class="flex mx-auto my-auto">Add</div>
       </div>
     </div>
@@ -472,7 +406,8 @@ function addNewTask(boardID, projectName) {
   }, 0);
 }
 
-function saveData(boardID, projectName) {
+function saveData(boardID) {
+  let projectID = getProjectIdFromBoardId(boardID);
   /* Getting all the task names from the input fields. */
   const getDate = document.getElementById("dueTo").value;
   const taskName = document.getElementById(`task_${boardID}_edit`).value;
@@ -486,7 +421,7 @@ function saveData(boardID, projectName) {
       date: getDate,
       priority,
     }).done((data) => {
-      reloadBoardData(projectName);
+      reloadBoardData(projectID);
     });
   }, 20);
 }
@@ -500,16 +435,8 @@ function cancelChanges(boardID) {
 
 function isChecked(taskID, projectName) {
   /* Getting the state of the checkbox and then updating it. */
-  const state = $.ajax("../utils/scripts/getCheckStatus.php", {
-    async: false,
-    type: "POST",
-    data: {
-      dataID: taskID,
-    },
-  }).done((data) => {
-    return data;
-  });
-  const changedState = state.responseText == 1 ? 0 : 1;
+  let state = getCheckState(taskID);
+  const changedState = state == 1 ? 0 : 1;
   /* Updating the state of the checkbox. */
   $.post("../utils/scripts/updateCheckboxState.php", {
     state: changedState,
@@ -533,6 +460,13 @@ document.addEventListener("mousemove", (e) => {
   mouse.x = e.clientX;
   mouse.y = e.clientY;
 });
+
+function cancelOverlay(overlayName) {
+  const getOverlay = document.getElementById(overlayName);
+  if (getOverlay != null) {
+    getOverlay.remove();
+  }
+}
 
 const closePriorityModalWindowOnBlur = (e) => {
   if (e.target === e.currentTarget) cancelOverlay("priorityListOverlay");

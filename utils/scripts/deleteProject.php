@@ -2,15 +2,12 @@
 include './connectToDatabase.php';
 include "./getUserID.php";
 
-$projectName = $_POST["projectName"];
+$projectID = $_POST["projectID"];
 
-$IDQ = "select projectID from project where project_name = '$projectName' and userID = '$userID'";
+$IDQ = "select project_name from project where projectID = '$projectID' and userID = '$userID'";
 $result = mysqli_query($conn, $IDQ);
 
 if (mysqli_num_rows($result) > 0) {
-    $projectIDF = mysqli_fetch_assoc($result);
-    $projectID = $projectIDF["projectID"];
-
     $findBoard = "select boardID from board where projectID = '$projectID'";
     $fetchBoard = mysqli_fetch_assoc(mysqli_query($conn, $findBoard));
     $boardID = $fetchBoard["boardID"];

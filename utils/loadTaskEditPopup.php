@@ -59,7 +59,7 @@ echo '          </div>';
 echo '      </div>';
 echo '      <div class="flex flex-row gap-2 ml-auto mr-2">';
 echo '          <div class="w-fit h-fit px-3 py-1 bg-slate-100 border border-slate-200 hover:bg-slate-300 rounded-lg cursor-pointer" onclick="cancelTaskEdit()">Cancel</div>';
-echo '          <div class="w-fit h-fit px-3 py-1 bg-slate-500 border border-slate-400 hover:bg-slate-600 rounded-lg cursor-pointer text-slate-50" onclick="saveTaskEdit(`' . $dataID . '`, `' . $projectName . '`, `' . $boardID . '`)">Save</div>';
+echo '          <div class="w-fit h-fit px-3 py-1 bg-slate-500 border border-slate-400 hover:bg-slate-600 rounded-lg cursor-pointer text-slate-50" onclick="saveTaskEdit(`' . $dataID . '`, `' . $boardID . '`)">Save</div>';
 echo '      </div>';
 echo '  </div>';
 echo '</div>';

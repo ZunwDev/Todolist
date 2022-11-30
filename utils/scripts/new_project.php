@@ -1,28 +1,18 @@
-<?php  
-session_start();
-
+<?php
 include "./connectToDatabase.php";
 include "./getUserID.php";
 
 $projectName = $_POST["projectName"];
 $projectDescription = $_POST["projectDescription"];
 $color = $_POST["color"];
+$projectID = $_POST["projectID"];
 
 $colorIDQuery = "select colorID from colors where color_name = '$color'";
-$projectNameQuery = "select count(project_name) from project where project_name like '%$projectName%' and userID = '$userID'";
-
 $colorIDFetch = mysqli_fetch_assoc(mysqli_query($conn, $colorIDQuery));
-$projectNameFetch = mysqli_fetch_assoc(mysqli_query($conn, $projectNameQuery));
-
 $colorID = $colorIDFetch['colorID'];
-$projectNameCount = $projectNameFetch['count(project_name)'];
 
-if ($projectNameCount >= 1) {
-    $dupeNumber = $projectNameCount + 1;
-    $newProjectName = $projectName . "#".$dupeNumber. " ";
-    $q = "insert into project (userID, project_name, colorID, project_description) values ('$userID', '$newProjectName', '$colorID', '$projectDescription')";
-    $res = mysqli_query($conn, $q);
-} else {
-    $q = "insert into project (userID, project_name, colorID, project_description) values ('$userID', '$projectName', '$colorID', '$projectDescription')";
-    $res = mysqli_query($conn, $q);
-}
+$checkIfExistsInDb = "select projectID from project where projectID like '$projectID'";
+$checkRes = mysqli_query($conn, $checkIfExistsInDb);
+
+$q = "insert into project (userID, project_name, colorID, project_description) values ('$userID', '$projectName', '$colorID', '$projectDescription')";
+mysqli_query($conn, $q);

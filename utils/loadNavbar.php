@@ -8,7 +8,7 @@ echo '<nav class="app_navbarContainer h-fit pb-2 pt-2 shadow-bottom shadow-lg fl
     echo '</svg>';
     echo '</button>';
     echo '</div>';
-    echo '<div class="app_authNav flex flex-shrink my-auto gap-3 text-xl justify-end select-none">';
+    echo '<div class="app_authNav flex flex-shrink my-auto gap-3 text-xl justify-end">';
     if (!isset($_SESSION['login_user'])) {
         echo '<a href="auth/login.php" type="button" class="h-fit w-fit px-2 py-2 hover:bg-slate-100 transition ease-out duration-200 rounded-lg break-normal font-bold">Log in</a>';
         echo '<a href="auth/signup.php" type="button" class="h-fit w-fit px-2 py-2 min-w-16 bg-blue-500 hover:bg-blue-400 transition ease-out duration-200 rounded-lg break-normal font-bold text-white">Sign Up</a>';
