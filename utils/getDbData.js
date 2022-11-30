@@ -117,7 +117,7 @@ function getTaskManagePopup(id) {
 }
 
 function getColorSelect() {
-  const data = $.ajax("./utils/loadColors.php", {
+  let data = $.ajax("./utils/loadColors.php", {
     async: false,
     type: "post",
     data: {},

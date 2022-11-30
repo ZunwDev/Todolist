@@ -174,9 +174,7 @@ function getHTML(name, light, lightplus, lightlow, color, id) {
 }
 
 function openProjectSidebar(id, color, projectName) {
-  console.log(color);
   const checkIfProjectIsOpen = document.querySelectorAll(`section[id$='_id']`);
-  console.log(checkIfProjectIsOpen);
   if (checkIfProjectIsOpen.length > 0) {
     closeProjectSidebar(id, color, projectName);
     return;

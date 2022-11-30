@@ -19,6 +19,7 @@ include "../TodoList/utils/scripts/getUserID.php";
     <script src="./utils/project_utils.js"></script>
     <script src="./utils/sidebar_utils.js"></script>
     <script src="./utils/board_utils.js"></script>
+    <script src="./utils/getDbData.js"></script>
     <script src="./utils/class/Color.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
