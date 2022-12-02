@@ -116,11 +116,18 @@ function getTaskManagePopup(id) {
   return data.responseText;
 }
 
-function getColorSelect() {
-  let data = $.ajax("./utils/loadColors.php", {
+function getDeletePopup(id, title, msg, reason) {
+  closeAnyPopup();
+  const data = $.ajax("../utils/loadDeletePopup.php", {
     async: false,
     type: "post",
-    data: {},
+    data: {
+      id,
+      title,
+      msg,
+      reason,
+    }
   });
-  return data.responseText;
+  body.insertAdjacentHTML("beforeend", data.responseText);
+  popupModalSettings();
 }

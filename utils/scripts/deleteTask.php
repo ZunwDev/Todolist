@@ -1,8 +1,7 @@
 <?php
 include './connectToDatabase.php';
 
-$taskID = $_POST["taskID"];
-echo $taskID;
+$id = $_POST["id"];
 
-$q = "delete from board_data where dataID = '$taskID'";
+$q = "delete from board_data where dataID = '$id'";
 mysqli_query($conn, $q);

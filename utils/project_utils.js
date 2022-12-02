@@ -3,15 +3,14 @@
  * "afterShowUp".
  */
 function openProjectCreate(projectID) {
-  let colorSelect = getColorSelect();
   body.insertAdjacentHTML(
     "beforeend",
     `
-    <section id="newProj" class="w-screen h-screen absolute bg-slate-50/25 beforeShowUp" style="display: none">
-      <div id="projectCreatePopup" class="absolute flex left-0 right-0 ml-auto mr-auto top-28 flex-col h-fit w-80 shadow-lg bg-slate-50 rounded-lg">
+    <section id="popupOverlay" class="w-screen h-screen absolute bg-slate-50/25 beforeShowUp" style="display: none">
+      <div id="popupElement" class="absolute flex left-0 right-0 ml-auto mr-auto top-28 flex-col h-fit w-80 shadow-lg bg-slate-50 rounded-lg">
         <div class="deleteHeader flex flex-row w-full h-8 border-b border-slate-200 gap-4">
           <div class="my-1 ml-4 w-full h-full font-bold">New project</div>
-          <div class="ml-auto mt-1 mr-1 flex h-fit w-fit px-1 py-1 rounded-lg hover:bg-slate-200 cursor-pointer" onclick="closeProjectCreate()"><svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/></svg></div>
+          <div class="ml-auto mt-1 mr-1 flex h-fit w-fit px-1 py-1 rounded-lg hover:bg-slate-200 cursor-pointer" onclick="closeAnyPopup()"><svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/></svg></div>
       </div>
       <form id="newProjectForm" class="app_appDialogForm flex flex-col w-full h-full bg-slate-50 rounded-b-lg" method="post">
           <div class="app_appFormField mt-4 px-6 flex flex-col gap-1">
@@ -39,7 +38,7 @@ function openProjectCreate(projectID) {
               </div>
           </div>
           <div class="app_appFormControl flex flex-row gap-2 justify-end mr-2">
-              <button title="Cancel - Esc" type="button" class="app_appFormCancel mt-4 py-1 px-3 mb-3 bg-slate-200 rounded-lg border border-slate-300 hover:bg-slate-300" onclick="closeProjectCreate()">
+              <button title="Cancel - Esc" type="button" class="app_appFormCancel mt-4 py-1 px-3 mb-3 bg-slate-200 rounded-lg border border-slate-300 hover:bg-slate-300" onclick="closeAnyPopup()">
                   Cancel
               </button>
               <button title="Add - Enter" type="button" class="app_appFormAccept mt-4 py-1 px-3 mb-3 bg-slate-500 text-white rounded-lg border border-slate-400 hover:bg-slate-600" onclick="acceptProjectCreate('${projectID}')">
@@ -54,8 +53,12 @@ function openProjectCreate(projectID) {
   show("newProj");
   $("#newProj").removeClass("beforeShowUp");
   $("#newProj").addClass("afterShowUp");
+  let colorSelect = $.ajax("./utils/loadColors.php", {
+    async: false,
+    type: "post",
+  });
   let getColorSelect = document.getElementById("colorSelect");
-  getColorSelect.insertAdjacentHTML("afterbegin", colorSelect);
+  getColorSelect.insertAdjacentHTML("afterbegin", colorSelect.responseText);
 }
 
 /**

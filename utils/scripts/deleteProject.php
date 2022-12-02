@@ -2,13 +2,13 @@
 include './connectToDatabase.php';
 include "./getUserID.php";
 
-$projectID = $_POST["projectID"];
+$id = $_POST["id"];
 
-$IDQ = "select project_name from project where projectID = '$projectID' and userID = '$userID'";
+$IDQ = "select project_name from project where id = '$id' and userID = '$userID'";
 $result = mysqli_query($conn, $IDQ);
 
 if (mysqli_num_rows($result) > 0) {
-    $findBoard = "select boardID from board where projectID = '$projectID'";
+    $findBoard = "select boardID from board where id = '$id'";
     $fetchBoard = mysqli_fetch_assoc(mysqli_query($conn, $findBoard));
     $boardID = $fetchBoard["boardID"];
 
@@ -31,6 +31,6 @@ if (mysqli_num_rows($result) > 0) {
         }
     }
     //Deleting project data
-    $sql = "delete from project where projectID = '$projectID'";
+    $sql = "delete from project where id = '$id'";
     mysqli_query($conn, $sql);
 }

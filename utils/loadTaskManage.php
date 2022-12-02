@@ -6,13 +6,13 @@ include "./scripts/getUserID.php";
 $dataID = $_POST['dataID'];
 
 //Start of overlay
-echo '<div id="taskManageOverlay" class="w-screen h-screen absolute bg-slate-50/25">';
-echo '    <div id="taskManagePopup" class="absolute flex beforeShowUp flex-col h-fit shadow-lg bg-slate-100 pb-2 rounded-lg">';
+echo '<div id="popupOverlay" class="w-screen h-screen absolute bg-slate-50/25">';
+echo '    <div id="popupElement" class="absolute flex beforeShowUp flex-col h-fit shadow-lg bg-slate-100 pb-2 rounded-lg">';
 echo '        <div class="flex w-full bg-slate-100 h-fit rounded-tr-lg rounded-tl-lg">';
 echo '            <div class="flex h-fit w-fit flex-row my-1 gap-3 mx-2">';
 echo '                <div class="h-fit w-fit my-1">Manage task</div>';
 echo '                <div class="flex my-1 h-fit">';
-echo '                <div title="Close task manage" class="flex h-fit w-fit px-2 py-2 rounded-lg hover:bg-slate-200 cursor-pointer" onclick="closeTaskManagePopup()"><svg class="flex w-3 h-3 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z"/></svg></div>';
+echo '                <div title="Close task manage" class="flex h-fit w-fit px-2 py-2 rounded-lg hover:bg-slate-200 cursor-pointer" onclick="closeAnyPopup()"><svg class="flex w-3 h-3 " xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M376.6 84.5c11.3-13.6 9.5-33.8-4.1-45.1s-33.8-9.5-45.1 4.1L192 206 56.6 43.5C45.3 29.9 25.1 28.1 11.5 39.4S-3.9 70.9 7.4 84.5L150.3 256 7.4 427.5c-11.3 13.6-9.5 33.8 4.1 45.1s33.8 9.5 45.1-4.1L192 306 327.4 468.5c11.3 13.6 31.5 15.4 45.1 4.1s15.4-31.5 4.1-45.1L233.7 256 376.6 84.5z"/></svg></div>';
 echo '            </div>';
 echo '        </div>';
 echo '    </div>';
@@ -22,7 +22,7 @@ echo '        <svg class="my-auto ml-2 w-4 h-4" xmlns="http://www.w3.org/2000/sv
 echo '            <div class="flex text-sm pl-2 py-1">Edit</div>';
 echo '        </div>';
 echo '    <div class="w-3/4 flex h-0.5 mx-auto bg-slate-200"></div>';
-echo '    <div title="Delete this task" class="flex flex-row mt-1 mx-2 bg-slate-100 hover:text-red-500 transition cursor-pointer rounded-md group" onclick="deleteTask('.$dataID.')">';
+echo '    <div title="Delete this task" class="flex flex-row mt-1 mx-2 bg-slate-100 hover:text-red-500 transition cursor-pointer rounded-md group" onclick="showTaskDeleteWarning('.$dataID.')">';
 echo '        <svg class="my-auto ml-2 w-4 h-4 transition group-hover:fill-red-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"/></svg>';
 echo '            <div class="flex text-sm pl-2 py-1">Delete task</div>';
 echo '        </div>';

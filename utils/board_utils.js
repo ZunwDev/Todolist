@@ -11,6 +11,14 @@ function addBoard(id) {
   });
 }
 
+function popupModalSettings() {
+  const getPopup = document.getElementById("popupElement");
+  getPopup.classList.toggle("beforeShowUp");
+  getPopup.classList.toggle("afterShowUp");
+  const popupOverlay = document.getElementById("popupOverlay");
+  popupOverlay.addEventListener("click", closeModal);
+}
+
 /**
  * When the user clicks the button, the button expands and a text input appears
  */
@@ -35,6 +43,7 @@ function expandBoardCreate() {
 }
 
 function reloadBoardData(id) {
+  closeAnyPopup();
   /* Reloading the board data. */
   document.getElementById("boards").innerText = "";
   let board = getBoardData(id);
@@ -67,27 +76,21 @@ function resetAllNewTasks() {
 }
 
 function showPriorityList() {
-  closePriorityList();
   let priorityList = getPriorityListPopup();
 
   body.insertAdjacentHTML("beforeend", priorityList);
-  const priorityPopup = document.getElementById("priorityListPopup");
+  const priorityPopup = document.getElementById("popupElementPriority");
   priorityPopup.classList.add(`left-[${mouse.x + 8}px]`);
   priorityPopup.classList.add(`top-[${mouse.y - 128}px]`);
-  priorityPopup.classList.toggle("beforeShowUp");
-  priorityPopup.classList.toggle("afterShowUp");
-  const priorityModal = document.getElementById("priorityListOverlay");
-  priorityModal.addEventListener("click", closePriorityModalWindowOnBlur);
-}
-
-function closePriorityList() {
-  const findPriorityList = document.getElementById("priorityListOverlay");
-  if (findPriorityList != null) {
-    findPriorityList.remove();
-  }
+  const getPopup = document.getElementById("popupElementPriority");
+  getPopup.classList.toggle("beforeShowUp");
+  getPopup.classList.toggle("afterShowUp");
+  const popupOverlay = document.getElementById("popupOverlayPriority");
+  popupOverlay.addEventListener("click", closeModalPriority);
 }
 
 function savePriority(name) {
+  closePriority()
   switch (name) {
     case "High":
       var color = "bg-red-100";
@@ -120,88 +123,25 @@ function savePriority(name) {
     prioritySel.classList.add("border-transparent");
     priorityName.innerText = "";
   }
-  closePriorityList();
 }
 
 function showTaskManagePopup(dataID) {
-  closeTaskManagePopup();
+  closeAnyPopup();
   let loadTaskManagePopup = getTaskManagePopup(dataID);
 
   body.insertAdjacentHTML("beforeend", loadTaskManagePopup);
-  const taskManagePopup = document.getElementById("taskManagePopup");
+  const taskManagePopup = document.getElementById("popupElement");
   taskManagePopup.classList.add(`left-[${mouse.x + 8}px]`);
   taskManagePopup.classList.add(`top-[${mouse.y - 128}px]`);
-  taskManagePopup.classList.toggle("beforeShowUp");
-  taskManagePopup.classList.toggle("afterShowUp");
-  const taskModal = document.getElementById("taskManageOverlay");
-  taskModal.addEventListener("click", closeTaskModalWindowOnBlur);
-}
-
-function closeTaskManagePopup() {
-  const findTaskManagePopup = document.getElementById("taskManageOverlay");
-  if (findTaskManagePopup != null) {
-    findTaskManagePopup.remove();
-  }
-}
-
-function deleteTask(taskID) {
-  closeTaskManagePopup();
-  body.insertAdjacentHTML(
-    "beforeend",
-    `
-  <div id="taskDeletionOverlay" class="flex w-screen h-screen absolute bg-white/25">
-    <div class="flex flex-col w-80 h-fit top-28 bg-slate-50 shadow-xl absolute left-0 right-0 ml-auto mr-auto rounded-lg">
-      <div class="deleteHeader flex flex-row w-full h-8 border-b border-slate-200 gap-4">
-        <div class="my-1 ml-4 w-full h-full font-bold">Task deletion</div>
-        <div class="ml-auto mt-1 mr-1 flex h-fit w-fit px-1 py-1 rounded-lg hover:bg-slate-200 cursor-pointer" onclick="cancelTaskDeletion()"><svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/></svg></div>
-      </div>
-      <div class="w-full py-2 px-4 h-fit text-sm">Are you sure you want to delete this task?</div>
-      <div class="flex flex-row gap-2 py-2 ml-auto mr-2">
-        <div class="w-fit h-fit px-3 py-1 bg-slate-100 border border-slate-200 hover:bg-slate-300 rounded-lg cursor-pointer" onclick="cancelTaskDeletion()">Cancel</div>
-        <div class="w-fit h-fit px-3 py-1 bg-slate-500 border border-slate-400 hover:bg-slate-600 rounded-lg cursor-pointer text-slate-50" onclick="confirmTaskDelete('${taskID}')">Delete</div>
-      </div>
-    </div>
-  </div>
-  `
-  );
-  const taskDeleteModal = document.getElementById("taskDeletionOverlay");
-  taskDeleteModal.addEventListener("click", closeTaskDeleteModalWindowOnBlur);
-}
-
-function cancelTaskDeletion() {
-  const getOverlay = document.getElementById("taskDeletionOverlay");
-  if (getOverlay != null) {
-    getOverlay.remove();
-  }
-}
-
-function cancelTaskEdit() {
-  const getOverlay = document.getElementById("taskEditOverlay");
-  if (getOverlay != null) {
-    getOverlay.remove();
-  }
-}
-
-function confirmTaskDelete(taskID) {
-  let projectID = getProjectIdFromTaskId(taskID);
-  $.post("../utils/scripts/deleteTask.php", {
-    taskID,
-  }).done((data) => {
-    cancelTaskDeletion();
-    reloadBoardData(projectID);
-  });
+  popupModalSettings();
 }
 
 function showTaskEditPopup(dataID) {
-  closeTaskManagePopup();
+  closeAnyPopup();
   let loadTaskEditPopup = getTaskEditPopup(dataID);
 
   body.insertAdjacentHTML("beforeend", loadTaskEditPopup);
-  const taskEditPopup = document.getElementById("taskEditPopup");
-  taskEditPopup.classList.toggle("beforeShowUp");
-  taskEditPopup.classList.toggle("afterShowUp");
-  const editTaskModal = document.getElementById("taskEditOverlay");
-  editTaskModal.addEventListener("click", closeTaskEditModalWindowOnBlur);
+  popupModalSettings();
 }
 
 function saveTaskEdit(dataID, boardID) {
@@ -215,25 +155,18 @@ function saveTaskEdit(dataID, boardID) {
       document.querySelectorAll(`[class*='board_${boardID}']`) + 1;
     newTaskName = `Task ${getTaskAmount}`;
   }
-  if (newTaskDescription == "") {
-    newTaskDescription = "";
-  }
-  if (newDueTo == "") {
-    newDueTo = "0000-00-00";
-  }
-  if (newPriority == "") {
-    newPriority = "None";
-  }
+  let finalTaskDescription = newTaskDescription == "" ? "" : newTaskDescription;
+  let finalDueTo = newDueTo == "" ? "0000-00-00" : newDueTo;
+  let finalPriority = newPriority == "" ? "None" : newPriority;
 
   setTimeout(() => {
     $.post("../utils/scripts/saveTaskEdit.php", {
       dataID,
       task_name: newTaskName,
-      task_description: newTaskDescription,
-      task_dueTo: newDueTo,
-      task_priority: newPriority,
+      task_description: finalTaskDescription,
+      task_dueTo: finalDueTo,
+      task_priority: finalPriority,
     }).done((data) => {
-      cancelTaskEdit();
       reloadBoardData(projectID);
     });
   }, 30);
@@ -241,31 +174,14 @@ function saveTaskEdit(dataID, boardID) {
 
 function showColumnEdit(boardID) {
   let loadColumnEditPopup = getColumnEditPopup(boardID);
-
   body.insertAdjacentHTML("beforeend", loadColumnEditPopup);
-  const columnEditPopup = document.getElementById("columnEditPopup");
-  columnEditPopup.classList.toggle("beforeShowUp");
-  columnEditPopup.classList.toggle("afterShowUp");
-  const editColumnModal = document.getElementById("columnEditOverlay");
-  editColumnModal.addEventListener("click", closeColumnEditModalWindowOnBlur);
-}
-
-function cancelColumnEdit() {
-  const getOverlay = document.getElementById("columnEditOverlay");
-  if (getOverlay != null) {
-    getOverlay.remove();
-  }
+  popupModalSettings();
 }
 
 function showProjectEdit(id) {
   let loadProjectEditPopup = getProjectEditPopup(id);
-
   body.insertAdjacentHTML("beforeend", loadProjectEditPopup);
-  const projectEditPopup = document.getElementById("projectEditPopup");
-  projectEditPopup.classList.toggle("beforeShowUp");
-  projectEditPopup.classList.toggle("afterShowUp");
-  const editProjectModal = document.getElementById("projectEditOverlay");
-  editProjectModal.addEventListener("click", closeProjectEditModalWindowOnBlur);
+  popupModalSettings();
 }
 
 function postUpdateProject(
@@ -286,40 +202,66 @@ function postUpdateProject(
 }
 
 function showProjectDeleteWarning(id) {
-  cancelProjectEdit();
-  body.insertAdjacentHTML(
-    "beforeend",
-    `
-  <div id="projectDeletionOverlay" class="flex w-screen h-screen absolute bg-white/25">
-    <div class="flex flex-col w-80 h-fit top-28 bg-slate-50 shadow-xl absolute left-0 right-0 ml-auto mr-auto rounded-lg">
-      <div class="deleteHeader flex flex-row w-full h-8 border-b border-slate-200 gap-4">
-        <div class="my-1 ml-4 w-full h-full font-bold">Project deletion</div>
-        <div class="ml-auto mt-1 mr-1 flex h-fit w-fit px-1 py-1 rounded-lg hover:bg-slate-200 cursor-pointer" onclick="cancelProjectDeletion()"><svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/></svg></div>
-      </div>
-      <div class="w-full py-2 px-4 h-fit text-sm">Are you sure you want to delete this project? You will lose all data.</div>
-      <div class="flex flex-row gap-2 py-2 ml-auto mr-2">
-        <div class="w-fit h-fit px-3 py-1 bg-slate-100 border border-slate-200 hover:bg-slate-300 rounded-lg cursor-pointer" onclick="cancelProjectDeletion()">Cancel</div>
-        <div class="w-fit h-fit px-3 py-1 bg-slate-500 border border-slate-400 hover:bg-slate-600 rounded-lg cursor-pointer text-slate-50" onclick="confirmProjectDelete('${id}')">Delete</div>
-      </div>
-    </div>
-  </div>
-  `
+  getDeletePopup(
+    id,
+    "Project delete",
+    "Are you sure you want to delete this project? You will lose all data.",
+    "projDel"
   );
 }
 
-function confirmProjectDelete(id) {
-  $.post("../utils/scripts/deleteProject.php", {
-    projectID: id,
-  }).done((data) => {
-    window.location.reload();
-  });
+function showColumnClearWarning(id) {
+  getDeletePopup(
+    id,
+    "Column clear",
+    "Are you sure you want to clear this column? You will lose all saved data.",
+    "colCl"
+  );
+}
+function showTaskDeleteWarning(id) {
+  getDeletePopup(
+    id,
+    "Task delete",
+    "Are you sure you want to delete this task?",
+    "taskDel"
+  );
 }
 
-function cancelProjectDeletion() {
-  const getOverlay = document.getElementById("projectDeletionOverlay");
-  if (getOverlay != null) {
-    getOverlay.remove();
+function showColumnDeleteWarning(id) {
+  getDeletePopup(
+    id,
+    "Column delete",
+    "Are you sure you want to delete this column? You will lose all saved data.",
+    "colDel"
+  );
+}
+
+function confirmDelete(id, delReason) {
+  switch (delReason) {
+    case "projDel":
+      var link = "../utils/scripts/deleteProject.php";
+      break;
+    case "colCl":
+      var link = "../utils/scripts/clearColumn.php";
+      var projectID = getProjectIdFromBoardId(id);
+      break;
+    case "colDel":
+      var link = "../utils/scripts/deleteColumn.php";
+      var projectID = getProjectIdFromBoardId(id);
+      break;
+    case "taskDel":
+      var link = "../utils/scripts/deleteTask.php";
+      var projectID = getProjectIdFromTaskId(id);
   }
+  $.post(link, {
+    id,
+  }).done((data) => {
+    if (delReason != "projDel") {
+      reloadBoardData(projectID);
+    } else {
+      window.location.reload();
+    }
+  });
 }
 
 function saveProjectChanges(id) {
@@ -330,16 +272,10 @@ function saveProjectChanges(id) {
   const newColorName = document.getElementById("currentColorName").innerText;
 
   let finalName = newProjectName == "" ? "Project" : newProjectName;
-  let finalDescription = newProjectDescription == "" ? "" : newProjectDescription;
+  let finalDescription =
+    newProjectDescription == "" ? "" : newProjectDescription;
 
   postUpdateProject(finalName, finalDescription, newColorName, id);
-}
-
-function cancelProjectEdit() {
-  const getOverlay = document.getElementById("projectEditOverlay");
-  if (getOverlay != null) {
-    getOverlay.remove();
-  }
 }
 
 function saveColumnChanges(boardID) {
@@ -354,7 +290,6 @@ function saveColumnChanges(boardID) {
     board_name: newBoardName,
     board_description: newBoardDescription,
   }).done((data) => {
-    cancelColumnEdit();
     reloadBoardData(projectID);
   });
 }
@@ -461,33 +396,24 @@ document.addEventListener("mousemove", (e) => {
   mouse.y = e.clientY;
 });
 
-function cancelOverlay(overlayName) {
-  const getOverlay = document.getElementById(overlayName);
+function closePriority() {
+  const getOverlay = document.getElementById("popupOverlayPriority");
   if (getOverlay != null) {
     getOverlay.remove();
   }
 }
 
-const closePriorityModalWindowOnBlur = (e) => {
-  if (e.target === e.currentTarget) cancelOverlay("priorityListOverlay");
+function closeAnyPopup() {
+  const getOverlay = document.getElementById("popupOverlay");
+  if (getOverlay != null) {
+    getOverlay.remove();
+  }
+}
+
+const closeModal = (e) => {
+  if (e.target === e.currentTarget) closeAnyPopup();
 };
 
-const closeTaskModalWindowOnBlur = (e) => {
-  if (e.target === e.currentTarget) cancelOverlay("taskManageOverlay");
-};
-
-const closeTaskDeleteModalWindowOnBlur = (e) => {
-  if (e.target === e.currentTarget) cancelOverlay("taskDeletionOverlay");
-};
-
-const closeTaskEditModalWindowOnBlur = (e) => {
-  if (e.target === e.currentTarget) cancelOverlay("taskEditOverlay");
-};
-
-const closeColumnEditModalWindowOnBlur = (e) => {
-  if (e.target === e.currentTarget) cancelOverlay("columnEditOverlay");
-};
-
-const closeProjectEditModalWindowOnBlur = (e) => {
-  if (e.target === e.currentTarget) cancelOverlay("projectEditOverlay");
+const closeModalPriority = (e) => {
+  if (e.target === e.currentTarget) closePriority();
 };
