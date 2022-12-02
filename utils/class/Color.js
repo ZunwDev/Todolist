@@ -4,15 +4,15 @@ class Color {
   }
 
   getNum() {
-    const onlyNum = this.color_code.replace(/\D/g, "");
+    const onlyNum = this.color_code.replace(/\D/g, '');
     let num;
 
-    if (onlyNum !== "") {
+    if (onlyNum !== '') {
       return (num = Number(onlyNum));
     }
   }
   splitColor() {
-    return this.color_code.split("-");
+    return this.color_code.split('-');
   }
   getLighter(mod) {
     const splitted = this.splitColor();
