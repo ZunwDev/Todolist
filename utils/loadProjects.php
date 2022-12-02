@@ -26,6 +26,6 @@ $q = "select projectID from project where userID = '$userID'";
 $f = mysqli_fetch_assoc(mysqli_query($conn, $q));
 $projectID = $f['projectID'];
 
-echo '<button type="button" class="flex justify-center w-40 h-20 rounded-lg transition ease-in-out duration-200 bg-slate-200 hover:bg-slate-300" title="Create a new project" onclick="openProjectCreate(`' . $projectID .'`)">';
+echo '<button type="button" class="flex justify-center w-40 h-20 rounded-lg transition ease-in-out duration-200 bg-slate-200 hover:bg-slate-300" title="Create a new project" onclick="openProjectCreate(`' . $projectID . '`)">';
 echo '  <div class="flex container mx-auto my-auto justify-center text-3xl text-gray-600">+</div>';
 echo '</button>';

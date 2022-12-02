@@ -17,10 +17,10 @@ echo '  </div>';
 echo '  </div>';
 echo '  <div class="flex w-2/3 mx-auto h-0.5 bg-slate-200"></div>';
 echo '      <div class="flex flex-col mt-2">';
-                while ($priorities = mysqli_fetch_assoc($result)) {
-                //Start of list
-                echo '<div class="flex pl-2 py-1 mx-2 text-sm bg-slate-100 hover:bg-slate-200 cursor-pointer rounded-md" onclick="savePriority(`'.$priorities['priority_name'].'`)">'.$priorities['priority_name'].'</div>';
-                //End of list
+while ($priorities = mysqli_fetch_assoc($result)) {
+    //Start of list
+    echo '<div class="flex pl-2 py-1 mx-2 text-sm bg-slate-100 hover:bg-slate-200 cursor-pointer rounded-md" onclick="savePriority(`' . $priorities['priority_name'] . '`)">' . $priorities['priority_name'] . '</div>';
+    //End of list
 }
 echo '      </div>';
 echo '  </div>';

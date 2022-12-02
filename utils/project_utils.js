@@ -4,7 +4,7 @@
  */
 function openProjectCreate(projectID) {
   body.insertAdjacentHTML(
-    "beforeend",
+    'beforeend',
     `
     <section id="popupOverlay" class="w-screen h-screen absolute bg-slate-50/25 beforeShowUp" style="display: none">
       <div id="popupElement" class="absolute flex left-0 right-0 ml-auto mr-auto top-28 flex-col h-fit w-80 shadow-lg bg-slate-50 rounded-lg">
@@ -50,15 +50,15 @@ function openProjectCreate(projectID) {
 </section>
   `
   );
-  show("newProj");
-  $("#newProj").removeClass("beforeShowUp");
-  $("#newProj").addClass("afterShowUp");
-  let colorSelect = $.ajax("./utils/loadColors.php", {
+  show('newProj');
+  $('#newProj').removeClass('beforeShowUp');
+  $('#newProj').addClass('afterShowUp');
+  let colorSelect = $.ajax('./utils/loadColors.php', {
     async: false,
-    type: "post",
+    type: 'post',
   });
-  let getColorSelect = document.getElementById("colorSelect");
-  getColorSelect.insertAdjacentHTML("afterbegin", colorSelect.responseText);
+  let getColorSelect = document.getElementById('colorSelect');
+  getColorSelect.insertAdjacentHTML('afterbegin', colorSelect.responseText);
 }
 
 /**
@@ -66,11 +66,11 @@ function openProjectCreate(projectID) {
  * "newProj". Then it hides the element with the id "newProj" after 400 milliseconds.
  */
 function closeProjectCreate() {
-  $("#newProj").removeClass("afterShowUp");
-  $("#newProj").addClass("beforeShowUp");
+  $('#newProj').removeClass('afterShowUp');
+  $('#newProj').addClass('beforeShowUp');
   setTimeout(() => {
-    $("#newProj").hide();
-    const getNewProj = document.getElementById("newProj");
+    $('#newProj').hide();
+    const getNewProj = document.getElementById('newProj');
     getNewProj.remove();
   }, 400);
 }
@@ -83,13 +83,8 @@ function closeProjectCreate() {
  * @param colorName - The name of the color that the user selected.
  */
 
-function postCreateProject(
-  projectName,
-  projectDescription,
-  colorName,
-  projectID
-) {
-  $.post("./utils/scripts/new_project.php", {
+function postCreateProject(projectName, projectDescription, colorName, projectID) {
+  $.post('./utils/scripts/new_project.php', {
     projectName,
     projectDescription,
     color: colorName,
@@ -107,14 +102,12 @@ function postCreateProject(
  * user has not entered a color name, use "Red" as the color name.
  */
 function acceptProjectCreate(projectID) {
-  const projectName = document.getElementById("nameInputCreate").value;
-  const projectDescription = document.getElementById(
-    "projectDescriptionCreate"
-  ).value;
-  const colorName = document.getElementById("currentColorName").innerText;
+  const projectName = document.getElementById('nameInputCreate').value;
+  const projectDescription = document.getElementById('projectDescriptionCreate').value;
+  const colorName = document.getElementById('currentColorName').innerText;
 
-  let finalProjectName = projectName == "" ? "Project" : projectName;
-  let finalDescription = projectDescription == "" ? "" : projectDescription;
+  let finalProjectName = projectName == '' ? 'Project' : projectName;
+  let finalDescription = projectDescription == '' ? '' : projectDescription;
 
   postCreateProject(finalProjectName, finalDescription, colorName, projectID);
   closeProjectCreate();
@@ -139,22 +132,22 @@ function closeProjectSidebar(id, color, projectName) {
  * and project_wrapper elements, and changes the URL and title of the page.
  */
 function closeProject() {
-  const getSidebar = document.getElementById("sidebar");
-  const getLastClass = getSidebar.classList.toString().split(" ").pop();
+  const getSidebar = document.getElementById('sidebar');
+  const getLastClass = getSidebar.classList.toString().split(' ').pop();
   getSidebar.classList.remove(getLastClass);
-  getSidebar.classList.add("bg-slate-100");
+  getSidebar.classList.add('bg-slate-100');
   const projectSections = document.querySelectorAll(`section[id$='_id']`);
   projectSections[0].remove();
-  $("#project_grid").show();
-  $("#projects_nameEl").show();
-  $(".project_wrapper").show();
-  URL("index.php");
-  title("TodoList");
+  $('#project_grid').show();
+  $('#projects_nameEl').show();
+  $('.project_wrapper').show();
+  URL('index.php');
+  title('TodoList');
 }
 
 function getHTML(name, light, lightplus, lightlow, color, id) {
-  const getSidebar = document.getElementById("sidebar");
-  const getLastClass = getSidebar.classList.toString().split(" ").pop();
+  const getSidebar = document.getElementById('sidebar');
+  const getLastClass = getSidebar.classList.toString().split(' ').pop();
   getSidebar.classList.remove(getLastClass);
   getSidebar.classList.add(lightlow);
   return `
@@ -182,30 +175,21 @@ function openProjectSidebar(id, color, projectName) {
     closeProjectSidebar(id, color, projectName);
     return;
   }
-  const getProjectWindow = document.getElementsByClassName(
-    "app_appProjectsContainer"
-  );
+  const getProjectWindow = document.getElementsByClassName('app_appProjectsContainer');
   const colorClass = new Color(color);
-  $("#project_grid").hide();
-  $("#projects_nameEl").hide();
-  $(".project_wrapper").hide();
+  $('#project_grid').hide();
+  $('#projects_nameEl').hide();
+  $('.project_wrapper').hide();
   //New window
   getProjectWindow[0].insertAdjacentHTML(
-    "beforeend",
-    getHTML(
-      projectName,
-      colorClass.getLighter(100),
-      colorClass.getLighter(300),
-      colorClass.getLighter(400),
-      color,
-      id
-    )
+    'beforeend',
+    getHTML(projectName, colorClass.getLighter(100), colorClass.getLighter(300), colorClass.getLighter(400), color, id)
   );
   setTimeout(() => {
-    document.getElementById("boards").innerText = "";
+    document.getElementById('boards').innerText = '';
     let board = getBoardData(id);
-    const getBoardArea = document.getElementById("boards");
-    getBoardArea.insertAdjacentHTML("afterbegin", board);
+    const getBoardArea = document.getElementById('boards');
+    getBoardArea.insertAdjacentHTML('afterbegin', board);
   }, 50);
   URL(`${id}/${projectName}`);
   title(`TodoList: ${projectName}`);
@@ -217,17 +201,15 @@ function openProject(id) {
   let projectName = getProjectName(id);
 
   const colorClass = new Color(colorCode);
-  const getProjectWindow = document.getElementsByClassName(
-    "app_appProjectsContainer"
-  );
+  const getProjectWindow = document.getElementsByClassName('app_appProjectsContainer');
   //Hiding projects
-  $("#project_grid").hide();
-  $("#projects_nameEl").hide();
-  $(".project_wrapper").hide();
+  $('#project_grid').hide();
+  $('#projects_nameEl').hide();
+  $('.project_wrapper').hide();
   //New window
 
   getProjectWindow[0].insertAdjacentHTML(
-    "beforeend",
+    'beforeend',
     getHTML(
       projectName,
       colorClass.getLighter(100),
@@ -238,10 +220,10 @@ function openProject(id) {
     )
   );
   setTimeout(() => {
-    document.getElementById("boards").innerText = "";
+    document.getElementById('boards').innerText = '';
     let board = getBoardData(id);
-    const getBoardArea = document.getElementById("boards");
-    getBoardArea.insertAdjacentHTML("afterbegin", board);
+    const getBoardArea = document.getElementById('boards');
+    getBoardArea.insertAdjacentHTML('afterbegin', board);
   }, 50);
   URL(`${id}/${projectName}`);
   title(`TodoList: ${projectName}`);
@@ -251,7 +233,7 @@ function openProject(id) {
 window object that listens for the popstate event. When the popstate event is fired, it calls the
 closeProject() function. */
 if (window.history?.pushState) {
-  $(window).on("popstate", () => {
+  $(window).on('popstate', () => {
     closeProject();
   });
 }

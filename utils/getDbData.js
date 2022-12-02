@@ -1,7 +1,7 @@
 function getColorCode(id) {
-  let data = $.ajax("./utils/scripts/getColor.php", {
+  let data = $.ajax('./utils/scripts/getColor.php', {
     async: false,
-    type: "POST",
+    type: 'POST',
     data: {
       projectID: id,
     },
@@ -10,9 +10,9 @@ function getColorCode(id) {
 }
 
 function getProjectName(id) {
-  let data = $.ajax("./utils/scripts/getProjectName.php", {
+  let data = $.ajax('./utils/scripts/getProjectName.php', {
     async: false,
-    type: "POST",
+    type: 'POST',
     data: {
       projectID: id,
     },
@@ -21,9 +21,9 @@ function getProjectName(id) {
 }
 
 function getProjectIdFromBoardId(id) {
-  let data = $.ajax("../utils/scripts/getProjectIdFromBoardId.php", {
+  let data = $.ajax('../utils/scripts/getProjectIdFromBoardId.php', {
     async: false,
-    type: "POST",
+    type: 'POST',
     data: {
       boardID: id,
     },
@@ -32,9 +32,9 @@ function getProjectIdFromBoardId(id) {
 }
 
 function getProjectIdFromTaskId(id) {
-  let data = $.ajax("../utils/scripts/getProjectIdFromTaskId.php", {
+  let data = $.ajax('../utils/scripts/getProjectIdFromTaskId.php', {
     async: false,
-    type: "POST",
+    type: 'POST',
     data: {
       taskID: id,
     },
@@ -43,9 +43,9 @@ function getProjectIdFromTaskId(id) {
 }
 
 function getBoardData(id) {
-  let data = $.ajax("../utils/loadBoards.php", {
+  let data = $.ajax('../utils/loadBoards.php', {
     async: false,
-    type: "post",
+    type: 'post',
     data: {
       projectID: id,
     },
@@ -54,9 +54,9 @@ function getBoardData(id) {
 }
 
 function getProjectEditPopup(id) {
-  let data = $.ajax("../utils/loadProjectEdit.php", {
+  let data = $.ajax('../utils/loadProjectEdit.php', {
     async: false,
-    type: "POST",
+    type: 'POST',
     data: {
       projectID: id,
     },
@@ -65,9 +65,9 @@ function getProjectEditPopup(id) {
 }
 
 function getColumnEditPopup(id) {
-  let data = $.ajax("../utils/loadColumnEdit.php", {
+  let data = $.ajax('../utils/loadColumnEdit.php', {
     async: false,
-    type: "post",
+    type: 'post',
     data: {
       boardID: id,
     },
@@ -76,9 +76,9 @@ function getColumnEditPopup(id) {
 }
 
 function getCheckState(id) {
-  const data = $.ajax("../utils/scripts/getCheckStatus.php", {
+  const data = $.ajax('../utils/scripts/getCheckStatus.php', {
     async: false,
-    type: "POST",
+    type: 'POST',
     data: {
       dataID: id,
     },
@@ -87,9 +87,9 @@ function getCheckState(id) {
 }
 
 function getTaskEditPopup(id) {
-  const data = $.ajax("../utils/loadTaskEditPopup.php", {
+  const data = $.ajax('../utils/loadTaskEditPopup.php', {
     async: false,
-    type: "post",
+    type: 'post',
     data: {
       dataID: id,
     },
@@ -98,17 +98,17 @@ function getTaskEditPopup(id) {
 }
 
 function getPriorityListPopup() {
-  const data = $.ajax("../utils/loadPriorityList.php", {
+  const data = $.ajax('../utils/loadPriorityList.php', {
     async: false,
-    type: "post",
+    type: 'post',
   });
   return data.responseText;
 }
 
 function getTaskManagePopup(id) {
-  const data = $.ajax("../utils/loadTaskManage.php", {
+  const data = $.ajax('../utils/loadTaskManage.php', {
     async: false,
-    type: "post",
+    type: 'post',
     data: {
       dataID: id,
     },
@@ -118,16 +118,16 @@ function getTaskManagePopup(id) {
 
 function getDeletePopup(id, title, msg, reason) {
   closeAnyPopup();
-  const data = $.ajax("../utils/loadDeletePopup.php", {
+  const data = $.ajax('../utils/loadDeletePopup.php', {
     async: false,
-    type: "post",
+    type: 'post',
     data: {
       id,
       title,
       msg,
       reason,
-    }
+    },
   });
-  body.insertAdjacentHTML("beforeend", data.responseText);
+  body.insertAdjacentHTML('beforeend', data.responseText);
   popupModalSettings();
 }
