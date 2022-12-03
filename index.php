@@ -1,6 +1,6 @@
 <?php
-include '../TodoList/utils/scripts/connectToDatabase.php';
-include "../TodoList/utils/scripts/getUserID.php";
+include '../TodoList/utils/scripts/db/connectToDatabase.php';
+include "../TodoList/utils/scripts/db/getUserID.php";
 ?>
 
 <!DOCTYPE html>
@@ -13,13 +13,13 @@ include "../TodoList/utils/scripts/getUserID.php";
     <LINK REL=StyleSheet HREF="stylesheet.css" TYPE="text/css" MEDIA=screen>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <script src="./utils/getDbData.js"></script>
-    <script src="./utils/main_page_setup.js"></script>
-    <script src="./utils/color_menu_utils.js"></script>
-    <script src="./utils/profile_utils.js"></script>
-    <script src="./utils/project_utils.js"></script>
-    <script src="./utils/sidebar_utils.js"></script>
-    <script src="./utils/board_utils.js"></script>
+    <script src="./utils/js/getDbData.js"></script>
+    <script src="./utils/js/main_page_setup.js"></script>
+    <script src="./utils/js/color_menu_utils.js"></script>
+    <script src="./utils/js/profile_utils.js"></script>
+    <script src="./utils/js/project_utils.js"></script>
+    <script src="./utils/js/sidebar_utils.js"></script>
+    <script src="./utils/js/board_utils.js"></script>
     <script src="./utils/class/Color.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -28,9 +28,9 @@ include "../TodoList/utils/scripts/getUserID.php";
 
 <body id="body" class="flex w-screen h-screen flex-col">
     <?php
-    include "./utils/loadNavbar.php";
-    include "./utils/loadMainApp.php";
-    include "./utils/loadProjectContainer.php";
+    include "./utils/load/main/loadNavbar.php";
+    include "./utils/load/main/loadMainApp.php";
+    include "./utils/load/main/loadProjectContainer.php";
     ?>
 </body>
 
