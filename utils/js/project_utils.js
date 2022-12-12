@@ -50,7 +50,7 @@ function openProjectCreate(projectID) {
 </section>
   `
   );
-  let colorSelect = $.ajax('./utils/loadColors.php', {
+  let colorSelect = $.ajax('./utils/load/other/loadColors.php', {
     async: false,
     type: 'post',
   });
@@ -77,12 +77,9 @@ function postCreateProject(projectName, projectDescription, colorName) {
   });
 }
 
+
 /**
- * If the user has entered a project name, use that as the project name. If the user has entered a
- * project description, use that as the project description. If the user has entered a color name, use
- * that as the color name. If the user has not entered a project name, use "Project" as the project
- * name. If the user has not entered a project description, use "" as the project description. If the
- * user has not entered a color name, use "Red" as the color name.
+ * It takes the values of the inputs and sends them to the server.
  */
 function acceptProjectCreate() {
   const projectName = document.getElementById('nameInputCreate').value;

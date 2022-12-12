@@ -17,6 +17,7 @@ function popupModalSettings() {
   popupOverlay.addEventListener('click', closeModal);
 }
 
+
 /**
  * When the user clicks the button, the button expands and a text input appears
  */

@@ -9,9 +9,7 @@ if (mysqli_num_rows($result) > 0) {
         echo '<div id="' . $projects['project_name'] . '_link" class="absolute cursor-pointer z-10 h-8 w-full" onclick="openProjectSidebar(`' . $projects['projectID'] . '`, `' . $projects['color_code'] . '`, `' . $projects['project_name'] . '`)"></div>';
         echo '<div class="flex w-4 h-4 my-auto ml-2 flex-shrink-0 rounded-md z-10 ' . $projects['color_code'] . '"></div>';
         echo '<div id="' . $projects['project_name'] . '_projectName" class="truncate pl-3 w-fit my-auto">' . $projects['project_name'] . '</div>';
-        echo '</li>';
-        echo '<button type="button" class="flex justify-center w-full my-auto h-8 rounded-lg transition ease-in-out duration-200 bg-slate-200 hover:bg-slate-300 text-2xl" title="Create a new project" onclick="openProjectCreate()">+</button>';
-    }
+        echo '</li>';    }
 } else {
     echo '<button type="button" class="flex justify-center w-full my-auto h-8 rounded-lg transition ease-in-out duration-200 bg-slate-200 hover:bg-slate-300 text-2xl" title="Create a new project" onclick="openProjectCreate()">+</button>';
 }

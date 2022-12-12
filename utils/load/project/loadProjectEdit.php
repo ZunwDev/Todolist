@@ -35,7 +35,7 @@ echo '                          </svg>';
 echo '                      </div>';
 echo '                  </div>';
 echo '              <div id="colorSelect" class="flex flex-wrap mx-auto py-3 pl-[1.15rem] gap-2 relative w-fit h-0 opacity-0 duration-100 bg-slate-100 rounded-lg mt-4 transition-[height]" style="display: none">';
-include "./loadColors.php";
+include "../other/loadColors.php";
 echo '              </div>';
 echo '          </div>';
 echo '      </div>';
