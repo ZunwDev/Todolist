@@ -1,5 +1,5 @@
 function showProfileMenu() {
-  !checkDisplay() ? show('profile_dropdown') : $('#profile_dropdown').hide();
+  $('#profile_dropdown').css('display') == 'none' ? show('profile_dropdown') : $('#profile_dropdown').hide();
 }
 
 function userLogOut() {

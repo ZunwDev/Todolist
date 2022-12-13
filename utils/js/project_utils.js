@@ -2,7 +2,7 @@
  * It shows the div with the id "newProj" and removes the class "beforeShowUp" and adds the class
  * "afterShowUp".
  */
-function openProjectCreate(projectID) {
+function openProjectCreate() {
   body.insertAdjacentHTML(
     'beforeend',
     `
@@ -15,11 +15,11 @@ function openProjectCreate(projectID) {
       <form id="newProjectForm" class="app_appDialogForm flex flex-col w-full h-full bg-slate-50 rounded-b-lg" method="post">
           <div class="app_appFormField mt-4 px-6 flex flex-col gap-1">
               <label class="font-bold">Name</label>
-              <input id="nameInputCreate" placeholder="e.g Work, Bussiness" type="text" class="flex shadow-md form-control block w-full px-2 text-lg font-normal text-slate-700 bg-slate-50 bg-clip-padding border border-solid border-slate-300 rounded-md transition ease-in-out duration-200 m-0 focus:text-slate-700 focus:bg-slate-50 focus:border-slate-600 focus:outline-none" autocomplete="none">
+              <input autocomplete="none" id="nameInputCreate" placeholder="e.g Work, Bussiness" type="text" class="flex shadow-md form-control block w-full px-2 text-lg font-normal text-slate-700 bg-slate-50 bg-clip-padding border border-solid border-slate-300 rounded-md transition ease-in-out duration-200 m-0 focus:text-slate-700 focus:bg-slate-50 focus:border-slate-600 focus:outline-none" autocomplete="none">
           </div>
           <div class="app_appFormField mt-4 px-6 flex flex-col gap-1">
               <label class="font-bold">Description</label>
-              <textarea id="projectDescriptionCreate" placeholder="Describe this project" maxlength="128" class="descriptionInput flex overflow-y-auto shadow-md h-20 form-control block w-full px-2 text-base font-normal text-slate-700 bg-slate-50 bg-clip-padding border border-solid border-slate-300 rounded-md transition ease-in-out duration-200 m-0 focus:text-slate-700 focus:bg-slate-50 focus:border-slate-600 focus:outline-none resize-none" autocomplete="none"></textarea>
+              <textarea autocomplete="none" id="projectDescriptionCreate" placeholder="Describe this project" maxlength="128" class="descriptionInput flex overflow-y-auto shadow-md h-20 form-control block w-full px-2 text-base font-normal text-slate-700 bg-slate-50 bg-clip-padding border border-solid border-slate-300 rounded-md transition ease-in-out duration-200 m-0 focus:text-slate-700 focus:bg-slate-50 focus:border-slate-600 focus:outline-none resize-none" autocomplete="none"></textarea>
           </div>
           <div class="app_appFormField mt-4 px-6 flex flex-col gap-1">
               <label for="colorChoose" class="font-bold">Color</label>
