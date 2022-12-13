@@ -2,7 +2,7 @@
 session_start();
 
 if (isset($_SESSION['login_user'])) {
-    echo '<script>window.location = "../index.php"</script>';
+    header("location: ../index.php");
 };
 
 ?>
@@ -107,7 +107,7 @@ if (isset($_SESSION['login_user'])) {
 
             var isPassEqual = passwordVal === confPassInputVal;
 
-            if (isPassEqual === false || confPassInputVal.length === 0) {
+            if (!isPassEqual || confPassInputVal.length === 0) {
                 flagInput(confPassInputEl);
                 showError(confPasswordError, "Password doesn't match");
             } else {
@@ -126,9 +126,7 @@ if (isset($_SESSION['login_user'])) {
 
         function signupCheckValues() {
             if (
-                checkUsername() === true &&
-                checkPassword() === true &&
-                checkConfirmPassword() === true
+                checkUsername() && checkPassword() && checkConfirmPassword()
             ) {
                 var username = $("#nameInput").val();
                 var password = $("#passwordInput").val();

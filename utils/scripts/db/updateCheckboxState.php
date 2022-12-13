@@ -1,7 +1,6 @@
 <?php 
 include "./connectToDatabase.php";
 
-
 $state = $_POST['state'];
 $dataID = $_POST['dataID'];
 

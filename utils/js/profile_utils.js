@@ -1,9 +1,5 @@
 function showProfileMenu() {
-  if ($('#profile_dropdown').css('display') === 'none') {
-    show('profile_dropdown');
-  } else {
-    $('#profile_dropdown').hide();
-  }
+  !checkDisplay() ? show('profile_dropdown') : $('#profile_dropdown').hide();
 }
 
 function userLogOut() {

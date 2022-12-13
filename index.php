@@ -1,6 +1,18 @@
 <?php
 include '../TodoList/utils/scripts/db/connectToDatabase.php';
 include "../TodoList/utils/scripts/db/getUserID.php";
+
+/* It checks if the user is logged in. If not, it redirects to the login page. */
+if (!isset($_SESSION['login_user'])) {
+    header("Location: auth/login.php");
+}
+/* Checking if the user is an admin or not. */
+if (isset($_SESSION['login_user'])) {
+    $usrname = $_SESSION['login_user'];
+    $q = "select roleID from user where username = '$usrname'";
+    $f = mysqli_fetch_assoc(mysqli_query($conn, $q));
+    $adminState = $f['roleID'];
+}
 ?>
 
 <!DOCTYPE html>

@@ -17,7 +17,6 @@ function popupModalSettings() {
   popupOverlay.addEventListener('click', closeModal);
 }
 
-
 /**
  * When the user clicks the button, the button expands and a text input appears
  */
@@ -45,9 +44,8 @@ function reloadBoardData(id) {
   closeAnyPopup();
   /* Reloading the board data. */
   document.getElementById('boards').innerText = '';
-  let board = getBoardData(id);
   const getBoardArea = document.getElementById('boards');
-  getBoardArea.insertAdjacentHTML('afterbegin', board);
+  getBoardArea.insertAdjacentHTML('afterbegin', getBoardData(id));
 }
 
 /**
@@ -100,9 +98,6 @@ function savePriority(name) {
     case 'Low':
       var color = 'bg-slate-100';
       break;
-    case 'None':
-      var color = 'bg-transparent';
-      break;
     default:
       var color = 'bg-transparent';
       break;
@@ -136,27 +131,21 @@ function setPopupToCorrectPos() {
 
 function showTaskManagePopup(dataID) {
   closeAnyPopup();
-  let loadTaskManagePopup = getTaskManagePopup(dataID);
-
-  body.insertAdjacentHTML('beforeend', loadTaskManagePopup);
+  body.insertAdjacentHTML('beforeend', getTaskManagePopup(dataID));
   setPopupToCorrectPos();
   popupModalSettings();
 }
 
 function showColumnManagePopup(boardID) {
   closeAnyPopup();
-  let loadColumnManagePopup = getColumnManagePopup(boardID);
-
-  body.insertAdjacentHTML('beforeend', loadColumnManagePopup);
+  body.insertAdjacentHTML('beforeend', getColumnManagePopup(boardID));
   setPopupToCorrectPos();
   popupModalSettings();
 }
 
 function showTaskEditPopup(dataID) {
   closeAnyPopup();
-  let loadTaskEditPopup = getTaskEditPopup(dataID);
-
-  body.insertAdjacentHTML('beforeend', loadTaskEditPopup);
+  body.insertAdjacentHTML('beforeend', getTaskEditPopup(dataID));
   popupModalSettings();
 }
 
@@ -189,14 +178,12 @@ function saveTaskEdit(dataID, boardID) {
 
 function showColumnEdit(boardID) {
   closeAnyPopup();
-  let loadColumnEditPopup = getColumnEditPopup(boardID);
-  body.insertAdjacentHTML('beforeend', loadColumnEditPopup);
+  body.insertAdjacentHTML('beforeend', getColumnEditPopup(boardID));
   popupModalSettings();
 }
 
 function showProjectEdit(id) {
-  let loadProjectEditPopup = getProjectEditPopup(id);
-  body.insertAdjacentHTML('beforeend', loadProjectEditPopup);
+  body.insertAdjacentHTML('beforeend', getProjectEditPopup(id));
   popupModalSettings();
 }
 
