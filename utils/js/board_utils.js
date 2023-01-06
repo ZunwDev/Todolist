@@ -155,8 +155,9 @@ function saveTaskEdit(dataID, boardID) {
   let newTaskDescription = document.getElementById('taskDescriptionEdit').value;
   let newDueTo = document.getElementById('taskDueToEdit').value;
   let newPriority = document.getElementById('priorityListText').innerText;
+  const board = document.getElementById(`${boardID}_name`);
   if (newTaskName == '') {
-    let getTaskAmount = document.querySelectorAll(`[class*='board_${boardID}']`) + 1;
+    let getTaskAmount = board.children.length-1 + 1;
     newTaskName = `Task ${getTaskAmount}`;
   }
   let finalTaskDescription = newTaskDescription == '' ? '' : newTaskDescription;
@@ -277,7 +278,7 @@ function addNewTask(boardID) {
   resetAllNewTasks();
   /* Getting the board ID, confirm button, cancel button and existing tasks. */
   const board = document.getElementById(`${boardID}_name`);
-  const existingTasks = document.querySelectorAll(`[class*='board_${boardID}']`);
+  const existingTasks = board.children.length-1;
   /* Inserting a temporary task into the board. */
   board.insertAdjacentHTML(
     'beforeend',
@@ -285,7 +286,7 @@ function addNewTask(boardID) {
     <div id="board_${boardID}_edit" class="flex flex-col edit gap-2">
     <div class="w-full h-fit mt-1 bg-slate-200 flex-col border border-slate-400 rounded-md">
       <textarea id="task_${boardID}_edit" maxlength="64" class="border-b border-slate-300 flex mt-[0.2px] form-control h-8 resize-none bg-transparent overflow-y-hidden pt-1 pl-2 w-full focus:text-slate-700 focus:bg-slate-50 focus:rounded-tr-md focus:rounded-tl-md focus:border focus:outline-none focus:border-slate-600">Task #${
-      existingTasks.length + 1
+      existingTasks + 1
     }</textarea>
       <input id="dueTo" class="flex w-full mt-0.5 mx-[0.1px] form-control px-4 bg-transparent focus:text-slate-700 border-b border-slate-300 focus:bg-slate-50 focus:border focus:outline-none focus:border-slate-600" type="date"></input>
       <div class="flex flex-row w-full h-8">
@@ -322,9 +323,12 @@ function saveData(boardID) {
   let projectID = getProjectIdFromBoardId(boardID);
   /* Getting all the task names from the input fields. */
   const getDate = document.getElementById('dueTo').value;
-  const taskName = document.getElementById(`task_${boardID}_edit`).value;
+  var taskName = document.getElementById(`task_${boardID}_edit`).value;
   const priority = document.getElementById('priorityListText').innerText;
+  const board = document.getElementById(`${boardID}_name`);
+  const existingTasks = board.children.length-1;
   cancelChanges(boardID);
+  if (taskName == "") taskName = `Task #${existingTasks}`;
   /*Adding the tasks to the database.  */
   setTimeout(() => {
     $.post('../utils/scripts/task/addNewTask.php', {
