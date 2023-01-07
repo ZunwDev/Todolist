@@ -142,3 +142,16 @@ function getDeletePopup(id, title, msg, reason) {
   body.insertAdjacentHTML('beforeend', data.responseText);
   popupModalSettings();
 }
+
+function getMoveToPopup(id) {
+  const projID = getProjectIdFromTaskId(id);
+  const data = $.ajax('../utils/load/task/loadMoveToPopup.php', {
+    async: false,
+    type: 'post',
+    data: {
+      projectID: projID,
+      dataID: id,
+    },
+  });
+  return data.responseText;
+}

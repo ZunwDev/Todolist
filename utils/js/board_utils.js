@@ -17,6 +17,14 @@ function popupModalSettings() {
   popupOverlay.addEventListener('click', closeModal);
 }
 
+function popupModalSettingsT2() {
+  const getPopup = document.getElementById('popupPopupElement');
+  getPopup.classList.toggle('beforeShowUp');
+  getPopup.classList.toggle('afterShowUp');
+  const popupOverlay = document.getElementById('popupPopupOverlay');
+  popupOverlay.addEventListener('click', closeModalMoveTo);
+}
+
 /**
  * When the user clicks the button, the button expands and a text input appears
  */
@@ -53,21 +61,14 @@ function reloadBoardData(id) {
  * existing tasks.
  */
 function resetAllNewTasks() {
-  const confirmButton = document.querySelectorAll(`[id*='_confirm']`);
-  const cancelButton = document.querySelectorAll(`[id*='_cancel']`);
   const existingTasks = document.querySelectorAll(`div.edit`);
   const addNewTaskButton = document.querySelectorAll(`[id*='_add']`);
-
-  for (var i = 0; i < confirmButton.length; i++) {
-    confirmButton[i].classList.add('hidden');
-    cancelButton[i].classList.add('hidden');
-  }
 
   for (var i = 0; i < addNewTaskButton.length; i++) {
     addNewTaskButton[i].classList.remove('hidden');
   }
 
-  for (var i = 0; i < existingTasks.length; i++) {
+   for (var i = 0; i < existingTasks.length; i++) {
     existingTasks[i].remove();
   }
 }
@@ -84,6 +85,20 @@ function showPriorityList() {
   getPopup.classList.toggle('afterShowUp');
   const popupOverlay = document.getElementById('popupOverlayPriority');
   popupOverlay.addEventListener('click', closeModalPriority);
+}
+
+function showMoveToPopup(dataID) {
+  let moveToList = getMoveToPopup(dataID);
+
+  body.insertAdjacentHTML('beforeend', moveToList);
+  const priorityPopup = document.getElementById('popupPopupElement');
+  priorityPopup.classList.add(`left-[${mouse.x + 64}px]`);
+  priorityPopup.classList.add(`top-[${mouse.y - 128}px]`);
+  const getPopup = document.getElementById('popupPopupElement');
+  getPopup.classList.toggle('beforeShowUp');
+  getPopup.classList.toggle('afterShowUp');
+  const popupOverlay = document.getElementById('popupPopupOverlay');
+  popupOverlay.addEventListener('click', closeModalMoveTo);
 }
 
 function savePriority(name) {
@@ -147,6 +162,18 @@ function showTaskEditPopup(dataID) {
   closeAnyPopup();
   body.insertAdjacentHTML('beforeend', getTaskEditPopup(dataID));
   popupModalSettings();
+}
+
+function confirmMoving(boardID, dataID) {
+  let projectID = getProjectIdFromBoardId(boardID);
+  closeAnyPopup();
+  $.post('../utils/scripts/task/moveToAnotherBoard.php', {
+    boardID: boardID,
+    dataID:dataID,
+  }).done((data) => {
+    console.log(data);
+    reloadBoardData(projectID);
+  })
 }
 
 function saveTaskEdit(dataID, boardID) {
@@ -326,9 +353,7 @@ function saveData(boardID) {
   var taskName = document.getElementById(`task_${boardID}_edit`).value;
   const priority = document.getElementById('priorityListText').innerText;
   const board = document.getElementById(`${boardID}_name`);
-  const existingTasks = board.children.length-1;
-  cancelChanges(boardID);
-  if (taskName == "") taskName = `Task #${existingTasks}`;
+  if (taskName == "") taskName = `Task #${board.children.length-1}`;
   /*Adding the tasks to the database.  */
   setTimeout(() => {
     $.post('../utils/scripts/task/addNewTask.php', {
@@ -381,10 +406,21 @@ function closePriority() {
   }
 }
 
+function closeMoveTo() {
+  const getOverlay = document.getElementById('popupPopupOverlay');
+  if (getOverlay != null) {
+    getOverlay.remove();
+  }
+}
+
 function closeAnyPopup() {
   const getOverlay = document.getElementById('popupOverlay');
   if (getOverlay != null) {
     getOverlay.remove();
+  }
+  const getSecondLOverlay = document.getElementById('popupPopupOverlay');
+  if (getSecondLOverlay != null) {
+    getSecondLOverlay.remove();
   }
 }
 
@@ -394,4 +430,8 @@ const closeModal = (e) => {
 
 const closeModalPriority = (e) => {
   if (e.target === e.currentTarget) closePriority();
+};
+
+const closeModalMoveTo = (e) => {
+  if (e.target === e.currentTarget) closeMoveTo();
 };

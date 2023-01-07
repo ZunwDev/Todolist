@@ -10,7 +10,7 @@ function openProjectCreate() {
       <div id="popupElement" class="absolute flex left-0 right-0 ml-auto mr-auto top-28 flex-col h-fit w-80 shadow-lg bg-slate-50 rounded-lg beforeShowUp">
         <div class="deleteHeader flex flex-row w-full h-8 border-b border-slate-200 gap-4">
           <div class="my-1 ml-4 w-full h-full font-bold">New project</div>
-          <div class="ml-auto mt-1 mr-1 flex h-fit w-fit px-1 py-1 rounded-lg hover:bg-slate-200 cursor-pointer" onclick="closeAnyPopup()"><svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Pro 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/></svg></div>
+          <div class="ml-auto mt-1 mr-1 flex h-fit w-fit px-1 py-1 rounded-lg hover:bg-slate-200 cursor-pointer" onclick="closeAnyPopup()"><svg class="h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/></svg></div>
       </div>
       <form id="newProjectForm" class="app_appDialogForm flex flex-col w-full h-full bg-slate-50 rounded-b-lg" method="post">
           <div class="app_appFormField mt-4 px-6 flex flex-col gap-1">
@@ -77,7 +77,6 @@ function postCreateProject(projectName, projectDescription, colorName) {
   });
 }
 
-
 /**
  * It takes the values of the inputs and sends them to the server.
  */
@@ -115,14 +114,14 @@ function closeProject() {
   const getSidebar = document.getElementById('sidebar');
   const getSidebarProjectText = document.getElementById('app_appProjectTab');
   const projectSections = document.querySelectorAll(`section[id$='_id']`);
-  
+
   const lastClass = getSidebar.classList.item(getSidebar.classList.length - 1);
   getSidebar.classList.remove(lastClass);
   getSidebar.classList.add('bg-slate-100');
-  
+
   const lastClassText = getSidebarProjectText.classList.item(getSidebarProjectText.classList.length - 1);
   getSidebarProjectText.classList.remove(lastClassText);
-  getSidebarProjectText.classList.add('hover:bg-slate-200')
+  getSidebarProjectText.classList.add('hover:bg-slate-200');
 
   projectSections[0].remove();
   $('#project_grid').show();
@@ -139,14 +138,14 @@ function getHTML(name, light, lightplus, lightlow, color, id) {
   const lastClass = getSidebar.classList.item(getSidebar.classList.length - 1);
   getSidebar.classList.remove(lastClass);
   getSidebar.classList.add(lightlow);
-  
+
   const lastClassText = getSidebarProjectText.classList.item(getSidebarProjectText.classList.length - 1);
   getSidebarProjectText.classList.remove(lastClassText);
   getSidebarProjectText.classList.add('hover:' + lightplus);
-  
+
   return `
           <section id="${name}_id" class="flex flex-col overflow-x-auto overflow-y-hidden h-full bg-slate-100 w-full">
-            <div class="flex flex-row h-10 mt-4 gap-2 w-full">
+            <div class="flex flex-row h-10 gap-2 w-full border-b border-slate-300 bg-slate-50">
               <div class="flex w-fit h-full px-4">
                 <div class="flex text-2xl truncate text-gray-700 h-8 mx-2 my-auto">${name}</div>
               </div>
@@ -155,7 +154,7 @@ function getHTML(name, light, lightplus, lightlow, color, id) {
                   <svg class="w-5 h-5 mx-auto my-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M120 256c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm160 0c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm104 56c-30.9 0-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56s-25.1 56-56 56z"/></svg></div>
               </div>
             </div>
-            <section id="boards" class="flex flex-row mt-4 ml-4 gap-4 overflow-x-auto overflow-y-hidden"></section>
+            <section id="boards" class="flex flex-row mt-4 ml-4 gap-4 h-full overflow-x-auto overflow-y-hidden"></section>
           </section>`;
 }
 
@@ -224,7 +223,6 @@ window object that listens for the popstate event. When the popstate event is fi
 closeProject() function. */
 if (window.history?.pushState) {
   $(window).on('popstate', () => {
-
     closeProject();
   });
 }
