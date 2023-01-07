@@ -73,15 +73,8 @@ if (mysqli_num_rows($result) > 0) {
         $editColor = "bg-{$split[1]}-{$mod}/50";
         $textColor = $mod > 400 ? "text-{$split[1]}-{$mod}" : "text-{$split[1]}-{$split[2]}";
         echo '<div class="flex h-fit w-fit px-2 text-sm my-auto rounded-full ' . $editColor . " " . $textColor . ' justify-center">' . $f['total'] . '</div>';
-        echo '<div class="flex w-fit px-1 py-1 h-fit py-1 mr-2 ml-auto my-1 transition ease-in-out hover:bg-slate-200 cursor-pointer rounded-lg" onclick="showColumnManagePopup(`' . $boards['boardID'] . '`)"><svg class="w-4 px-auto h-4 fill-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM64 256c0-17.7 14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H96c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></div>';
+        echo '<div class="flex w-fit px-1 py-1 h-fit py-1 ml-auto my-1 transition ease-in-out hover:bg-slate-200 cursor-pointer rounded-lg" onclick="showColumnManagePopup(`' . $boards['boardID'] . '`)"><svg class="w-4 px-auto h-4 fill-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM64 256c0-17.7 14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H96c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></div>';
         echo '</div>';
-        //Progress bar
-/*         echo '<div class="flex flex-row">';
-        echo '<div id="prog-bar" class="rounded-full flex w-full h-2 bg-gray-200 my-auto">';
-        echo '  <div class="w-[' . $percentComplete . '%] bg-lime-500 rounded-full transition-all animate-pulse"></div>';
-        echo '</div>';
-        echo '<div class="flex h-fit w-fit px-2 text-sm">' . round($percentComplete) . '%</div>';
-        echo '</div>';*/
         echo '</div>';
         //Start of boards
         echo '<div id="' . $boards['boardID'] . '_name" class="overflow-y-auto flex flex-col gap-2">';
