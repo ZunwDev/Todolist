@@ -29,13 +29,9 @@ function popupModalSettingsT2() {
  * When the user clicks the button, the button expands and a text input appears
  */
 function expandBoardCreate() {
-  $('.newBoard').toggleClass('h-8');
-  $('.newBoard').toggleClass('h-20');
-  $('.newBoard').toggleClass('bg-slate-100');
-  $('.newBoardButton').toggleClass('w-64');
-  $('.newBoardButton').toggleClass('w-[13rem]');
-  $('.acceptBoard').toggleClass('w-64');
-  $('.acceptBoard').toggleClass('w-[13rem]');
+  $('.newBoard').toggleClass('h-8').toggleClass('h-20').toggleClass('bg-slate-100');
+  $('.newBoardButton').toggleClass('w-64').toggleClass('w-[13rem]');
+  $('.acceptBoard').toggleClass('w-64').toggleClass('w-[13rem]');
   $('.newBoardButton').toggleClass('hidden');
   $('.acceptBoard').toggleClass('hidden');
   $('.newBoardCancel').toggleClass('hidden');
@@ -171,7 +167,6 @@ function confirmMoving(boardID, dataID) {
     boardID: boardID,
     dataID:dataID,
   }).done((data) => {
-    console.log(data);
     reloadBoardData(projectID);
   })
 }
@@ -312,7 +307,7 @@ function addNewTask(boardID) {
     `
     <div id="board_${boardID}_edit" class="flex flex-col edit gap-2">
     <div class="w-full h-fit mt-1 bg-slate-200 flex-col border border-slate-400 rounded-md">
-      <textarea id="task_${boardID}_edit" maxlength="64" class="border-b border-slate-300 flex mt-[0.2px] form-control h-8 resize-none bg-transparent overflow-y-hidden pt-1 pl-2 w-full focus:text-slate-700 focus:bg-slate-50 focus:rounded-tr-md focus:rounded-tl-md focus:border focus:outline-none focus:border-slate-600">Task #${
+      <textarea autofocus autoselect id="task_${boardID}_edit" maxlength="64" class="border-b border-slate-300 flex mt-[0.2px] form-control h-8 resize-none bg-transparent overflow-y-hidden pt-1 pl-2 w-full focus:text-slate-700 focus:bg-slate-50 focus:rounded-tr-md focus:rounded-tl-md focus:border focus:outline-none focus:border-slate-600">Task #${
       existingTasks + 1
     }</textarea>
       <input id="dueTo" class="flex w-full mt-0.5 mx-[0.1px] form-control px-4 bg-transparent focus:text-slate-700 border-b border-slate-300 focus:bg-slate-50 focus:border focus:outline-none focus:border-slate-600" type="date"></input>
@@ -341,7 +336,6 @@ function addNewTask(boardID) {
   /* Focusing and select the the last input element. */
   const input = document.getElementById(`task_${boardID}_edit`);
   setTimeout(() => {
-    input.focus();
     input.select();
   }, 0);
 }
@@ -374,12 +368,8 @@ function cancelChanges(boardID) {
 
 function isChecked(taskID) {
   let projectID = getProjectIdFromTaskId(taskID);
-  /* Getting the state of the checkbox and then updating it. */
-  let state = getCheckState(taskID);
-  const changedState = state == 1 ? 0 : 1;
   /* Updating the state of the checkbox. */
   $.post('../utils/scripts/db/updateCheckboxState.php', {
-    state: changedState,
     dataID: taskID,
   }).done((data) => reloadBoardData(projectID));
 }

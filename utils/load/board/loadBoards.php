@@ -128,7 +128,7 @@ echo '<div title="Add a new column" class="newBoardButton flex w-64 transition-[
 echo '<span class="mx-auto my-auto text-sm">+ Add column</span>';
 echo '</div>';
 echo '<div title="Add a new column" class="acceptBoard flex w-64 transition-[width] ease-in-out duration-200 text-lg bg-lime-400 hover:bg-lime-500 rounded-md cursor-pointer hidden" onclick="addBoard(`' . $projectID . '`)">';
-echo '<span class="mx-auto my-auto">Add column</span>';
+echo '<span class="mx-auto my-auto text-sm">Add column</span>';
 echo '</div>';
 echo '<div title="Close" class="newBoardCancel flex w-8 h-8 bg-slate-200 hover:bg-slate-300 rounded-lg transition z-50 ease-in-out duration-200 hidden cursor-pointer" onclick="expandBoardCreate()">';
 echo '<svg class="flex w-3 h-3 mx-auto my-auto fill-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/></svg></div>';

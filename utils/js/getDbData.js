@@ -75,17 +75,6 @@ function getColumnEditPopup(id) {
   return data.responseText;
 }
 
-function getCheckState(id) {
-  const data = $.ajax('../utils/scripts/db/getCheckStatus.php', {
-    async: false,
-    type: 'POST',
-    data: {
-      dataID: id,
-    },
-  });
-  return data.responseText;
-}
-
 function getTaskEditPopup(id) {
   const data = $.ajax('../utils/load/task/loadTaskEditPopup.php', {
     async: false,
@@ -151,6 +140,17 @@ function getMoveToPopup(id) {
     data: {
       projectID: projID,
       dataID: id,
+    },
+  });
+  return data.responseText;
+}
+
+function getFavoriteStatus(id) {
+  const data = $.ajax('../TodoList/utils/scripts/db/getFavoriteStatus.php', {
+    async: false,
+    type: 'POST',
+    data: {
+      projectID: id,
     },
   });
   return data.responseText;

@@ -34,8 +34,10 @@ function resetAllColorsAndAddNew(name) {
   const findColorElement = document.getElementById(name);
   const toRemove = document.getElementsByClassName('rounded-full');
   for (const element of toRemove) {
-    element.classList.add('rounded-xl');
-    element.classList.remove('rounded-full');
+    if (element.id != "") {
+      element.classList.remove('rounded-full');
+      element.classList.add('rounded-xl');
+    }
   }
   findColorElement.classList.add('rounded-full');
 }
