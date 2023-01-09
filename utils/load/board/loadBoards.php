@@ -82,10 +82,10 @@ if (mysqli_num_rows($result) > 0) {
         while ($board_data = mysqli_fetch_array($resultBD)) {
             if ($board_data['board_check'] == 0) {
                 //Unchecked checkboxes
-                echo '<section class="flex flex-shrink-0 flex-col py-1 bg-slate-50 rounded-md group shadow-md relative">';
+                echo '<section id="'. $board_data['dataID'] .'_taskChecked" class="flex flex-shrink-0 flex-col py-1 bg-slate-50 rounded-md group shadow-md relative">';
                 echo '  <div class="flex-shrink-0 flex flex-row px-2">';
-                echo '      <div title="Mark complete" class="flex h-6 w-6 border-2 flex-shrink-0 border-gray-300 rounded-full bg-slate-50 cursor-pointer" onclick="isChecked(`' . $board_data['dataID'] . '`)">';
-                echo '          <svg class="h-3 w-3 flex my-auto fill-gray-300 mx-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>';
+                echo '      <div id="'. $board_data['dataID'] .'" title="Mark complete" class="flex transition duration-300 h-6 w-6 border-2 flex-shrink-0 border-gray-300 rounded-full bg-slate-50 cursor-pointer" onclick="isChecked(`' . $board_data['dataID'] . '`)">';
+                echo '          <svg id="'. $board_data['dataID'] .'_check" class="h-3 w-3 flex my-auto fill-gray-300 transition duration-300 mx-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>';
                 echo '      </div>';
                 echo '  <div class="w-full flex text-sm my-auto px-2 pr-8 break-all">' . $board_data['board_data'] . '</div>';
                 echo '      <div title="More actions" class="flex w-fit px-2 left-[14.5rem] absolute opacity-0 cursor-pointer transition ease-in-out hover:bg-slate-200 rounded-lg group-hover:opacity-100" onclick="showTaskManagePopup(`' . $board_data['dataID'] . '`)"><svg class="w-4 px-auto h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M120 256c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm160 0c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm104 56c-30.9 0-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56s-25.1 56-56 56z"/></svg>';
@@ -96,10 +96,10 @@ if (mysqli_num_rows($result) > 0) {
                 echo '</section>';
             } else {
                 //Checked out checkboxes
-                echo '<section class="flex flex-shrink-0 flex-col py-1 bg-slate-50 opacity-80 rounded-md group shadow-md relative">';
+                echo '<section id="'. $board_data['dataID'] .'_taskChecked" class="flex flex-shrink-0 flex-col py-1 bg-slate-50 transition duration-300 opacity-70 rounded-md group shadow-md relative">';
                 echo '  <div class="flex-shrink-0 flex flex-row px-2">';
-                echo '      <div title="Mark incomplete" class="flex h-6 w-6 border-2 flex-shrink-0 border-lime-600 rounded-full bg-lime-500 cursor-pointer" onclick="isChecked(`' . $board_data['dataID'] . '`)">';
-                echo '          <svg class="h-3 w-3 flex my-auto fill-white mx-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>';
+                echo '      <div id="'. $board_data['dataID'] .'" title="Mark incomplete" class="flex h-6 w-6 transition duration-300 border-2 flex-shrink-0 border-lime-600 rounded-full bg-lime-500 cursor-pointer" onclick="isChecked(`' . $board_data['dataID'] . '`)">';
+                echo '          <svg id="'. $board_data['dataID'] .'_check" class="h-3 w-3 flex my-auto transition duration-300 fill-white mx-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>';
                 echo '      </div>';
                 echo '  <div class="w-full flex text-sm my-auto px-2 pr-8 break-all">' . $board_data['board_data'] . '</div>';
                 echo '      <div title="More actions" class="flex w-fit px-2 left-[14.5rem] absolute opacity-0 cursor-pointer transition ease-in-out hover:bg-slate-200 rounded-lg group-hover:opacity-100" onclick="showTaskManagePopup(`' . $board_data['dataID'] . '`)"><svg class="w-4 px-auto h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M120 256c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm160 0c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm104 56c-30.9 0-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56s-25.1 56-56 56z"/></svg>';

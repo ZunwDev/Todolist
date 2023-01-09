@@ -63,3 +63,7 @@ function URL(url) {
 function title(title) {
   document.title = title;
 }
+
+const classToggle = (el, ...args) => {
+  args.map(e => el.classList.toggle(e))
+}

@@ -145,8 +145,8 @@ function getMoveToPopup(id) {
   return data.responseText;
 }
 
-function getFavoriteStatus(id) {
-  const data = $.ajax('../TodoList/utils/scripts/db/getFavoriteStatus.php', {
+/* function getFavoriteStatus(id) {
+  const data = $.ajax('./utils/scripts/db/getFavoriteStatus.php', {
     async: false,
     type: 'POST',
     data: {
@@ -154,4 +154,4 @@ function getFavoriteStatus(id) {
     },
   });
   return data.responseText;
-}
+} */
