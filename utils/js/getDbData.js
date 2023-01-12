@@ -116,6 +116,17 @@ function getColumnManagePopup(id) {
   return data.responseText;
 }
 
+function getBoardFilterPopup(id) {
+  const data = $.ajax('../utils/load/board/loadBoardFilter.php', {
+    async: false,
+    type: 'post',
+    data: {
+      projectID: id,
+    },
+  });
+  return data.responseText;
+}
+
 function getDeletePopup(id, title, msg, reason) {
   closeAnyPopup();
   const data = $.ajax('../utils/load/other/loadDeletePopup.php', {

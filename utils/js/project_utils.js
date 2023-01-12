@@ -112,14 +112,10 @@ function closeProjectSidebar(id, color, projectName) {
  */
 function closeProject() {
   const getSidebar = document.getElementById('sidebar');
-  const getSidebarProjectText = document.getElementById('app_appProjectTab');
   const projectSections = document.querySelectorAll(`section[id$='_id']`);
 
   const lastClass = getSidebar.classList.item(getSidebar.classList.length - 1);
   getSidebar.classList.replace(lastClass, 'bg-slate-100');
-
-  const lastClassText = getSidebarProjectText.classList.item(getSidebarProjectText.classList.length - 1);
-  getSidebarProjectText.classList.replace(lastClassText, 'hover:bg-slate-200');
 
   projectSections[0].remove();
   $('#project_grid').show();
@@ -129,15 +125,10 @@ function closeProject() {
   title('TodoList');
 }
 
-function getHTML(name, lightplus, lightlow, id) {
+function getHTML(name, lightlow, id) {
   const getSidebar = document.getElementById('sidebar');
-  const getSidebarProjectText = document.getElementById('app_appProjectTab');
-
   const lastClass = getSidebar.classList.item(getSidebar.classList.length - 1);
   getSidebar.classList.replace(lastClass, lightlow);
-
-  const lastClassText = getSidebarProjectText.classList.item(getSidebarProjectText.classList.length - 1);
-  getSidebarProjectText.classList.replace(lastClassText, 'hover:' + lightplus);
 
   /*
    let favState = getFavoriteStatus(id);
@@ -152,9 +143,14 @@ function getHTML(name, lightplus, lightlow, id) {
               <div class="flex w-fit h-full px-4">
                 <div class="flex text-2xl truncate text-gray-700 h-8 mx-2 my-auto">${name}</div>
               </div>
-              <div class="flex flex-row gap-1 ml-auto mr-1">
-                <div title="Project settings" class="flex w-fit h-fit px-2 py-2 rounded-full my-auto mr-4 hover:bg-slate-300 transition ease-in-out duration-200 cursor-pointer group" onclick="showProjectEdit('${id}')">
-                  <svg class="w-5 h-5 mx-auto my-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M120 256c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm160 0c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm104 56c-30.9 0-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56s-25.1 56-56 56z"/></svg></div>
+              <div title="Filter" class="flex flex-row w-fit h-fit px-2 py-1 my-auto gap-2 rounded-full hover:bg-slate-300 transition cursor-pointer" onclick="showBoardFilterPopup('${id}')">
+                <svg class="flex w-3 h-3 mx-auto my-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M3.9 54.9C10.5 40.9 24.5 32 40 32H472c15.5 0 29.5 8.9 36.1 22.9s4.6 30.5-5.2 42.5L320 320.9V448c0 12.1-6.8 23.2-17.7 28.6s-23.8 4.3-33.5-3l-64-48c-8.1-6-12.8-15.5-12.8-25.6V320.9L9 97.3C-.7 85.4-2.8 68.8 3.9 54.9z"/></svg>
+                <div class="flex text-sm">Filter</div>                
+              </div>
+              <div class="flex flex-row-reverse gap-1 ml-auto mr-1">
+                <div title="Project settings" class="flex w-fit h-fit px-2 py-1 rounded-full my-auto mr-4 hover:bg-slate-300 transition cursor-pointer group" onclick="showProjectEdit('${id}')">
+                  <svg class="w-5 h-5 mx-auto my-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M120 256c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm160 0c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm104 56c-30.9 0-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56s-25.1 56-56 56z"/></svg>
+                </div>
               </div>
             </div>
             <section id="boards" class="flex flex-row mt-4 ml-4 gap-4 h-full overflow-x-auto overflow-y-hidden"></section>
@@ -185,7 +181,7 @@ function openProjectSidebar(id, color, projectName) {
   //New window
   getProjectWindow[0].insertAdjacentHTML(
     'beforeend',
-    getHTML(projectName, colorClass.getLighter(300), colorClass.getLighter(400), id)
+    getHTML(projectName, colorClass.getLighter(400), id)
   );
   setTimeout(() => {
     document.getElementById('boards').innerText = '';
@@ -214,7 +210,6 @@ function openProject(id) {
     'beforeend',
     getHTML(
       projectName,
-      colorClass.getLighter(300),
       colorClass.getLighter(400),
       id
     )

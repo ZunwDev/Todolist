@@ -8,8 +8,8 @@ if (!isset($_SESSION['login_user'])) {
 }
 /* Checking if the user is an admin or not. */
 if (isset($_SESSION['login_user'])) {
-    $usrname = $_SESSION['login_user'];
-    $q = "select roleID from user where username = '$usrname'";
+    $username = $_SESSION['login_user'];
+    $q = "SELECT roleID FROM user WHERE username = '$username'";
     $f = mysqli_fetch_assoc(mysqli_query($conn, $q));
     $adminState = $f['roleID'];
 }

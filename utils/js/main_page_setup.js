@@ -6,21 +6,21 @@ function setClassToBeggining(element, classToAdd) {
 
 function expandSidebar() {
   if ($('#sidebar').hasClass('shrinkSidebar')) {
+    show('sidebar');
     let sidebar = document.getElementById('sidebar');
     sidebar.classList.remove('shrinkSidebar');
     setClassToBeggining('sidebar', 'expandSidebar');
     setTimeout(() => {
       $('.app_appProjectsContainer').addClass('pl-64');
     }, 100);
-    show('tabContainer');
     return;
   }
   sidebar.classList.remove('expandSidebar');
   setClassToBeggining('sidebar', 'shrinkSidebar');
   setTimeout(() => {
     $('.app_appProjectsContainer').removeClass('pl-64');
+    $('#sidebar').hide();
   }, 100);
-  $('#tabContainer').hide();
 }
 
 function toggleAngle() {

@@ -11,16 +11,14 @@ function addBoard(id) {
 
 function popupModalSettings() {
   const getPopup = document.getElementById('popupElement');
-  getPopup.classList.toggle('beforeShowUp');
-  getPopup.classList.toggle('afterShowUp');
+  classToggle(getPopup, 'beforeShowUp', 'afterShowUp');
   const popupOverlay = document.getElementById('popupOverlay');
   popupOverlay.addEventListener('click', closeModal);
 }
 
 function popupModalSettingsT2() {
   const getPopup = document.getElementById('popupPopupElement');
-  getPopup.classList.toggle('beforeShowUp');
-  getPopup.classList.toggle('afterShowUp');
+  classToggle(getPopup, 'beforeShowUp', 'afterShowUp');
   const popupOverlay = document.getElementById('popupPopupOverlay');
   popupOverlay.addEventListener('click', closeModalMoveTo);
 }
@@ -29,9 +27,9 @@ function popupModalSettingsT2() {
  * When the user clicks the button, the button expands and a text input appears
  */
 function expandBoardCreate() {
-  $('.newBoard').toggleClass('h-8').toggleClass('h-20').toggleClass('bg-slate-100');
-  $('.newBoardButton').toggleClass('w-64').toggleClass('w-[13rem]');
-  $('.acceptBoard').toggleClass('w-64').toggleClass('w-[13rem]');
+  classToggle(document.getElementsByClassName('newBoard')[0], 'h-8', 'h-20', 'bg-slate-100');
+  classToggle(document.getElementsByClassName('newBoardButton')[0], 'w-64', 'w-[13rem]');
+  classToggle(document.getElementsByClassName('acceptBoard')[0], 'w-64', 'w-[13rem]');
   $('.newBoardButton').toggleClass('hidden');
   $('.acceptBoard').toggleClass('hidden');
   $('.newBoardCancel').toggleClass('hidden');
@@ -73,12 +71,9 @@ function showPriorityList() {
   let priorityList = getPriorityListPopup();
 
   body.insertAdjacentHTML('beforeend', priorityList);
-  const priorityPopup = document.getElementById('popupElementPriority');
-  priorityPopup.classList.add(`left-[${mouse.x + 8}px]`);
-  priorityPopup.classList.add(`top-[${mouse.y - 128}px]`);
-  const getPopup = document.getElementById('popupElementPriority');
-  getPopup.classList.toggle('beforeShowUp');
-  getPopup.classList.toggle('afterShowUp');
+  const popup = document.getElementById('popupElementPriority');
+  popup.classList.add(`left-[${mouse.x + 8}px]`, `top-[${mouse.y - 128}px]`);
+  classToggle(popup, 'beforeShowUp', 'afterShowUp');
   const popupOverlay = document.getElementById('popupOverlayPriority');
   popupOverlay.addEventListener('click', closeModalPriority);
 }
@@ -87,32 +82,23 @@ function showMoveToPopup(dataID) {
   let moveToList = getMoveToPopup(dataID);
 
   body.insertAdjacentHTML('beforeend', moveToList);
-  const priorityPopup = document.getElementById('popupPopupElement');
-  priorityPopup.classList.add(`left-[${mouse.x + 64}px]`);
-  priorityPopup.classList.add(`top-[${mouse.y - 128}px]`);
-  const getPopup = document.getElementById('popupPopupElement');
-  getPopup.classList.toggle('beforeShowUp');
-  getPopup.classList.toggle('afterShowUp');
+  const popup = document.getElementById('popupPopupElement');
+  popup.classList.add(`left-[${mouse.x + 64}px]`, `top-[${mouse.y - 128}px]`);
+  classToggle(popup, 'beforeShowUp', 'afterShowUp');
   const popupOverlay = document.getElementById('popupPopupOverlay');
   popupOverlay.addEventListener('click', closeModalMoveTo);
 }
 
 function savePriority(name) {
   closePriority();
-  switch (name) {
-    case 'High':
-      var color = 'bg-red-100';
-      break;
-    case 'Medium':
-      var color = 'bg-amber-100';
-      break;
-    case 'Low':
-      var color = 'bg-slate-100';
-      break;
-    default:
-      var color = 'bg-transparent';
-      break;
-  }
+  let colors = {
+    High: 'bg-red-100',
+    Medium: 'bg-amber-100',
+    Low: 'bg-slate-100',
+    None: 'bg-transparent',
+  };
+
+  const color = colors[name];
   const prioritySel = document.getElementById('priorityList');
   for (let i = 0; i < 2; i++) {
     prioritySel.classList.remove(prioritySel.classList.toString().split(' ').pop());
@@ -140,24 +126,45 @@ function setPopupToCorrectPos() {
   el.classList.add(`left-[${mouse.x + window.scrollX + 16}px]`);
 }
 
-function showTaskManagePopup(dataID) {
+function openPopupUnderButton() {
+  let el = document.getElementById('popupElement');
+  el.classList.add(`top-[${mouse.y + 32}px]`);
+  el.classList.add(`left-[${mouse.x - 64}px]`);
+}
+
+function showPopup(htmlString, setPosFunction, closeAnyPopup) {
   closeAnyPopup();
-  body.insertAdjacentHTML('beforeend', getTaskManagePopup(dataID));
-  setPopupToCorrectPos();
+  body.insertAdjacentHTML('beforeend', htmlString);
+  setPosFunction();
   popupModalSettings();
+}
+
+function showTaskManagePopup(dataID) {
+  showPopup(getTaskManagePopup(dataID), setPopupToCorrectPos, closeAnyPopup);
 }
 
 function showColumnManagePopup(boardID) {
-  closeAnyPopup();
-  body.insertAdjacentHTML('beforeend', getColumnManagePopup(boardID));
-  setPopupToCorrectPos();
-  popupModalSettings();
+  showPopup(getColumnManagePopup(boardID), setPopupToCorrectPos, closeAnyPopup);
 }
 
 function showTaskEditPopup(dataID) {
-  closeAnyPopup();
-  body.insertAdjacentHTML('beforeend', getTaskEditPopup(dataID));
-  popupModalSettings();
+  showPopup(getTaskEditPopup(dataID), () => {}, closeAnyPopup);
+}
+
+function showColumnEdit(boardID) {
+  showPopup(getColumnEditPopup(boardID), () => {}, closeAnyPopup);
+}
+
+function showProjectEdit(id) {
+  showPopup(
+    getProjectEditPopup(id),
+    () => {},
+    () => {}
+  );
+}
+
+function showBoardFilterPopup(boardID) {
+  showPopup(getBoardFilterPopup(boardID), openPopupUnderButton, closeAnyPopup);
 }
 
 function confirmMoving(boardID, dataID) {
@@ -186,28 +193,17 @@ function saveTaskEdit(dataID, boardID) {
   let finalDueTo = newDueTo == '' ? '0000-00-00' : newDueTo;
   let finalPriority = newPriority == '' ? 'None' : newPriority;
 
-  setTimeout(() => {
-    $.post('../utils/scripts/task/saveTaskEdit.php', {
-      dataID,
-      task_name: newTaskName,
-      task_description: finalTaskDescription,
-      task_dueTo: finalDueTo,
-      task_priority: finalPriority,
-    }).done((data) => {
+  $.post('../utils/scripts/task/saveTaskEdit.php', {
+    dataID,
+    task_name: newTaskName,
+    task_description: finalTaskDescription,
+    task_dueTo: finalDueTo,
+    task_priority: finalPriority,
+  }).done((data) => {
+    setTimeout(() => {
       reloadBoardData(projectID);
-    });
-  }, 30);
-}
-
-function showColumnEdit(boardID) {
-  closeAnyPopup();
-  body.insertAdjacentHTML('beforeend', getColumnEditPopup(boardID));
-  popupModalSettings();
-}
-
-function showProjectEdit(id) {
-  body.insertAdjacentHTML('beforeend', getProjectEditPopup(id));
-  popupModalSettings();
+    }, 30);
+  });
 }
 
 function postUpdateProject(projectName, projectDescription, colorName, projectID) {
@@ -250,22 +246,15 @@ function showColumnDeleteWarning(id) {
 }
 
 function confirmDelete(id, delReason) {
-  switch (delReason) {
-    case 'projDel':
-      var link = '../utils/scripts/project/deleteProject.php';
-      break;
-    case 'colCl':
-      var link = '../utils/scripts/board/clearColumn.php';
-      var projectID = getProjectIdFromBoardId(id);
-      break;
-    case 'colDel':
-      var link = '../utils/scripts/board/deleteColumn.php';
-      var projectID = getProjectIdFromBoardId(id);
-      break;
-    case 'taskDel':
-      var link = '../utils/scripts/task/deleteTask.php';
-      var projectID = getProjectIdFromTaskId(id);
-  }
+  const projectID = getProjectIdFromBoardId(id);
+  const links = {
+    projDel: '../utils/scripts/project/deleteProject.php',
+    colCl: '../utils/scripts/board/clearColumn.php',
+    colDel: '../utils/scripts/board/deleteColumn.php',
+    taskDel: '../utils/scripts/task/deleteTask.php',
+  };
+
+  var link = links[delReason];
   $.post(link, {
     id,
   }).done((data) => {
@@ -342,21 +331,22 @@ function addNewTask(boardID) {
 
 function saveData(boardID) {
   let projectID = getProjectIdFromBoardId(boardID);
-  /* Getting all the task names from the input fields. */
   const getDate = document.getElementById('dueTo').value;
   var taskName = document.getElementById(`task_${boardID}_edit`).value;
   const priority = document.getElementById('priorityListText').innerText;
   const board = document.getElementById(`${boardID}_name`);
   if (taskName == '') taskName = `Task #${board.children.length - 1}`;
-  /*Adding the tasks to the database.  */
-  setTimeout(() => {
-    $.post('../utils/scripts/task/addNewTask.php', {
-      boardID,
-      nameOfTask: taskName,
-      date: getDate,
-      priority,
-    }).done((data) => reloadBoardData(projectID));
-  }, 20);
+
+  $.post('../utils/scripts/task/addNewTask.php', {
+    boardID,
+    nameOfTask: taskName,
+    date: getDate,
+    priority,
+  }).done((data) => {
+    setTimeout(() => {
+      reloadBoardData(projectID);
+    }, 20);
+  });
 }
 
 function cancelChanges(boardID) {
@@ -367,19 +357,17 @@ function cancelChanges(boardID) {
 }
 
 function isChecked(taskID) {
+  closeAnyPopup();
   let check = document.getElementById(taskID);
   let checkmark = document.getElementById(taskID + '_check');
   let taskChecked = document.getElementById(taskID + '_taskChecked');
   classToggle(check, 'border-gray-300', 'bg-slate-50', 'border-lime-600', 'bg-lime-500');
   classToggle(checkmark, 'fill-gray-300', 'fill-white');
   classToggle(taskChecked, 'opacity-70');
-  let projectID = getProjectIdFromTaskId(taskID);
   /* Updating the state of the checkbox. */
-  setTimeout(() => {
-    $.post('../utils/scripts/db/updateCheckboxState.php', {
-      dataID: taskID,
-    }).done((data) => reloadBoardData(projectID));
-  }, 300);
+  $.post('../utils/scripts/db/updateCheckboxState.php', {
+    dataID: taskID,
+  });
 }
 
 $(document).keyup((e) => {
