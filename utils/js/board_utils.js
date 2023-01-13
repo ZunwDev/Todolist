@@ -9,18 +9,11 @@ function addBoard(id) {
   }).done((data) => reloadBoardData(id));
 }
 
-function popupModalSettings() {
+function popupModalSettings(listener, overlay) {
   const getPopup = document.getElementById('popupElement');
   classToggle(getPopup, 'beforeShowUp', 'afterShowUp');
-  const popupOverlay = document.getElementById('popupOverlay');
-  popupOverlay.addEventListener('click', closeModal);
-}
-
-function popupModalSettingsT2() {
-  const getPopup = document.getElementById('popupPopupElement');
-  classToggle(getPopup, 'beforeShowUp', 'afterShowUp');
-  const popupOverlay = document.getElementById('popupPopupOverlay');
-  popupOverlay.addEventListener('click', closeModalMoveTo);
+  const popupOverlay = document.getElementById(overlay);
+  popupOverlay.addEventListener('pointerdown', listener);
 }
 
 /**
@@ -132,39 +125,57 @@ function openPopupUnderButton() {
   el.classList.add(`left-[${mouse.x - 64}px]`);
 }
 
-function showPopup(htmlString, setPosFunction, closeAnyPopup) {
+function showPopup(htmlString, setPosFunction, closeAnyPopup, modalSettings, overlay = 'popupOverlay') {
   closeAnyPopup();
   body.insertAdjacentHTML('beforeend', htmlString);
   setPosFunction();
-  popupModalSettings();
+  popupModalSettings(modalSettings, overlay);
 }
 
 function showTaskManagePopup(dataID) {
-  showPopup(getTaskManagePopup(dataID), setPopupToCorrectPos, closeAnyPopup);
+  showPopup(getTaskManagePopup(dataID), setPopupToCorrectPos, closeAnyPopup, closeModal);
 }
 
 function showColumnManagePopup(boardID) {
-  showPopup(getColumnManagePopup(boardID), setPopupToCorrectPos, closeAnyPopup);
+  showPopup(getColumnManagePopup(boardID), setPopupToCorrectPos, closeAnyPopup, closeModal);
 }
 
 function showTaskEditPopup(dataID) {
-  showPopup(getTaskEditPopup(dataID), () => {}, closeAnyPopup);
+  showPopup(getTaskEditPopup(dataID), () => {}, closeAnyPopup, closeModal);
 }
 
 function showColumnEdit(boardID) {
-  showPopup(getColumnEditPopup(boardID), () => {}, closeAnyPopup);
+  showPopup(getColumnEditPopup(boardID), () => {}, closeAnyPopup, closeModal);
 }
 
 function showProjectEdit(id) {
   showPopup(
     getProjectEditPopup(id),
     () => {},
-    () => {}
+    () => {},
+    closeModal
   );
 }
 
-function showBoardFilterPopup(boardID) {
-  showPopup(getBoardFilterPopup(boardID), openPopupUnderButton, closeAnyPopup);
+function showBoardFilterPopup(projectID) {
+  showPopup(
+    getBoardFilterPopup(projectID),
+    openPopupUnderButton,
+    () => {},
+    (e) => closeFilterAndSave(e, projectID),
+    'popupOverlayFilter'
+  );
+  //Priority
+  let checkmarks = document.querySelectorAll('[id*="_priFil"], [id*="_termFil"], [id*="_taskFil"]');
+  let ids = Array.from(checkmarks).map((element) => element.id);
+  for (let i = 0; i < localStorage.length; i++) {
+    let curItem = localStorage.getItem(ids[i].slice(0, ids[i].indexOf('_')));
+    if (curItem == 'true') {
+      checkmarks[i].checked = curItem;
+    } else {
+      checkmarks[i].checked = '';
+    }
+  }
 }
 
 function confirmMoving(boardID, dataID) {
@@ -401,12 +412,53 @@ function closeMoveTo() {
 
 function closeAnyPopup() {
   const getOverlay = document.getElementById('popupOverlay');
+  const getSecondLOverlay = document.getElementById('popupPopupOverlay');
   if (getOverlay != null) {
     getOverlay.remove();
   }
-  const getSecondLOverlay = document.getElementById('popupPopupOverlay');
   if (getSecondLOverlay != null) {
     getSecondLOverlay.remove();
+  }
+}
+
+function closeFilter(id) {
+  const getOverlay = document.getElementById('popupOverlayFilter');
+  let getFilterButton = document.querySelector('.filter-button');
+  if (getOverlay != null) {
+    let checks = [];
+    const filter = document.querySelectorAll('[id*="_priFil"], [id*="_termFil"], [id*="_taskFil"]');
+    filter.forEach((element) => checks.push(element.id.slice(0, element.id.indexOf('_')) + '-' + element.checked));
+    const boards = document.getElementById('boards');
+    if (boards != null) {
+      document.getElementById('boards').innerText = '';
+      for (let i = 0; i < checks.length; i++) {
+        localStorage.setItem(
+          checks[i].slice(0, checks[i].indexOf('-')),
+          checks[i].slice(checks[i].indexOf('-') + 1, checks[i].length)
+        );
+      }
+      const getBoardArea = document.getElementById('boards');
+      getBoardArea.insertAdjacentHTML('afterbegin', getBoardData(id, checks.toString()));
+      if (checks.filter((el) => el.includes(true)).length > 0) {
+        getFilterButton.classList.add('bg-gray-200');
+        if (document.getElementById('filter-count') != null) {
+          document.getElementById('filter-count').remove();
+        }
+
+        getFilterButton.insertAdjacentHTML(
+          'beforeend',
+          `<div class="flex text-sm px-1.5 bg-white rounded-lg" id="filter-count">${
+            checks.filter((el) => el.includes(true)).length
+          }</div>`
+        );
+      } else {
+        getFilterButton.classList.remove('bg-gray-200');
+        if (document.getElementById('filter-count') != null) {
+          document.getElementById('filter-count').remove();
+        }
+      }
+    }
+    getOverlay.remove();
   }
 }
 
@@ -420,4 +472,8 @@ const closeModalPriority = (e) => {
 
 const closeModalMoveTo = (e) => {
   if (e.target === e.currentTarget) closeMoveTo();
+};
+
+const closeFilterAndSave = (e, projectID) => {
+  if (e.target === e.currentTarget) closeFilter(projectID);
 };

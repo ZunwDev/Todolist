@@ -42,12 +42,13 @@ function getProjectIdFromTaskId(id) {
   return data.responseText;
 }
 
-function getBoardData(id) {
+function getBoardData(id, filter="") {
   let data = $.ajax('../utils/load/board/loadBoards.php', {
     async: false,
     type: 'post',
     data: {
       projectID: id,
+      filter: filter,
     },
   });
   return data.responseText;

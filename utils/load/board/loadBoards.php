@@ -3,6 +3,7 @@ include "../../scripts/db/connectToDatabase.php";
 include "../../scripts/db/getUserID.php";
 
 $projectID = $_POST['projectID'];
+$filter = $_POST['filter'];
 
 $projectNameQ = "SELECT project_name FROM project WHERE projectID = '$projectID' AND userID = '$userID'";
 $projectNameF = mysqli_fetch_assoc(mysqli_query($conn, $projectNameQ));
@@ -59,7 +60,7 @@ function loadTasks($board_data)
     $colors = $board_data['board_check'] == 0 ? "border-gray-300 bg-slate-50" : "border-lime-600 bg-lime-500";
     $hasOpacity = $board_data['board_check'] == 0 ? "" : "opacity-70";
     $checkColor = $board_data['board_check'] == 0 ? "fill-gray-300" : "fill-white";
-    echo '<section id="' . $board_data['dataID'] . '_taskChecked" class="flex flex-shrink-0 flex-col py-1 rounded-md group '.$hasOpacity.' shadow-md relative bg-slate-50">';
+    echo '<section id="' . $board_data['dataID'] . '_taskChecked" class="flex flex-shrink-0 flex-col py-1 rounded-md group ' . $hasOpacity . ' shadow-md relative bg-slate-50">';
     echo '  <div class="flex-shrink-0 flex flex-row px-2">';
     echo '      <div id="' . $board_data['dataID'] . '" title="Mark complete" class="flex transition duration-300 h-6 w-6 border-2 flex-shrink-0 rounded-full cursor-pointer ' . $colors . '" onclick="isChecked(`' . $board_data['dataID'] . '`)">';
     echo '          <svg id="' . $board_data['dataID'] . '_check" class="h-3 w-3 flex my-auto ' . $checkColor . ' transition duration-300 mx-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>';
@@ -73,6 +74,44 @@ function loadTasks($board_data)
     echo '</section>';
 }
 
+function filter($filters)
+{
+    $currentTimestamp = time();
+    $nextTimestamp = strtotime(' +1 day');
+    $currentDate = date('Y-m-d', $currentTimestamp);
+    $nextDate = date('Y-m-d', $nextTimestamp);
+
+    explode("-", $filters[0])[1] == "true" ? $priority_conditions[] = "priority.priorityID = 1" : "";
+    explode("-", $filters[1])[1] == "true" ? $priority_conditions[] = "priority.priorityID = 2" : "";
+    explode("-", $filters[2])[1] == "true" ? $priority_conditions[] = "priority.priorityID = 3" : "";
+    explode("-", $filters[3])[1] == "true" ? $priority_conditions[] = "priority.priorityID = 4" : "";
+    explode("-", $filters[4])[1] == "true" ? $term_conditions[] = "board_data.dueTo = '$currentDate' " : "";
+    explode("-", $filters[5])[1] == "true" ? $term_conditions[] = "board_data.dueTo = '$nextDate'" : "";
+    explode("-", $filters[6])[1] == "true" ? $term_conditions[] = "board_data.dueTo < '$currentDate'" : "";
+    explode("-", $filters[7])[1] == "true" ? $term_conditions[] = "board_data.dueTo > '$nextDate'" : "";
+    explode("-", $filters[8])[1] == "true" ? $term_conditions[] = " board_data.dueTo = '0000-00-00'" : "";
+    explode("-", $filters[9])[1] == "true" ? $task_conditions[] = " board_check = '1'" : "";
+    explode("-", $filters[10])[1] == "true" ? $task_conditions[] = " board_check = '0'" : "";
+
+    if (!empty($priority_conditions)) {
+        $queryToAddPriority = " AND (" . implode(" OR ", $priority_conditions) . ")";
+    } else {
+        $queryToAddPriority = "";
+    }
+    if (!empty($term_conditions)) {
+        $queryToAddTerm = " AND (" . implode(" OR ", $term_conditions) . ")";
+    } else {
+        $queryToAddTerm = "";
+    }
+    if (!empty($task_conditions)) {
+        $queryToAddTask = " AND (" . implode(" OR ", $task_conditions) . ")";
+    } else {
+        $queryToAddTask = "";
+    }
+
+    return $queryToAddPriority . $queryToAddTerm . $queryToAddTask;
+}
+
 if (mysqli_num_rows($result) > 0) {
     while ($boards = mysqli_fetch_assoc($result)) {
         //Set flex area
@@ -82,9 +121,17 @@ if (mysqli_num_rows($result) > 0) {
         echo '<div class="flex flex-col px-2 gap-1">';
         echo '<div class="flex flex-row flex-shrink-0 transition ease-in-out duration-200 gap-2 h-8 text-lg rounded-lg">';
         echo '<span class="flex px-2 my-auto text-md font-medium truncate">' . $boards['board_name'] . '</span>';
-        $q = 'SELECT COUNT(*) as total FROM board_data WHERE boardID = ' . $boards['boardID'] . '';
+        $filters = explode(",", $filter);
+        $queryToAdd = "";
+        $priority_conditions = array();
+        $term_conditions = array();
+        if (!empty($filter)) {
+            $q = "SELECT COUNT(*) as total FROM board_data LEFT JOIN priority ON board_data.priorityID = priority.priorityID WHERE boardID = " . $boards['boardID'] . filter($filters);
+        } else {
+            $q = 'SELECT COUNT(*) as total FROM board_data WHERE boardID = ' . $boards['boardID'] . '';
+        }
         $f = mysqli_fetch_assoc(mysqli_query($conn, $q));
-        $qc = 'SELECT colors.color_code FROM project JOIN colors on project.colorID = colors.colorID WHERE projectID = ' . $projectID . ' AND userID = '.$userID.'';
+        $qc = 'SELECT colors.color_code FROM project JOIN colors on project.colorID = colors.colorID WHERE projectID = ' . $projectID . ' AND userID = ' . $userID . '';
         $fc = mysqli_fetch_assoc(mysqli_query($conn, $qc));
         $split = explode("-", $fc['color_code']);
         $mod = $split[2] - 400;
@@ -96,10 +143,20 @@ if (mysqli_num_rows($result) > 0) {
         echo '</div>';
         //Start of boards
         echo '<div id="' . $boards['boardID'] . '_name" class="overflow-y-auto flex flex-col gap-2">';
-        $q = "select board_data.dataID, board_data.board_data, board_data.dueTo, board_data.board_check, priority.priority_name, priority.priority_color from board_data left join priority on board_data.priorityID = priority.priorityID where boardID = " . $boards['boardID'] . "";
+        $filters = explode(",", $filter);
+        $queryToAdd = "";
+        $priority_conditions = array();
+        $term_conditions = array();
+        if (!empty($filter)) {
+            $q = "SELECT board_data.dataID, board_data.board_data, board_data.dueTo, board_data.board_check, priority.priority_name, priority.priority_color FROM board_data LEFT JOIN priority ON board_data.priorityID = priority.priorityID WHERE boardID = " . $boards['boardID'] . filter($filters);
+        } else {
+            $q = "SELECT board_data.dataID, board_data.board_data, board_data.dueTo, board_data.board_check, priority.priority_name, priority.priority_color FROM board_data LEFT JOIN priority ON board_data.priorityID = priority.priorityID WHERE boardID = " . $boards['boardID'] . "";
+        }
         $resultBD = mysqli_query($conn, $q);
-        while ($board_data = mysqli_fetch_array($resultBD)) {
-            loadTasks($board_data);
+        if (mysqli_num_rows($resultBD) > 0) {
+            while ($board_data = mysqli_fetch_array($resultBD)) {
+                loadTasks($board_data);
+            }
         }
         //End of board
         echo '<div id="' . $boards['boardID'] . '_add" class="flex h-8 hover:bg-slate-200 rounded-md cursor-pointer transition" onclick="addNewTask(`' . $boards['boardID'] . '`)">';

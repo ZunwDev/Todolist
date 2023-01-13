@@ -43,6 +43,9 @@ if (isset($_SESSION['login_user'])) {
     include "./utils/load/main/loadMainApp.php";
     include "./utils/load/main/loadProjectContainer.php";
     ?>
-</body>
 
+    <script>
+        localStorage.clear();
+    </script>
+</body>
 </html>
