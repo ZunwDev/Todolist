@@ -422,44 +422,48 @@ function closeAnyPopup() {
 }
 
 function closeFilter(id) {
-  const getOverlay = document.getElementById('popupOverlayFilter');
-  let getFilterButton = document.querySelector('.filter-button');
-  if (getOverlay != null) {
-    let checks = [];
-    const filter = document.querySelectorAll('[id*="_priFil"], [id*="_termFil"], [id*="_taskFil"]');
+  const checks = [];
+  const filter = document.querySelectorAll('[id*="_priFil"], [id*="_termFil"], [id*="_taskFil"]');
+  if ($('#popupOverlayFilter') != null) {
     filter.forEach((element) => checks.push(element.id.slice(0, element.id.indexOf('_')) + '-' + element.checked));
-    const boards = document.getElementById('boards');
-    if (boards != null) {
-      document.getElementById('boards').innerText = '';
+    if ($('#boards') != null) {
+      $('#boards').empty();
       for (let i = 0; i < checks.length; i++) {
         localStorage.setItem(
           checks[i].slice(0, checks[i].indexOf('-')),
           checks[i].slice(checks[i].indexOf('-') + 1, checks[i].length)
         );
       }
-      const getBoardArea = document.getElementById('boards');
-      getBoardArea.insertAdjacentHTML('afterbegin', getBoardData(id, checks.toString()));
+      $('#boards').prepend(getBoardData(id, checks.toString()));
       if (checks.filter((el) => el.includes(true)).length > 0) {
-        getFilterButton.classList.add('bg-gray-200');
-        if (document.getElementById('filter-count') != null) {
-          document.getElementById('filter-count').remove();
-        }
-
-        getFilterButton.insertAdjacentHTML(
-          'beforeend',
+        $('.filter-button').addClass('bg-gray-200');
+        if ($('#filter-count') != null) $('#filter-count').remove();
+        if ($('#filter-clear') != null) $('#filter-clear').remove();
+        $('.filter-button').append(
           `<div class="flex text-sm px-1.5 bg-white rounded-lg" id="filter-count">${
             checks.filter((el) => el.includes(true)).length
           }</div>`
         );
+        $('.filter-button').after(
+          `<div onclick="clearFilter('${id}')" id="filter-clear" class="flex text-sm px-1.5 my-auto cursor-pointer underline transition hover:text-black/50">Clear filters</div>`
+        );
       } else {
-        getFilterButton.classList.remove('bg-gray-200');
-        if (document.getElementById('filter-count') != null) {
-          document.getElementById('filter-count').remove();
-        }
+        $('.filter-button').removeClass('bg-gray-200');
+        if ($('#filter-count') != null) $('#filter-count').remove();
+        if ($('#filter-clear') != null) $('#filter-clear').remove();
       }
     }
-    getOverlay.remove();
+    $('#popupOverlayFilter').remove();
   }
+}
+
+function clearFilter(id) {
+  localStorage.clear();
+  if ($('#filter-count') != null) $('#filter-count').remove();
+  if ($('#filter-clear') != null) $('#filter-clear').remove();
+  $('.filter-button').removeClass('bg-gray-200');
+  $('#boards').empty();
+  $('#boards').prepend(getBoardData(id));
 }
 
 const closeModal = (e) => {
