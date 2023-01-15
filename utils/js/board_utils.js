@@ -257,7 +257,6 @@ function showColumnDeleteWarning(id) {
 }
 
 function confirmDelete(id, delReason) {
-  const projectID = getProjectIdFromBoardId(id);
   const links = {
     projDel: '../utils/scripts/project/deleteProject.php',
     colCl: '../utils/scripts/board/clearColumn.php',
@@ -265,8 +264,12 @@ function confirmDelete(id, delReason) {
     taskDel: '../utils/scripts/task/deleteTask.php',
   };
 
-  var link = links[delReason];
-  $.post(link, {
+  let projectID = (delReason == "taskDel") ? getProjectIdFromTaskId(id) : getProjectIdFromBoardId(id);
+  if (delReason == "taskDel") {
+    let log = new Log(projectID, id, null);
+    log.logRemoveTask(getTaskNameFromTaskId(id), getBoardNameFromTaskId(id));
+  }
+  $.post(links[delReason], {
     id,
   }).done((data) => {
     delReason != 'projDel' ? reloadBoardData(projectID) : window.location.reload();
@@ -342,12 +345,13 @@ function addNewTask(boardID) {
 
 function saveData(boardID) {
   let projectID = getProjectIdFromBoardId(boardID);
+  let boardName = getBoardNameFromBoardId(boardID);
   const getDate = document.getElementById('dueTo').value;
   var taskName = document.getElementById(`task_${boardID}_edit`).value;
   const priority = document.getElementById('priorityListText').innerText;
   const board = document.getElementById(`${boardID}_name`);
   if (taskName == '') taskName = `Task #${board.children.length - 1}`;
-
+  let log = new Log(projectID, null, boardID);
   $.post('../utils/scripts/task/addNewTask.php', {
     boardID,
     nameOfTask: taskName,
@@ -358,6 +362,7 @@ function saveData(boardID) {
       reloadBoardData(projectID);
     }, 20);
   });
+  log.logNewTask(taskName, boardName);
 }
 
 function cancelChanges(boardID) {
@@ -376,7 +381,7 @@ function isChecked(taskID) {
   classToggle(checkmark, 'fill-gray-300', 'fill-white');
   classToggle(taskChecked, 'opacity-70');
   /* Updating the state of the checkbox. */
-  $.post('../utils/scripts/db/updateCheckboxState.php', {
+  $.post('../utils/scripts/task/updateCheckboxState.php', {
     dataID: taskID,
   });
 }
@@ -422,38 +427,42 @@ function closeAnyPopup() {
 }
 
 function closeFilter(id) {
+  if ($('#popupOverlayFilter') != null) {
+    saveFilter(id);
+    $('#popupOverlayFilter').remove();
+  }
+}
+
+function saveFilter(id) {
   const checks = [];
   const filter = document.querySelectorAll('[id*="_priFil"], [id*="_termFil"], [id*="_taskFil"]');
-  if ($('#popupOverlayFilter') != null) {
-    filter.forEach((element) => checks.push(element.id.slice(0, element.id.indexOf('_')) + '-' + element.checked));
-    if ($('#boards') != null) {
-      $('#boards').empty();
-      for (let i = 0; i < checks.length; i++) {
-        localStorage.setItem(
-          checks[i].slice(0, checks[i].indexOf('-')),
-          checks[i].slice(checks[i].indexOf('-') + 1, checks[i].length)
-        );
-      }
-      $('#boards').prepend(getBoardData(id, checks.toString()));
-      if (checks.filter((el) => el.includes(true)).length > 0) {
-        $('.filter-button').addClass('bg-gray-200');
-        if ($('#filter-count') != null) $('#filter-count').remove();
-        if ($('#filter-clear') != null) $('#filter-clear').remove();
-        $('.filter-button').append(
-          `<div class="flex text-sm px-1.5 bg-white rounded-lg" id="filter-count">${
-            checks.filter((el) => el.includes(true)).length
-          }</div>`
-        );
-        $('.filter-button').after(
-          `<div onclick="clearFilter('${id}')" id="filter-clear" class="flex text-sm px-1.5 my-auto cursor-pointer underline transition hover:text-black/50">Clear filters</div>`
-        );
-      } else {
-        $('.filter-button').removeClass('bg-gray-200');
-        if ($('#filter-count') != null) $('#filter-count').remove();
-        if ($('#filter-clear') != null) $('#filter-clear').remove();
-      }
+  filter.forEach((element) => checks.push(element.id.slice(0, element.id.indexOf('_')) + '-' + element.checked));
+  if ($('#boards') != null) {
+    $('#boards').empty();
+    for (let i = 0; i < checks.length; i++) {
+      localStorage.setItem(
+        checks[i].slice(0, checks[i].indexOf('-')),
+        checks[i].slice(checks[i].indexOf('-') + 1, checks[i].length)
+      );
     }
-    $('#popupOverlayFilter').remove();
+    $('#boards').prepend(getBoardData(id, checks.toString()));
+    if (checks.filter((el) => el.includes(true)).length > 0) {
+      $('.filter-button').addClass('bg-gray-200');
+      if ($('#filter-count') != null) $('#filter-count').remove();
+      if ($('#filter-clear') != null) $('#filter-clear').remove();
+      $('.filter-button').append(
+        `<div class="flex text-sm px-1.5 bg-white rounded-lg" id="filter-count">${
+          checks.filter((el) => el.includes(true)).length
+        }</div>`
+      );
+      $('.filter-button').after(
+        `<div onclick="clearFilter('${id}')" id="filter-clear" class="flex text-sm px-1.5 my-auto cursor-pointer underline transition hover:text-black/50">Clear filters</div>`
+      );
+    } else {
+      $('.filter-button').removeClass('bg-gray-200');
+      if ($('#filter-count') != null) $('#filter-count').remove();
+      if ($('#filter-clear') != null) $('#filter-clear').remove();
+    }
   }
 }
 

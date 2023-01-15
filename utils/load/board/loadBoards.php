@@ -5,10 +5,6 @@ include "../../scripts/db/getUserID.php";
 $projectID = $_POST['projectID'];
 $filter = $_POST['filter'];
 
-$projectNameQ = "SELECT project_name FROM project WHERE projectID = '$projectID' AND userID = '$userID'";
-$projectNameF = mysqli_fetch_assoc(mysqli_query($conn, $projectNameQ));
-$project_name = $projectNameF['project_name'];
-
 $q = "SELECT project.project_name, board.boardID, board.board_name, board.board_description FROM board JOIN project ON project.projectID = board.projectID WHERE board.projectID = '$projectID'";
 $result = mysqli_query($conn, $q);
 
@@ -38,15 +34,15 @@ function loadExtra($board_data)
         echo '<div id="taskExtra" class="flex flex-row w-full gap-2 mt-2 mb-1 px-2">';
         if ($date !== "0000-00-00") {
             echo '<div title="' . $dateToCompare . '" class="flex flex-row w-fit gap-2 h-fit px-2 py-0.5 bg-' . $color . '-400 rounded-md">';
-            echo '<svg class="w-3 h-3 my-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M232 120C232 106.7 242.7 96 256 96C269.3 96 280 106.7 280 120V243.2L365.3 300C376.3 307.4 379.3 322.3 371.1 333.3C364.6 344.3 349.7 347.3 338.7 339.1L242.7 275.1C236 271.5 232 264 232 255.1L232 120zM256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0zM48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48C141.1 48 48 141.1 48 256z"/></svg>';
-            echo '<div class="dueToData text-sm flex">' . $newDateString . '</div>';
+            echo '<svg class="w-3 h-3 my-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M232 120C232 106.7 242.7 96 256 96C269.3 96 280 106.7 280 120V243.2L365.3 300C376.3 307.4 379.3 322.3 371.1 333.3C364.6 344.3 349.7 347.3 338.7 339.1L242.7 275.1C236 271.5 232 264 232 255.1L232 120zM256 0C397.4 0 512 114.6 512 256C512 397.4 397.4 512 256 512C114.6 512 0 397.4 0 256C0 114.6 114.6 0 256 0zM48 256C48 370.9 141.1 464 256 464C370.9 464 464 370.9 464 256C464 141.1 370.9 48 256 48C141.1 48 48 141.1 48 256z"/></svg>';
+            echo '<div class="dueToData text-xs flex">' . $newDateString . '</div>';
             echo '</div>';
         }
         //Priorities
         if ($board_data['priority_name'] !== "None") {
             echo '<div title="' . $board_data['priority_name'] . ' priority" class="flex flex-row w-fit gap-1 h-fit px-2 py-0.5 ' . $board_data['priority_color'] . ' rounded-md">';
-            echo '<svg class="w-3 h-3 my-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M48 24C48 10.7 37.3 0 24 0S0 10.7 0 24V64 350.5 400v88c0 13.3 10.7 24 24 24s24-10.7 24-24V388l80.3-20.1c41.1-10.3 84.6-5.5 122.5 13.4c44.2 22.1 95.5 24.8 141.7 7.4l34.7-13c12.5-4.7 20.8-16.6 20.8-30V66.1c0-23-24.2-38-44.8-27.7l-9.6 4.8c-46.3 23.2-100.8 23.2-147.1 0c-35.1-17.6-75.4-22-113.5-12.5L48 52V24zm0 77.5l96.6-24.2c27-6.7 55.5-3.6 80.4 8.8c54.9 27.4 118.7 29.7 175 6.8V334.7l-24.4 9.1c-33.7 12.6-71.2 10.7-103.4-5.4c-48.2-24.1-103.3-30.1-155.6-17.1L48 338.5v-237z"/></svg>';
-            echo '<div class="priorityData text-sm flex">' . $board_data['priority_name'] . '</div>';
+            echo '<svg class="w-3 h-3 my-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M48 24C48 10.7 37.3 0 24 0S0 10.7 0 24V64 350.5 400v88c0 13.3 10.7 24 24 24s24-10.7 24-24V388l80.3-20.1c41.1-10.3 84.6-5.5 122.5 13.4c44.2 22.1 95.5 24.8 141.7 7.4l34.7-13c12.5-4.7 20.8-16.6 20.8-30V66.1c0-23-24.2-38-44.8-27.7l-9.6 4.8c-46.3 23.2-100.8 23.2-147.1 0c-35.1-17.6-75.4-22-113.5-12.5L48 52V24zm0 77.5l96.6-24.2c27-6.7 55.5-3.6 80.4 8.8c54.9 27.4 118.7 29.7 175 6.8V334.7l-24.4 9.1c-33.7 12.6-71.2 10.7-103.4-5.4c-48.2-24.1-103.3-30.1-155.6-17.1L48 338.5v-237z"/></svg>';
+            echo '<div class="priorityData text-xs flex">' . $board_data['priority_name'] . '</div>';
             echo '</div>';
         }
         //End of priority
@@ -60,10 +56,11 @@ function loadTasks($board_data)
     $colors = $board_data['board_check'] == 0 ? "border-gray-300 bg-slate-50" : "border-lime-600 bg-lime-500";
     $hasOpacity = $board_data['board_check'] == 0 ? "" : "opacity-70";
     $checkColor = $board_data['board_check'] == 0 ? "fill-gray-300" : "fill-white";
+    $isChecked = $board_data['board_check'] == 0 ? "Mark complete" : "Mark incomplete";
     echo '<section id="' . $board_data['dataID'] . '_taskChecked" class="flex flex-shrink-0 flex-col py-1 rounded-md group ' . $hasOpacity . ' shadow-md relative bg-slate-50">';
     echo '  <div class="flex-shrink-0 flex flex-row px-2">';
-    echo '      <div id="' . $board_data['dataID'] . '" title="Mark complete" class="flex transition duration-300 h-6 w-6 border-2 flex-shrink-0 rounded-full cursor-pointer ' . $colors . '" onclick="isChecked(`' . $board_data['dataID'] . '`)">';
-    echo '          <svg id="' . $board_data['dataID'] . '_check" class="h-3 w-3 flex my-auto ' . $checkColor . ' transition duration-300 mx-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>';
+    echo '      <div id="' . $board_data['dataID'] . '" title="'.$isChecked.'" class="flex transition duration-300 h-4 w-4 border-2 flex-shrink-0 rounded-full cursor-pointer ' . $colors . '" onclick="isChecked(`' . $board_data['dataID'] . '`)">';
+    echo '          <svg id="' . $board_data['dataID'] . '_check" class="h-2 w-2 flex my-auto ' . $checkColor . ' transition duration-300 mx-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>';
     echo '      </div>';
     echo '  <div class="w-full flex text-sm my-auto px-2 pr-8 break-all">' . $board_data['board_data'] . '</div>';
     echo '      <div title="More actions" class="flex w-fit px-2 left-[14.5rem] absolute opacity-0 cursor-pointer transition ease-in-out hover:bg-slate-200 rounded-lg group-hover:opacity-100" onclick="showTaskManagePopup(`' . $board_data['dataID'] . '`)"><svg class="w-4 px-auto h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M120 256c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm160 0c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm104 56c-30.9 0-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56s-25.1 56-56 56z"/></svg>';
@@ -138,7 +135,7 @@ if (mysqli_num_rows($result) > 0) {
         $editColor = "bg-{$split[1]}-{$mod}/50";
         $textColor = $mod > 400 ? "text-{$split[1]}-{$mod}" : "text-{$split[1]}-{$split[2]}";
         echo '<div class="flex h-fit w-fit px-2 text-sm my-auto rounded-full ' . $editColor . " " . $textColor . ' justify-center">' . $f['total'] . '</div>';
-        echo '<div class="flex w-fit px-1 py-1 h-fit py-1 ml-auto my-1 transition ease-in-out hover:bg-slate-200 cursor-pointer rounded-lg" onclick="showColumnManagePopup(`' . $boards['boardID'] . '`)"><svg class="w-4 px-auto h-4 fill-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM64 256c0-17.7 14.3-32 32-32H480c17.7 0 32 14.3 32 32s-14.3 32-32 32H96c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></div>';
+        echo '<div class="flex w-fit px-1 py-1 h-fit py-1 ml-auto my-1 transition ease-in-out hover:bg-slate-200 cursor-pointer rounded-lg" onclick="showColumnManagePopup(`' . $boards['boardID'] . '`)"><svg class="w-4 px-auto h-4 fill-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M120 256c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm160 0c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm104 56c-30.9 0-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56s-25.1 56-56 56z"/></svg></div>';
         echo '</div>';
         echo '</div>';
         //Start of boards

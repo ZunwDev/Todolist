@@ -11,7 +11,7 @@ $f = mysqli_fetch_assoc(mysqli_query($conn, $q));
 echo '<div id="popupOverlay" class="w-screen h-screen absolute bg-slate-50/25">';
 echo '    <div id="popupElement" class="absolute flex beforeShowUp flex-col h-fit shadow-lg py-1 bg-slate-100">';
 echo '    <div class="flex flex-row py-1 w-48 bg-slate-100 hover:bg-slate-200 cursor-pointer" onclick="isChecked(`' . $dataID . '`)">';
-echo '        <svg class="my-auto ml-2 w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>';
+echo '        <svg class="my-auto ml-2 w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>';
 $msg = $f['board_check'] == 0 ? "Mark complete" : "Mark incomplete";
 echo '            <div class="flex text-sm px-2 py-1">'.$msg.'</div>';
 echo '        </div>';
@@ -20,7 +20,7 @@ echo '        <svg class="my-auto ml-2 w-4 h-4" xmlns="http://www.w3.org/2000/sv
 echo '            <div class="flex text-sm pl-2 py-1">Edit task</div>';
 echo '        </div>';
 echo '    <div class="flex flex-row py-1 bg-slate-100 hover:bg-slate-200 cursor-pointer" onclick="showMoveToPopup(`' . $dataID . '`)">';
-echo '        <svg class="my-auto ml-2 w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg>';
+echo '        <svg class="my-auto ml-2 w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M438.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-160-160c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L338.8 224 32 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l306.7 0L233.4 393.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l160-160z"/></svg>';
 echo '            <div class="flex text-sm pl-2 py-1">Move task to</div>';
 echo '        </div>';
 echo '    <div title="Delete this task" class="flex flex-row py-1 bg-slate-100 hover:bg-slate-200 transition cursor-pointer" onclick="showTaskDeleteWarning(' . $dataID . ')">';

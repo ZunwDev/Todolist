@@ -31,6 +31,39 @@ function getProjectIdFromBoardId(id) {
   return data.responseText;
 }
 
+function getBoardNameFromBoardId(id) {
+  let data = $.ajax('../utils/scripts/db/getBoardNameFromBoardId.php', {
+    async: false,
+    type: 'POST',
+    data: {
+      boardID: id,
+    },
+  });
+  return data.responseText;
+}
+
+function getTaskNameFromTaskId(id) {
+  let data = $.ajax('../utils/scripts/db/getTaskNameFromTaskId.php', {
+    async: false,
+    type: 'POST',
+    data: {
+      taskID: id,
+    },
+  });
+  return data.responseText;
+}
+
+function getBoardNameFromTaskId(id) {
+  let data = $.ajax('../utils/scripts/db/getBoardNameFromTaskId.php', {
+    async: false,
+    type: 'POST',
+    data: {
+      taskID: id,
+    },
+  });
+  return data.responseText;
+}
+
 function getProjectIdFromTaskId(id) {
   let data = $.ajax('../utils/scripts/db/getProjectIdFromTaskId.php', {
     async: false,
@@ -128,8 +161,19 @@ function getBoardFilterPopup(id) {
   return data.responseText;
 }
 
+function getActivityTimelinePopup(id) {
+  const data = $.ajax('../utils/load/project/loadActivityTimeline.php', {
+    async: false,
+    type: 'post',
+    data: {
+      projectID: id,
+    },
+  });
+  return data.responseText;
+}
+
 function getDeletePopup(id, title, msg, reason) {
-  closeAnyPopup();
+  closeAnyPopup()
   const data = $.ajax('../utils/load/other/loadDeletePopup.php', {
     async: false,
     type: 'post',
@@ -141,7 +185,7 @@ function getDeletePopup(id, title, msg, reason) {
     },
   });
   body.insertAdjacentHTML('beforeend', data.responseText);
-  popupModalSettings();
+  popupModalSettings(closeModal, "popupOverlay");
 }
 
 function getMoveToPopup(id) {
