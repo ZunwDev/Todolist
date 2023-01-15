@@ -53,6 +53,17 @@ function getTaskNameFromTaskId(id) {
   return data.responseText;
 }
 
+function getBoardIdFromTaskId(id) {
+  let data = $.ajax('../utils/scripts/db/getBoardIdFromTaskId.php', {
+    async: false,
+    type: 'POST',
+    data: {
+      taskID: id,
+    },
+  });
+  return data.responseText;
+}
+
 function getBoardNameFromTaskId(id) {
   let data = $.ajax('../utils/scripts/db/getBoardNameFromTaskId.php', {
     async: false,

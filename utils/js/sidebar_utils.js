@@ -4,6 +4,3 @@ function toggleHidden(id) {
   }
 }
 
-function showProjects() {
-  $('#projectList').toggleClass('hidden');
-}

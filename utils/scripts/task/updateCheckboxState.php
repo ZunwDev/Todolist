@@ -1,5 +1,5 @@
 <?php 
-include "./connectToDatabase.php";
+include '../db/connectToDatabase.php';
 
 $dataID = $_POST['dataID'];
 

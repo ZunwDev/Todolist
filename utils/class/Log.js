@@ -5,26 +5,28 @@ class Log {
         this.boardID = boardID;
     }
 
-    logNewTask(task_name, column_name) {
-        $.post("../utils/scripts/project/logActivity.php", {
-            projectID: this.projectID,
-            taskID: null,
-            boardID: this.boardID, 
-            description: `Added task „${task_name}” to column „${column_name}”`,
-            old_val: null,
-            new_val: null,
-            typeID: 2,
-        });
-    }
-    logRemoveTask(task_name, column_name) {
+    logActivity(message, old_val, new_val, typeID) {
         $.post("../utils/scripts/project/logActivity.php", {
             projectID: this.projectID,
             taskID: this.taskID,
             boardID: this.boardID, 
-            description: `Deleted task „${task_name}” from column „${column_name}”`,
-            old_val: null,
-            new_val: null,
-            typeID: 1,
+            description: message,
+            old_val: old_val,
+            new_val: new_val,
+            typeID: typeID,
         });
+    }
+
+    logNewTask(task_name, column_name) {
+        this.logActivity(`Added task „${task_name}” to column „${column_name}”`, null, null, 2);
+    }
+    logRemoveTask(task_name, column_name) {
+        this.logActivity(`Deleted task „${task_name}” from column „${column_name}”`, null, null, 1);
+    }
+    logClearColumn(column_name) {
+        this.logActivity(`Cleared column „${column_name}”`, null, null, 1);
+    }
+    logRemoveColumn(column_name) {
+        this.logActivity(`Deleted column „${column_name}”`, null, null, 1);
     }
 }

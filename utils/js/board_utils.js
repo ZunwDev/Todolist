@@ -266,8 +266,17 @@ function confirmDelete(id, delReason) {
 
   let projectID = (delReason == "taskDel") ? getProjectIdFromTaskId(id) : getProjectIdFromBoardId(id);
   if (delReason == "taskDel") {
-    let log = new Log(projectID, id, null);
+    let boardID = getBoardIdFromTaskId(id);
+    let log = new Log(projectID, id, boardID);
     log.logRemoveTask(getTaskNameFromTaskId(id), getBoardNameFromTaskId(id));
+  }
+  if (delReason == "colCl") {
+    let log = new Log(projectID, null, id);
+    log.logClearColumn(getBoardNameFromBoardId(id));
+  }
+  if (delReason == "colDel") {
+    let log = new Log(projectID, null, id);
+    log.logRemoveColumn(getBoardNameFromBoardId(id));
   }
   $.post(links[delReason], {
     id,
