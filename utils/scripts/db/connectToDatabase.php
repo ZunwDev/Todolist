@@ -1,14 +1,6 @@
 <?php
-$host = getHostByName(getHostName());
-if ($host == "192.168.56.1") {
-    $h = explode('.', $host);
-    $h[3] = 2;
-    $host = implode('.', $h);
-}
-if ($host != "192.168.56.1" || $host == "192.168.56.1") {
-    $host = "192.168.1.110";
-}
-
+$host = "192.168.1.110";
+//$host = "localhost";
 $user = "myuser";
 $password = "abc";
 $databaseName = "todolist";
