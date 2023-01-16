@@ -29,4 +29,10 @@ class Log {
     logRemoveColumn(column_name) {
         this.logActivity(`Deleted column „${column_name}”`, null, null, 1);
     }
+    logTaskUpdate(task_name, column_name, new_val) {
+        this.logActivity(`Updated task „${task_name}” in column „${column_name}”`, task_name, new_val, 3);
+    }
+    logColumnUpdate(column_name, new_val) {
+        this.logActivity(`Updated column „${column_name}”`, column_name, new_val, 3);
+    }
 }

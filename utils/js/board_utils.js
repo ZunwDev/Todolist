@@ -204,6 +204,9 @@ function saveTaskEdit(dataID, boardID) {
   let finalDueTo = newDueTo == '' ? '0000-00-00' : newDueTo;
   let finalPriority = newPriority == '' ? 'None' : newPriority;
 
+  let log = new Log(projectID, dataID, boardID);
+  let oldTaskName = getTaskNameFromTaskId(dataID);
+  let boardName = getBoardNameFromBoardId(boardID);
   $.post('../utils/scripts/task/saveTaskEdit.php', {
     dataID,
     task_name: newTaskName,
@@ -215,6 +218,7 @@ function saveTaskEdit(dataID, boardID) {
       reloadBoardData(projectID);
     }, 30);
   });
+  log.logTaskUpdate(oldTaskName, boardName, newTaskName);
 }
 
 function postUpdateProject(projectName, projectDescription, colorName, projectID) {
@@ -301,11 +305,14 @@ function saveColumnChanges(boardID) {
   let newBoardName = document.getElementById('columnNameEdit').value;
   const newBoardDescription = document.getElementById('columnDescriptionEdit').value;
   if (newBoardName == '' || newBoardName == null) newBoardName = 'Column';
+  let log = new Log(projectID, null, boardID);
+  let currentBoardName = getBoardNameFromBoardId(boardID);
   $.post('../utils/scripts/board/saveColumnEdit.php', {
     boardID,
     board_name: newBoardName,
     board_description: newBoardDescription,
   }).done((data) => reloadBoardData(projectID));
+  log.logColumnUpdate(currentBoardName, newBoardName);
 }
 
 function addNewTask(boardID) {
