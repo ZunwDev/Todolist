@@ -119,8 +119,8 @@ if (mysqli_num_rows($result) > 0) {
         echo '<div class="flex w-72 flex-col flex-shrink-0 h-fit px-2 pb-2 pt-2 gap-2 rounded-lg overflow-x-hidden" >';
         //Board name 
         echo '<div class="flex flex-col px-2 gap-1">';
-        echo '<div class="flex flex-row flex-shrink-0 transition ease-in-out duration-200 gap-2 h-8 text-lg rounded-lg">';
-        echo '<span class="flex px-2 my-auto text-md font-medium truncate">' . $boards['board_name'] . '</span>';
+        echo '<div class="flex flex-row gap-2 h-8 text-lg rounded-lg">';
+        echo '<h3 class="text-md font-medium truncate overflow-hidden!important">' . $boards['board_name'] . '</h3>';
         $q = "SELECT COUNT(*) as total FROM board_data LEFT JOIN priority ON board_data.priorityID = priority.priorityID WHERE boardID = " . $boards['boardID'] . filter($filter);
         $f = mysqli_fetch_assoc(mysqli_query($conn, $q));
         $qc = 'SELECT colors.color_code FROM project JOIN colors on project.colorID = colors.colorID WHERE projectID = ' . $projectID . ' AND userID = ' . $userID . '';
