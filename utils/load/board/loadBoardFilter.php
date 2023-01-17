@@ -12,42 +12,42 @@ echo '          <div class="ml-auto mt-1 mr-1 flex h-fit w-fit px-1 py-1 rounded
 echo '      </div>';
 echo '      <div class="flex flex-col">';
 echo '          <div class="wrap mt-4 w-full h-full px-4 space-y-1 flex flex-col">';
-echo '              <label class="text-sm">Priority</label>';
+echo '              <label class="text-xs">Priority</label>';
 echo '              <div class="flex flex-col gap-2">';
 $options = ["High", "Medium", "Low", "None"];
 for ($i=0; $i < count($options); $i++) {
     echo '                  <div class="px-4 flex">';
     echo '                      <input id="' . strtolower($options[$i]) . '_priFil" type="checkbox" class="w-4 h-4 my-auto cursor-pointer"></input>';
     echo '                      <label for="' . strtolower($options[$i]) . '_priFil" class="rounded-lg w-32 flex flex-row px-2 mx-auto cursor-pointer hover:bg-gray-200">';
-    echo '                          <div class="text-md">' . $options[$i] . '</div>';
+    echo '                          <div class="text-sm">' . $options[$i] . '</div>';
     echo '                      </label>';
     echo '                  </div>';
 }
 echo '      </div>';
 echo '</div>';
 echo '          <div class="wrap mt-4 w-full h-full px-4 space-y-1 flex flex-col">';
-echo '              <label class="text-sm">Term</label>';
+echo '              <label class="text-xs">Term</label>';
 echo '              <div class="flex flex-col gap-2">';
 $options = ["Today", "Tomorrow", "Late", "Later", "No term"];
 for ($i = 0; $i < count($options); $i++) {
     echo '                  <div class="px-4 flex">';
     echo '                      <input id="' . strtolower($options[$i]) . '_termFil" type="checkbox" class="w-4 h-4 my-auto cursor-pointer"></input>';
     echo '                      <label for="' . strtolower($options[$i]) . '_termFil" class="rounded-lg z-20 w-32 flex flex-row px-2 mx-auto cursor-pointer hover:bg-gray-200">';
-    echo '                          <div class="text-md">' . $options[$i] . '</div>';
+    echo '                          <div class="text-sm">' . $options[$i] . '</div>';
     echo '                      </label>';
     echo '                  </div>';
 }
 echo '              </div>';
 echo '          </div>';
 echo '          <div class="wrap mt-4 w-full h-full px-4 space-y-1 flex flex-col">';
-echo '              <label class="text-sm">Tasks</label>';
+echo '              <label class="text-xs">Tasks</label>';
 echo '              <div class="flex flex-col gap-2">';
 $options = ["Completed", "Incomplete"];
 for ($i = 0; $i < count($options); $i++) {
     echo '                  <div class="px-4 flex">';
     echo '                      <input id="' . strtolower($options[$i]) . '_taskFil" type="checkbox" class="w-4 h-4 my-auto cursor-pointer"></input>';
     echo '                      <label for="' . strtolower($options[$i]) . '_taskFil" class="rounded-lg z-20 w-32 flex flex-row px-2 mx-auto cursor-pointer hover:bg-gray-200">';
-    echo '                          <div class="text-md">' . $options[$i] . '</div>';
+    echo '                          <div class="text-sm">' . $options[$i] . '</div>';
     echo '                      </label>';
     echo '                  </div>';
 }

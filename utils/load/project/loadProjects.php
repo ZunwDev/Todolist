@@ -6,7 +6,7 @@ if (mysqli_num_rows($result) > 0) {
     while ($projects = mysqli_fetch_assoc($result)) {
         echo '<button type="button" class="flex group flex-shrink-0 gap-2 flex-col w-52 h-fit shadow-xl relative transition rounded-lg bg-slate-100" onclick="openProject(`' . $projects['projectID'] . '`)">';
         echo '  <div class="flex h-1 transition-all duration-300 group-hover:h-full w-full absolute ' . $projects['color_code'] . ' group-hover:rounded-lg rounded-tr-lg rounded-tl-lg"></div>';
-        echo '  <div class="flex flex-col text-lg group-hover:z-10 group-hover:text-white transition mt-2 px-4 h-fit w-fit text-gray-600 break-all" title=' . $projects['project_name'] . '><strong>' . $projects['project_name'] . '</strong>';
+        echo '  <div class="flex flex-col text-md group-hover:z-10 group-hover:text-white transition mt-2 px-4 h-fit w-fit text-gray-600 break-all" title=' . $projects['project_name'] . '><strong>' . $projects['project_name'] . '</strong>';
         echo '      <div class="flex w-0 h-0.5 delay-100 transition-all group-hover:z-10 bg-white group-hover:w-full"></div>';
         echo '  </div>';
         if (strlen($projects['project_description']) > 0) {
