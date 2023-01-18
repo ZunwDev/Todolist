@@ -12,7 +12,7 @@ echo '          <div class="ml-auto mt-1 mr-1 flex h-fit w-fit px-1 py-1 rounded
 echo '      </div>';
 echo '      <div class="flex flex-col">';
 echo '          <div class="wrap mt-4 w-full h-full px-4 space-y-1 flex flex-col">';
-echo '              <label class="text-xs">Priority</label>';
+echo '              <label class="text-xs font-bold">Priority</label>';
 echo '              <div class="flex flex-col gap-2">';
 $options = ["High", "Medium", "Low", "None"];
 for ($i=0; $i < count($options); $i++) {
@@ -26,7 +26,7 @@ for ($i=0; $i < count($options); $i++) {
 echo '      </div>';
 echo '</div>';
 echo '          <div class="wrap mt-4 w-full h-full px-4 space-y-1 flex flex-col">';
-echo '              <label class="text-xs">Term</label>';
+echo '              <label class="text-xs font-bold">Term</label>';
 echo '              <div class="flex flex-col gap-2">';
 $options = ["Today", "Tomorrow", "Late", "Later", "No term"];
 for ($i = 0; $i < count($options); $i++) {
@@ -40,7 +40,7 @@ for ($i = 0; $i < count($options); $i++) {
 echo '              </div>';
 echo '          </div>';
 echo '          <div class="wrap mt-4 w-full h-full px-4 space-y-1 flex flex-col">';
-echo '              <label class="text-xs">Tasks</label>';
+echo '              <label class="text-xs font-bold">Tasks</label>';
 echo '              <div class="flex flex-col gap-2">';
 $options = ["Completed", "Incomplete"];
 for ($i = 0; $i < count($options); $i++) {

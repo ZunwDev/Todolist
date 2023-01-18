@@ -6,7 +6,7 @@ function addBoard(id) {
   $.post('../utils/scripts/board/addNewBoard.php', {
     projectID: id,
     board_name: finalProjectName,
-  }).done((data) => reloadBoardData(id));
+  }).done((data) => updateBoard(id));
 }
 
 function popupModalSettings(listener, overlay) {
@@ -35,18 +35,13 @@ function expandBoardCreate() {
   }, 0);
 }
 
-function reloadBoardData(id) {
+function updateBoard(id) {
   closeAnyPopup();
-  /* Reloading the board data. */
   document.getElementById('boards').innerText = '';
   const getBoardArea = document.getElementById('boards');
   getBoardArea.insertAdjacentHTML('afterbegin', getBoardData(id));
 }
 
-/**
- * This function hides the confirm and cancel buttons, shows the add new task button, and removes all
- * existing tasks.
- */
 function resetAllNewTasks() {
   const existingTasks = document.querySelectorAll(`div.edit`);
   const addNewTaskButton = document.querySelectorAll(`[id*='_add']`);
@@ -113,9 +108,9 @@ function setPopupToCorrectPos() {
   let bheight = document.body.scrollHeight;
   let mdiff = mouse.y + document.body.scrollHeight - diff;
 
-  mdiff > bheight
-    ? el.classList.add(`top-[${mouse.y + window.scrollY - 128}px]`)
-    : el.classList.add(`top-[${mouse.y + window.scrollY}px]`);
+  mdiff > bheight ?
+    el.classList.add(`top-[${mouse.y + window.scrollY - 128}px]`) :
+    el.classList.add(`top-[${mouse.y + window.scrollY}px]`);
   el.classList.add(`left-[${mouse.x + window.scrollX + 16}px]`);
 }
 
@@ -170,11 +165,7 @@ function showBoardFilterPopup(projectID) {
   let ids = Array.from(checkmarks).map((element) => element.id);
   for (let i = 0; i < localStorage.length; i++) {
     let curItem = localStorage.getItem(ids[i].slice(0, ids[i].indexOf('_')));
-    if (curItem == 'true') {
-      checkmarks[i].checked = curItem;
-    } else {
-      checkmarks[i].checked = '';
-    }
+    curItem == 'true' ? checkmarks[i].checked = curItem : checkmarks[i].checked = '';
   }
 }
 
@@ -185,7 +176,7 @@ function confirmMoving(boardID, dataID) {
     boardID: boardID,
     dataID: dataID,
   }).done((data) => {
-    reloadBoardData(projectID);
+    updateBoard(projectID);
   });
 }
 
@@ -215,7 +206,7 @@ function saveTaskEdit(dataID, boardID) {
     task_priority: finalPriority,
   }).done((data) => {
     setTimeout(() => {
-      reloadBoardData(projectID);
+      updateBoard(projectID);
     }, 30);
   });
   log.logTaskUpdate(oldTaskName, boardName, newTaskName);
@@ -247,6 +238,7 @@ function showColumnClearWarning(id) {
     'colCl'
   );
 }
+
 function showTaskDeleteWarning(id) {
   getDeletePopup(id, 'Task delete', 'Are you sure you want to delete this task?', 'taskDel');
 }
@@ -285,7 +277,7 @@ function confirmDelete(id, delReason) {
   $.post(links[delReason], {
     id,
   }).done((data) => {
-    delReason != 'projDel' ? reloadBoardData(projectID) : window.location.reload();
+    delReason != 'projDel' ? updateBoard(projectID) : window.location.reload();
   });
 }
 
@@ -304,23 +296,21 @@ function saveColumnChanges(boardID) {
   let projectID = getProjectIdFromBoardId(boardID);
   let newBoardName = document.getElementById('columnNameEdit').value;
   const newBoardDescription = document.getElementById('columnDescriptionEdit').value;
-  if (newBoardName == '' || newBoardName == null) newBoardName = 'Column';
+  if (newBoardName == '' || newBoardName == null) newBoardName = 'Untitled Column';
   let log = new Log(projectID, null, boardID);
   let currentBoardName = getBoardNameFromBoardId(boardID);
   $.post('../utils/scripts/board/saveColumnEdit.php', {
     boardID,
     board_name: newBoardName,
     board_description: newBoardDescription,
-  }).done((data) => reloadBoardData(projectID));
+  }).done((data) => updateBoard(projectID));
   log.logColumnUpdate(currentBoardName, newBoardName);
 }
 
 function addNewTask(boardID) {
   resetAllNewTasks();
-  /* Getting the board ID, confirm button, cancel button and existing tasks. */
   const board = document.getElementById(`${boardID}_name`);
   const existingTasks = board.children.length - 1;
-  /* Inserting a temporary task into the board. */
   board.insertAdjacentHTML(
     'beforeend',
     `
@@ -352,7 +342,6 @@ function addNewTask(boardID) {
   );
   const addNewTaskButton = document.getElementById(`${boardID}_add`);
   addNewTaskButton.classList.add('hidden');
-  /* Focusing and select the the last input element. */
   const input = document.getElementById(`task_${boardID}_edit`);
   setTimeout(() => {
     input.select();
@@ -360,29 +349,24 @@ function addNewTask(boardID) {
 }
 
 function saveData(boardID) {
-  let projectID = getProjectIdFromBoardId(boardID);
-  let boardName = getBoardNameFromBoardId(boardID);
-  const getDate = document.getElementById('dueTo').value;
   var taskName = document.getElementById(`task_${boardID}_edit`).value;
-  const priority = document.getElementById('priorityListText').innerText;
   const board = document.getElementById(`${boardID}_name`);
   if (taskName == '') taskName = `Task #${board.children.length - 1}`;
-  let log = new Log(projectID, null, boardID);
+  let log = new Log(getProjectIdFromBoardId(boardID), null, boardID);
   $.post('../utils/scripts/task/addNewTask.php', {
     boardID,
     nameOfTask: taskName,
-    date: getDate,
-    priority,
+    date: $("#dueTo").val(),
+    priority: $("#priorityListText").text(),
   }).done((data) => {
     setTimeout(() => {
-      reloadBoardData(projectID);
+      updateBoard(getProjectIdFromBoardId(boardID));
     }, 20);
   });
-  log.logNewTask(taskName, boardName);
+  log.logNewTask(taskName, getBoardNameFromBoardId(boardID));
 }
 
 function cancelChanges(boardID) {
-  /* Removing the input fields. */
   document.getElementById(`board_${boardID}_edit`).remove();
   const addNewTaskButton = document.getElementById(`${boardID}_add`);
   addNewTaskButton.classList.remove('hidden');
@@ -390,13 +374,9 @@ function cancelChanges(boardID) {
 
 function isChecked(taskID) {
   closeAnyPopup();
-  let check = document.getElementById(taskID);
-  let checkmark = document.getElementById(taskID + '_check');
-  let taskChecked = document.getElementById(taskID + '_taskChecked');
-  classToggle(check, 'border-gray-300', 'bg-slate-50', 'border-lime-600', 'bg-lime-500');
-  classToggle(checkmark, 'fill-gray-300', 'fill-white');
-  classToggle(taskChecked, 'opacity-70');
-  /* Updating the state of the checkbox. */
+  classToggle(document.getElementById(taskID), 'border-gray-300', 'bg-slate-50', 'border-lime-600', 'bg-lime-500');
+  classToggle(document.getElementById(taskID + '_check'), 'fill-gray-300', 'fill-white');
+  classToggle(document.getElementById(taskID + '_taskChecked'), 'opacity-70');
   $.post('../utils/scripts/task/updateCheckboxState.php', {
     dataID: taskID,
   });
@@ -411,7 +391,10 @@ $(document).keyup((e) => {
   }
 });
 
-const mouse = { x: 0, y: 0 };
+const mouse = {
+  x: 0,
+  y: 0
+};
 document.addEventListener('mousemove', (e) => {
   mouse.x = e.clientX;
   mouse.y = e.clientY;
