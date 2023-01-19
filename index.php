@@ -24,6 +24,8 @@ if (isset($_SESSION['login_user'])) {
     <LINK REL=StyleSheet HREF="stylesheet.css" TYPE="text/css" MEDIA=screen>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="./utils/class/popups/popupHandler.js"></script>
+    <script src="./utils/class/popups/taskManagePopup.js"></script>
     <script src="./utils/js/getDbData.js"></script>
     <script src="./utils/js/main_page_setup.js"></script>
     <script src="./utils/js/color_menu_utils.js"></script>

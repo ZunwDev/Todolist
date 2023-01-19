@@ -86,7 +86,7 @@ function filter($filter)
         explode("-", $filters[3])[1] == "true" ? $priority_conditions[] = "priority.priorityID = 4" : "";
         explode("-", $filters[4])[1] == "true" ? $term_conditions[] = "board_data.dueTo = '$currentDate' " : "";
         explode("-", $filters[5])[1] == "true" ? $term_conditions[] = "board_data.dueTo = '$nextDate'" : "";
-        explode("-", $filters[6])[1] == "true" ? $term_conditions[] = "board_data.dueTo < '$currentDate'" : "";
+        explode("-", $filters[6])[1] == "true" ? $term_conditions[] = "board_data.dueTo < '$currentDate' and board_data.dueTo != 0000-00-00" : "";
         explode("-", $filters[7])[1] == "true" ? $term_conditions[] = "board_data.dueTo > '$nextDate'" : "";
         explode("-", $filters[8])[1] == "true" ? $term_conditions[] = " board_data.dueTo = '0000-00-00'" : "";
         explode("-", $filters[9])[1] == "true" ? $task_conditions[] = " board_check = '1'" : "";

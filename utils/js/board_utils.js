@@ -1,3 +1,4 @@
+
 /* Getting the project ID from the database. */
 function addBoard(id) {
   const newProjectName = document.getElementById('newBoardInput').value;
@@ -128,7 +129,9 @@ function showPopup(htmlString, setPosFunction, closeAnyPopup, modalSettings, ove
 }
 
 function showTaskManagePopup(dataID) {
-  showPopup(getTaskManagePopup(dataID), setPopupToCorrectPos, closeAnyPopup, closeModal);
+  let taskManagePopup = new TaskManagePopup(dataID);
+  taskManagePopup.showPopup()
+  //showPopup(getTaskManagePopup(dataID), setPopupToCorrectPos, closeAnyPopup, closeModal);
 }
 
 function showColumnManagePopup(boardID) {

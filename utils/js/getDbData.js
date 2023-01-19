@@ -211,14 +211,3 @@ function getMoveToPopup(id) {
   });
   return data.responseText;
 }
-
-/* function getFavoriteStatus(id) {
-  const data = $.ajax('./utils/scripts/db/getFavoriteStatus.php', {
-    async: false,
-    type: 'POST',
-    data: {
-      projectID: id,
-    },
-  });
-  return data.responseText;
-} */
