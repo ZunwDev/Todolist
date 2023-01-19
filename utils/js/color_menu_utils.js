@@ -1,8 +1,3 @@
-function toggleClassesHeight() {
-  $('#colorSelect').toggleClass('h-0');
-  $('#colorSelect').toggleClass('h-32');
-}
-
 function setBeginningClass() {
   const currentColor = document.getElementById('currentColor');
   const lastClass = currentColor.classList.toString().split(' ').pop();
@@ -12,34 +7,32 @@ function setBeginningClass() {
 }
 
 function openColorSelectMenu() {
+  let angleColor = document.getElementById('angleColor');
+  let colorSelect = document.getElementById('colorSelect');
   if (document.getElementById('colorSelect').style.display === 'none') {
     setBeginningClass();
     showFlex('colorSelect');
-    $('#angleColor').removeClass('toggle-up');
-    $('#angleColor').addClass('toggle-down');
-    $('#colorSelect').toggleClass('opacity-0');
-    toggleClassesHeight();
+    classToggle(angleColor, 'toggle-up', 'toggle-down');
+    classToggle(colorSelect, 'h-0', 'h-32', 'opacity-0');
   } else {
-    $('#angleColor').addClass('toggle-up');
-    $('#angleColor').removeClass('toggle-down');
-    toggleClassesHeight();
+    classToggle(angleColor, 'toggle-up', 'toggle-down');
+    classToggle(colorSelect, 'h-0', 'h-32');
     setTimeout(() => {
-      $('#colorSelect').toggleClass('opacity-0');
+      classToggle(colorSelect, 'opacity-0');
       $('#colorSelect').hide();
     }, 50);
   }
 }
 
 function resetAllColorsAndAddNew(name) {
-  const findColorElement = document.getElementById(name);
   const toRemove = document.getElementsByClassName('rounded-full');
   for (const element of toRemove) {
-    if (element.id != "") {
+    if (element.id != '') {
       element.classList.remove('rounded-full');
       element.classList.add('rounded-xl');
     }
   }
-  findColorElement.classList.add('rounded-full');
+  $('#' + name).addClass('rounded-full');
 }
 
 function saveColor(name, code) {

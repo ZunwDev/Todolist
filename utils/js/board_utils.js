@@ -1,24 +1,12 @@
-/* Getting the project ID from the database. */
 function addBoard(id) {
   const newProjectName = document.getElementById('newBoardInput').value;
   let finalProjectName = newProjectName.length > 0 ? newProjectName : 'Column';
-  /* Adding a new board to the database. */
   $.post('../utils/scripts/board/addNewBoard.php', {
     projectID: id,
     board_name: finalProjectName,
   }).done((data) => updateBoard(id));
 }
 
-function popupModalSettings(listener, overlay) {
-  const getPopup = document.getElementById('popupElement');
-  classToggle(getPopup, 'beforeShowUp', 'afterShowUp');
-  const popupOverlay = document.getElementById(overlay);
-  popupOverlay.addEventListener('pointerdown', listener);
-}
-
-/**
- * When the user clicks the button, the button expands and a text input appears
- */
 function expandBoardCreate() {
   classToggle(document.getElementsByClassName('newBoard')[0], 'h-8', 'h-20', 'bg-slate-100');
   classToggle(document.getElementsByClassName('newBoardButton')[0], 'w-64', 'w-[13rem]');
@@ -54,7 +42,6 @@ function resetAllNewTasks() {
     existingTasks[i].remove();
   }
 }
-
 
 function showMoveToPopup(dataID) {
   let moveToList = getMoveToPopup(dataID);
@@ -92,81 +79,45 @@ function savePriority(name) {
   }
 }
 
-function setPopupToCorrectPos() {
-  let el = document.getElementById('popupElement');
-  let diff = document.body.scrollHeight - mouse.y;
-  let bheight = document.body.scrollHeight;
-  let mdiff = mouse.y + document.body.scrollHeight - diff;
-
-  mdiff > bheight ?
-    el.classList.add(`top-[${mouse.y + window.scrollY - 128}px]`) :
-    el.classList.add(`top-[${mouse.y + window.scrollY}px]`);
-  el.classList.add(`left-[${mouse.x + window.scrollX + 16}px]`);
-}
-
-function openPopupUnderButton() {
-  let el = document.getElementById('popupElement');
-  el.classList.add(`top-[${mouse.y + 32}px]`);
-  el.classList.add(`left-[${mouse.x - 64}px]`);
-}
-
-function showPopup(htmlString, setPosFunction, closeAnyPopup, modalSettings, overlay = 'popupOverlay') {
-  closeAnyPopup();
-  body.insertAdjacentHTML('beforeend', htmlString);
-  setPosFunction();
-  popupModalSettings(modalSettings, overlay);
-}
-
 function showTaskManagePopup(dataID) {
   let taskManagePopup = new TaskManagePopup(dataID);
-  taskManagePopup.showPopup()
-  //showPopup(getTaskManagePopup(dataID), setPopupToCorrectPos, closeAnyPopup, closeModal);
+  taskManagePopup.showPopup();
 }
 
 function showColumnManagePopup(boardID) {
   let columnManagePopup = new ColumnManagePopup(boardID);
   columnManagePopup.showPopup();
-  //showPopup(getColumnManagePopup(boardID), setPopupToCorrectPos, closeAnyPopup, closeModal);
 }
 
 function showTaskEditPopup(dataID) {
   let taskEditPopup = new TaskEditPopup(dataID);
   taskEditPopup.showPopup();
-  //showPopup(getTaskEditPopup(dataID), () => {}, closeAnyPopup, closeModal);
 }
 
 function showColumnEdit(boardID) {
   let columnEditPopup = new ColumnEditPopup(boardID);
   columnEditPopup.showPopup();
-  //showPopup(getColumnEditPopup(boardID), () => {}, closeAnyPopup, closeModal);
 }
 
 function showProjectEdit(id) {
   let projectEditPopup = new ProjectEditPopup(id);
   projectEditPopup.showPopup();
-  /*   showPopup(
-      getProjectEditPopup(id),
-      () => {},
-      () => {},
-      closeModal
-      ); */
+}
+
+function showPriorityPopup() {
+  let priorityListPopup = new PriorityPopup();
+  priorityListPopup.showPopup();
 }
 
 function showBoardFilterPopup(projectID) {
   let boardFilterPopup = new BoardFilterPopup(projectID);
   boardFilterPopup.showPopup();
-  //Priority
   let checkmarks = document.querySelectorAll('[id*="_priFil"], [id*="_termFil"], [id*="_taskFil"]');
   let ids = Array.from(checkmarks).map((element) => element.id);
   for (let i = 0; i < localStorage.length; i++) {
     let curItem = localStorage.getItem(ids[i].slice(0, ids[i].indexOf('_')));
-    curItem == 'true' ? checkmarks[i].checked = curItem : checkmarks[i].checked = '';
+    curItem == 'true' ? (checkmarks[i].checked = curItem) : (checkmarks[i].checked = '');
   }
-}
-
-function showPriorityList() {
-  let priorityListPopup = new PriorityPopup();
-  priorityListPopup.showPopup();
 }
 
 function confirmMoving(boardID, dataID) {
@@ -260,17 +211,17 @@ function confirmDelete(id, delReason) {
     taskDel: '../utils/scripts/task/deleteTask.php',
   };
 
-  let projectID = (delReason == "taskDel") ? getProjectIdFromTaskId(id) : getProjectIdFromBoardId(id);
-  if (delReason == "taskDel") {
+  let projectID = delReason == 'taskDel' ? getProjectIdFromTaskId(id) : getProjectIdFromBoardId(id);
+  if (delReason == 'taskDel') {
     let boardID = getBoardIdFromTaskId(id);
     let log = new Log(projectID, id, boardID);
     log.logRemoveTask(getTaskNameFromTaskId(id), getBoardNameFromTaskId(id));
   }
-  if (delReason == "colCl") {
+  if (delReason == 'colCl') {
     let log = new Log(projectID, null, id);
     log.logClearColumn(getBoardNameFromBoardId(id));
   }
-  if (delReason == "colDel") {
+  if (delReason == 'colDel') {
     let log = new Log(projectID, null, id);
     log.logRemoveColumn(getBoardNameFromBoardId(id));
   }
@@ -321,10 +272,10 @@ function addNewTask(boardID) {
     }</textarea>
       <input id="dueTo" class="flex w-full mt-0.5 mx-[0.1px] form-control px-4 bg-transparent focus:text-slate-700 border-b border-slate-300 focus:bg-slate-50 focus:border focus:outline-none focus:border-slate-600" type="date"></input>
       <div class="flex flex-row w-full h-8">
-        <div title="Add priority" id="priorityButton" class="flex ml-1 my-1 h-fit w-fit px-1 py-1 hover:bg-slate-300 rounded-lg cursor-pointer" onclick="showPriorityList()">
+        <div title="Add priority" id="priorityButton" class="flex ml-1 my-1 h-fit w-fit px-1 py-1 hover:bg-slate-300 rounded-lg cursor-pointer" onclick="showPriorityPopup()">
           <svg class="flex w-4 h-4 fill-black" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M48 24C48 10.7 37.3 0 24 0S0 10.7 0 24V64 350.5 400v88c0 13.3 10.7 24 24 24s24-10.7 24-24V388l80.3-20.1c41.1-10.3 84.6-5.5 122.5 13.4c44.2 22.1 95.5 24.8 141.7 7.4l34.7-13c12.5-4.7 20.8-16.6 20.8-30V66.1c0-23-24.2-38-44.8-27.7l-9.6 4.8c-46.3 23.2-100.8 23.2-147.1 0c-35.1-17.6-75.4-22-113.5-12.5L48 52V24zm0 77.5l96.6-24.2c27-6.7 55.5-3.6 80.4 8.8c54.9 27.4 118.7 29.7 175 6.8V334.7l-24.4 9.1c-33.7 12.6-71.2 10.7-103.4-5.4c-48.2-24.1-103.3-30.1-155.6-17.1L48 338.5v-237z"/></svg>
         </div>
-        <div id="priorityList" class="flex w-fit ml-4 h-fit my-1 rounded-lg border border-transparent bg-transparent" onclick="showPriorityList()">
+        <div id="priorityList" class="flex w-fit ml-4 h-fit my-1 rounded-lg border border-transparent bg-transparent" onclick="showPriorityPopup()">
           <div id="priorityListText" class="flex mx-auto px-2 cursor-pointer"></div>
         </div>
       </div>
@@ -356,8 +307,8 @@ function saveData(boardID) {
   $.post('../utils/scripts/task/addNewTask.php', {
     boardID,
     nameOfTask: taskName,
-    date: $("#dueTo").val(),
-    priority: $("#priorityListText").text(),
+    date: $('#dueTo').val(),
+    priority: $('#priorityListText').text(),
   }).done((data) => {
     setTimeout(() => {
       updateBoard(getProjectIdFromBoardId(boardID));
@@ -393,7 +344,7 @@ $(document).keyup((e) => {
 
 const mouse = {
   x: 0,
-  y: 0
+  y: 0,
 };
 document.addEventListener('mousemove', (e) => {
   mouse.x = e.clientX;
@@ -474,18 +425,6 @@ function clearFilter(id) {
   $('#boards').prepend(getBoardData(id));
 }
 
-const closeModal = (e) => {
-  if (e.target === e.currentTarget) closeAnyPopup();
-};
-
-const closeModalPriority = (e) => {
-  if (e.target === e.currentTarget) closePriority();
-};
-
 const closeModalMoveTo = (e) => {
   if (e.target === e.currentTarget) closeMoveTo();
-};
-
-const closeFilterAndSave = (e, projectID) => {
-  if (e.target === e.currentTarget) closeFilter(projectID);
 };

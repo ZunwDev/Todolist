@@ -1,7 +1,9 @@
 class PopupHandler {
-  popupModalSettings(listener, overlay, element = "popupElement") {
-    classToggle(document.getElementById(element), 'beforeShowUp', 'afterShowUp');
-    document.getElementById(overlay).addEventListener('pointerdown', listener);
+  popupModalSettings(listener, overlay, element = 'popupElement') {
+    if (document.getElementById(element) != null) {
+      classToggle(document.getElementById(element), 'beforeShowUp', 'afterShowUp');
+      document.getElementById(overlay).addEventListener('pointerdown', listener);
+    }
   }
 
   setToCorrectPos() {
@@ -9,13 +11,20 @@ class PopupHandler {
     let bheight = document.body.scrollHeight;
     let mdiff = mouse.y + document.body.scrollHeight - diff;
 
-    mdiff > bheight ?
-      document.getElementById('popupElement').classList.add(`top-[${mouse.y + window.scrollY - 128}px]`) :
-      document.getElementById('popupElement').classList.add(`top-[${mouse.y + window.scrollY}px]`);
+    mdiff > bheight
+      ? document.getElementById('popupElement').classList.add(`top-[${mouse.y + window.scrollY - 128}px]`)
+      : document.getElementById('popupElement').classList.add(`top-[${mouse.y + window.scrollY}px]`);
     document.getElementById('popupElement').classList.add(`left-[${mouse.x + window.scrollX + 16}px]`);
   }
 
-  showPopup(htmlString, setPosFunction, closeAnyPopup, closeSettings, overlay = "popupOverlay", element = "popupElement") {
+  showPopup(
+    htmlString,
+    setPosFunction,
+    closeAnyPopup,
+    closeSettings,
+    overlay = 'popupOverlay',
+    element = 'popupElement'
+  ) {
     closeAnyPopup();
     body.insertAdjacentHTML('beforeend', htmlString);
     setPosFunction();
@@ -26,12 +35,6 @@ class PopupHandler {
     if (document.getElementById('popupOverlay') != null) {
       document.getElementById('popupOverlay').remove();
     }
-  }
-
-  openPopupUnderButton() {
-    let el = document.getElementById('popupElement');
-    el.classList.add(`top-[${mouse.y + 32}px]`);
-    el.classList.add(`left-[${mouse.x - 64}px]`);
   }
 
   closeModal(e) {

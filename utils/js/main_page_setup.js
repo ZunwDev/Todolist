@@ -41,14 +41,6 @@ function showFlex(element) {
   document.getElementById(element).style.display = 'flex';
 }
 
-function checkDisplay(element) {
-  return $(element).css('display') === 'block';
-}
-
-function checkDisplayFlex(element) {
-  return $(element).css('display') === 'flex';
-}
-
 function URL(url) {
   history.pushState(
     {
@@ -65,5 +57,5 @@ function title(title) {
 }
 
 const classToggle = (el, ...args) => {
-  args.map(e => el.classList.toggle(e))
-}
+  args.map((e) => el.classList.toggle(e));
+};

@@ -32,12 +32,13 @@ if (isset($_SESSION['login_user'])) {
     <script src="./utils/class/popups/projectEditPopup.js"></script>
     <script src="./utils/class/popups/boardFilterPopup.js"></script>
     <script src="./utils/class/popups/priorityPopup.js"></script>
+    <script src="./utils/class/popups/activityTimelinePopup.js"></script>
+    <script src="./utils/class/popups/projectCreatePopup.js"></script>
     <script src="./utils/js/getDbData.js"></script>
     <script src="./utils/js/main_page_setup.js"></script>
     <script src="./utils/js/color_menu_utils.js"></script>
     <script src="./utils/js/profile_utils.js"></script>
     <script src="./utils/js/project_utils.js"></script>
-    <script src="./utils/js/sidebar_utils.js"></script>
     <script src="./utils/js/board_utils.js"></script>
     <script src="./utils/class/Color.js"></script>
     <script src="./utils/class/Log.js"></script>

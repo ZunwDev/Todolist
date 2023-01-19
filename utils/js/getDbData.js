@@ -86,7 +86,7 @@ function getProjectIdFromTaskId(id) {
   return data.responseText;
 }
 
-function getBoardData(id, filter = "") {
+function getBoardData(id, filter = '') {
   let data = $.ajax('../utils/load/board/loadBoards.php', {
     async: false,
     type: 'post',
@@ -183,8 +183,16 @@ function getActivityTimelinePopup(id) {
   return data.responseText;
 }
 
+function getProjectCreatePopup() {
+  const data = $.ajax('./utils/load/project/loadProjectCreate.php', {
+    async: false,
+    type: 'post',
+  });
+  return data.responseText;
+}
+
 function getDeletePopup(id, title, msg, reason) {
-  closeAnyPopup()
+  closeAnyPopup();
   const data = $.ajax('../utils/load/other/loadDeletePopup.php', {
     async: false,
     type: 'post',
@@ -196,7 +204,7 @@ function getDeletePopup(id, title, msg, reason) {
     },
   });
   body.insertAdjacentHTML('beforeend', data.responseText);
-  popupModalSettings(closeModal, "popupOverlay");
+  popupModalSettings(closeModal, 'popupOverlay');
 }
 
 function getMoveToPopup(id) {
@@ -208,6 +216,14 @@ function getMoveToPopup(id) {
       projectID: projID,
       dataID: id,
     },
+  });
+  return data.responseText;
+}
+
+function getColorSelect() {
+  let data = $.ajax('./utils/load/other/loadColors.php', {
+    async: false,
+    type: 'post',
   });
   return data.responseText;
 }
