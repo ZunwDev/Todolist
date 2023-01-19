@@ -86,7 +86,7 @@ function getProjectIdFromTaskId(id) {
   return data.responseText;
 }
 
-function getBoardData(id, filter="") {
+function getBoardData(id, filter = "") {
   let data = $.ajax('../utils/load/board/loadBoards.php', {
     async: false,
     type: 'post',
@@ -131,7 +131,7 @@ function getTaskEditPopup(id) {
   return data.responseText;
 }
 
-function getPriorityListPopup() {
+function getPriorityPopup() {
   const data = $.ajax('../utils/load/other/loadPriorityList.php', {
     async: false,
     type: 'post',

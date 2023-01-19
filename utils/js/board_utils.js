@@ -1,4 +1,3 @@
-
 /* Getting the project ID from the database. */
 function addBoard(id) {
   const newProjectName = document.getElementById('newBoardInput').value;
@@ -56,16 +55,6 @@ function resetAllNewTasks() {
   }
 }
 
-function showPriorityList() {
-  let priorityList = getPriorityListPopup();
-
-  body.insertAdjacentHTML('beforeend', priorityList);
-  const popup = document.getElementById('popupElementPriority');
-  popup.classList.add(`left-[${mouse.x + 8}px]`, `top-[${mouse.y - 128}px]`);
-  classToggle(popup, 'beforeShowUp', 'afterShowUp');
-  const popupOverlay = document.getElementById('popupOverlayPriority');
-  popupOverlay.addEventListener('click', closeModalPriority);
-}
 
 function showMoveToPopup(dataID) {
   let moveToList = getMoveToPopup(dataID);
@@ -135,34 +124,37 @@ function showTaskManagePopup(dataID) {
 }
 
 function showColumnManagePopup(boardID) {
-  showPopup(getColumnManagePopup(boardID), setPopupToCorrectPos, closeAnyPopup, closeModal);
+  let columnManagePopup = new ColumnManagePopup(boardID);
+  columnManagePopup.showPopup();
+  //showPopup(getColumnManagePopup(boardID), setPopupToCorrectPos, closeAnyPopup, closeModal);
 }
 
 function showTaskEditPopup(dataID) {
-  showPopup(getTaskEditPopup(dataID), () => {}, closeAnyPopup, closeModal);
+  let taskEditPopup = new TaskEditPopup(dataID);
+  taskEditPopup.showPopup();
+  //showPopup(getTaskEditPopup(dataID), () => {}, closeAnyPopup, closeModal);
 }
 
 function showColumnEdit(boardID) {
-  showPopup(getColumnEditPopup(boardID), () => {}, closeAnyPopup, closeModal);
+  let columnEditPopup = new ColumnEditPopup(boardID);
+  columnEditPopup.showPopup();
+  //showPopup(getColumnEditPopup(boardID), () => {}, closeAnyPopup, closeModal);
 }
 
 function showProjectEdit(id) {
-  showPopup(
-    getProjectEditPopup(id),
-    () => {},
-    () => {},
-    closeModal
-  );
+  let projectEditPopup = new ProjectEditPopup(id);
+  projectEditPopup.showPopup();
+  /*   showPopup(
+      getProjectEditPopup(id),
+      () => {},
+      () => {},
+      closeModal
+      ); */
 }
 
 function showBoardFilterPopup(projectID) {
-  showPopup(
-    getBoardFilterPopup(projectID),
-    openPopupUnderButton,
-    () => {},
-    (e) => closeFilterAndSave(e, projectID),
-    'popupOverlayFilter'
-  );
+  let boardFilterPopup = new BoardFilterPopup(projectID);
+  boardFilterPopup.showPopup();
   //Priority
   let checkmarks = document.querySelectorAll('[id*="_priFil"], [id*="_termFil"], [id*="_taskFil"]');
   let ids = Array.from(checkmarks).map((element) => element.id);
@@ -170,6 +162,11 @@ function showBoardFilterPopup(projectID) {
     let curItem = localStorage.getItem(ids[i].slice(0, ids[i].indexOf('_')));
     curItem == 'true' ? checkmarks[i].checked = curItem : checkmarks[i].checked = '';
   }
+}
+
+function showPriorityList() {
+  let priorityListPopup = new PriorityPopup();
+  priorityListPopup.showPopup();
 }
 
 function confirmMoving(boardID, dataID) {

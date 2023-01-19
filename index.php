@@ -26,6 +26,12 @@ if (isset($_SESSION['login_user'])) {
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <script src="./utils/class/popups/popupHandler.js"></script>
     <script src="./utils/class/popups/taskManagePopup.js"></script>
+    <script src="./utils/class/popups/columnManagePopup.js"></script>
+    <script src="./utils/class/popups/taskEditPopup.js"></script>
+    <script src="./utils/class/popups/columnEditPopup.js"></script>
+    <script src="./utils/class/popups/projectEditPopup.js"></script>
+    <script src="./utils/class/popups/boardFilterPopup.js"></script>
+    <script src="./utils/class/popups/priorityPopup.js"></script>
     <script src="./utils/js/getDbData.js"></script>
     <script src="./utils/js/main_page_setup.js"></script>
     <script src="./utils/js/color_menu_utils.js"></script>
@@ -51,4 +57,5 @@ if (isset($_SESSION['login_user'])) {
         localStorage.clear();
     </script>
 </body>
+
 </html>
