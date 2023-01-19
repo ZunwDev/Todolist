@@ -73,12 +73,6 @@ function acceptProjectCreate() {
   closeAnyPopup();
 }
 
-function closeProjectSidebar(id, color, projectName) {
-  const projectSections = document.querySelectorAll(`section[id$='_id']`);
-  projectSections[0].remove();
-  openProjectSidebar(id, color, projectName);
-}
-
 function closeProject() {
   const getSidebar = document.getElementById('sidebar');
   const projectSections = document.querySelectorAll(`section[id$='_id']`);
@@ -122,30 +116,13 @@ function getHTML(name, lightlow, id) {
           </section>`;
 }
 
-function openProjectSidebar(id, color, projectName) {
+function openProject(id) {
   const checkIfProjectIsOpen = document.querySelectorAll(`section[id$='_id']`);
   if (checkIfProjectIsOpen.length > 0) {
-    closeProjectSidebar(id, color, projectName);
+    closeProject(id);
+    openProject(id);
     return;
   }
-  const getProjectWindow = document.getElementsByClassName('app_appProjectsContainer');
-  const colorClass = new Color(color);
-  $('#project_grid').hide();
-  $('#projects_nameEl').hide();
-  $('.project_wrapper').hide();
-  //New window
-  getProjectWindow[0].insertAdjacentHTML('beforeend', getHTML(projectName, colorClass.getLighter(400), id));
-  setTimeout(() => {
-    document.getElementById('boards').innerText = '';
-    let board = getBoardData(id);
-    const getBoardArea = document.getElementById('boards');
-    getBoardArea.insertAdjacentHTML('afterbegin', board);
-  }, 50);
-  URL(`${id}/${projectName}`);
-  title(`TodoList: ${projectName}`);
-}
-
-function openProject(id) {
   //Data
   let colorCode = getColorCode(id);
   let projectName = getProjectName(id);
