@@ -1,49 +1,52 @@
 function openProjectCreate() {
-  let projectCreatePopup = new ProjectCreatePopup();
-  projectCreatePopup.showPopup();
-  let getColorSelectEl = document.getElementById('colorSelect');
-  getColorSelectEl.insertAdjacentHTML('afterbegin', getColorSelect());
+	let projectCreatePopup = new ProjectCreatePopup();
+	projectCreatePopup.showPopup();
+	//let getColorSelectEl = document.getElementById('colorSelect');
+	$('#colorSelect').after(getColorSelect());
+	//getColorSelectEl.insertAdjacentHTML('afterbegin', getColorSelect());
 }
 
 function postCreateProject(projectName, projectDescription, colorName) {
-  $.post('./utils/scripts/project/createProject.php', {
-    projectName,
-    projectDescription,
-    color: colorName,
-  }).done((data) => {
-    window.location.reload();
-  });
+	$.post('./utils/scripts/project/createProject.php', {
+		projectName,
+		projectDescription,
+		color: colorName,
+	}).done((data) => {
+		window.location.reload();
+	});
 }
 
 function acceptProjectCreate() {
-  const projectName = $('#nameInputCreate').val();
-  const projectDescription = $('#projectDescriptionCreate').val();
-  const colorName = document.getElementById('currentColorName').innerText;
+	const projectName = $('#nameInputCreate').val();
+	const projectDescription = $('#projectDescriptionCreate').val();
+	const colorName = document.getElementById('currentColorName').innerText;
 
-  let finalProjectName = projectName == '' ? 'Project' : projectName;
-  let finalDescription = projectDescription == '' ? '' : projectDescription;
+	let finalProjectName = projectName == '' ? 'Project' : projectName;
+	let finalDescription = projectDescription == '' ? '' : projectDescription;
 
-  postCreateProject(finalProjectName, finalDescription, colorName);
-  closeAnyPopup();
+	postCreateProject(finalProjectName, finalDescription, colorName);
+	closeAnyPopup();
 }
 
 function closeProject() {
-  const getSidebar = document.getElementById('sidebar');
-  const lastClass = getSidebar.classList.item(getSidebar.classList.length - 1);
-  getSidebar.classList.replace(lastClass, 'bg-slate-100');
+	const getSidebar = document.getElementById('sidebar');
+	const lastClass = getSidebar.classList.item(getSidebar.classList.length - 1);
+	getSidebar.classList.replace(lastClass, 'bg-slate-100');
 
-  document.getElementById('project_opened').remove();
-  $('#project_grid, #projects_nameEl, .project_wrapper').show();
-  URL('index.php');
-  title('TodoList');
+	if (document.querySelector('#project_opened') != null) {
+		document.querySelector('#project_opened').remove();
+	}
+	$('#project_grid, #projects_nameEl, .project_wrapper').show();
+	URL('index.php');
+	title('TodoList');
 }
 
 function getHTML(name, lightlow, id) {
-  const getSidebar = document.getElementById('sidebar');
-  const lastClass = getSidebar.classList.item(getSidebar.classList.length - 1);
-  getSidebar.classList.replace(lastClass, lightlow);
+	const getSidebar = document.getElementById('sidebar');
+	const lastClass = getSidebar.classList.item(getSidebar.classList.length - 1);
+	getSidebar.classList.replace(lastClass, lightlow);
 
-  return `
+	return `
           <section id="project_opened" class="flex flex-col overflow-x-auto overflow-y-hidden h-full bg-slate-100 w-full">
             <div id="board_nav" class="flex flex-row h-10 gap-2 w-full border-b border-slate-300 bg-slate-50">
               <div class="flex w-fit h-full px-4">
@@ -67,45 +70,44 @@ function getHTML(name, lightlow, id) {
 }
 
 function openProject(id) {
-  const checkIfProjectIsOpen = document.getElementById('project_opened');
-  if (checkIfProjectIsOpen != null) {
-    closeProject(id);
-    openProject(id);
-    return;
-  }
-  //Data
-  let projectName = getProjectName(id);
-  const colorClass = new Color(getColorCode(id));
-  //Hiding projects
-  $('#project_grid, #projects_nameEl, .project_wrapper').hide();
-  //New window
-  $('.app_appProjectsContainer').prepend(getHTML(projectName, colorClass.getLighter(400), id));
-  setTimeout(() => {
-    $('#boards').text('');
-    $('#boards').append(getBoardData(id));
-  }, 50);
-  URL(`${id}/${projectName}`);
-  title(`TodoList: ${projectName}`);
+	if (document.querySelector('#projet_opened') != null) {
+		closeProject(id);
+		openProject(id);
+		return;
+	}
+	//Data
+	let projectName = getProjectName(id);
+	const colorClass = new Color(getColorCode(id));
+	//Hiding projects
+	$('#project_grid, #projects_nameEl, .project_wrapper').hide();
+	//New window
+	$('.app_appProjectsContainer').prepend(getHTML(projectName, colorClass.getLighter(400), id));
+	setTimeout(() => {
+		$('#boards').text('');
+		$('#boards').append(getBoardData(id));
+	}, 50);
+	URL(`${id}/${projectName}`);
+	title(`TodoList: ${projectName}`);
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-  document.querySelector('.app_appProjectsContainer').addEventListener('pointerdown', (event) => {
-    const filterButton = event.target.closest('.filter-button');
-    if (filterButton) {
-      event.stopPropagation();
-      showBoardFilterPopup(filterButton.getAttribute('data-board-id'), event);
-    }
-  });
+	document.querySelector('.app_appProjectsContainer').addEventListener('pointerdown', (event) => {
+		const filterButton = event.target.closest('.filter-button');
+		if (filterButton) {
+			event.stopPropagation();
+			showBoardFilterPopup(filterButton.getAttribute('data-board-id'), event);
+		}
+	});
 });
 
 function showActivityTimeline(projectID) {
-  let activityTimelinePopup = new ActivityTimelinePopup(projectID);
-  activityTimelinePopup.showPopup();
+	let activityTimelinePopup = new ActivityTimelinePopup(projectID);
+	activityTimelinePopup.showPopup();
 }
 
 if (window.history?.pushState) {
-  $(window).on('popstate', () => {
-    closeProject();
-    localStorage.clear();
-  });
+	$(window).on('popstate', () => {
+		closeProject();
+		localStorage.clear();
+	});
 }
