@@ -25,23 +25,23 @@ if (isset($_SESSION['login_user'])) {
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
     <!-- Handlers -->
-    <script src="./utils/class/popups/popupHandler.js"></script>
-    <script src="./utils/class/popups/warnings/WarningHandler.js"></script>
+    <script src="./utils/class/handlers/popupHandler.js"></script>
+    <script src="./utils/class/handlers/WarningHandler.js"></script>
     <!-- Popups -->
-    <script src="./utils/class/popups/taskManagePopup.js"></script>
-    <script src="./utils/class/popups/columnManagePopup.js"></script>
-    <script src="./utils/class/popups/taskEditPopup.js"></script>
-    <script src="./utils/class/popups/columnEditPopup.js"></script>
-    <script src="./utils/class/popups/projectEditPopup.js"></script>
-    <script src="./utils/class/popups/boardFilterPopup.js"></script>
-    <script src="./utils/class/popups/priorityPopup.js"></script>
-    <script src="./utils/class/popups/activityTimelinePopup.js"></script>
-    <script src="./utils/class/popups/projectCreatePopup.js"></script>
+    <script src="./utils/class/popups/task/taskManagePopup.js"></script>
+    <script src="./utils/class/popups/column/columnManagePopup.js"></script>
+    <script src="./utils/class/popups/task/taskEditPopup.js"></script>
+    <script src="./utils/class/popups/column/columnEditPopup.js"></script>
+    <script src="./utils/class/popups/project/projectEditPopup.js"></script>
+    <script src="./utils/class/popups/board/boardFilterPopup.js"></script>
+    <script src="./utils/class/popups/other/priorityPopup.js"></script>
+    <script src="./utils/class/popups/other/activityTimelinePopup.js"></script>
+    <script src="./utils/class/popups/project/projectCreatePopup.js"></script>
     <!-- Popups -> Warnings -->
-    <script src="./utils/class/popups/warnings/columnDelete.js"></script>
-    <script src="./utils/class/popups/warnings/columnClear.js"></script>
-    <script src="./utils/class/popups/warnings/projectDelete.js"></script>
-    <script src="./utils/class/popups/warnings/taskDelete.js"></script>
+    <script src="./utils/class/popups/warnings/column/columnDelete.js"></script>
+    <script src="./utils/class/popups/warnings/column/columnClear.js"></script>
+    <script src="./utils/class/popups/warnings/project/projectDelete.js"></script>
+    <script src="./utils/class/popups/warnings/task/taskDelete.js"></script>
     <!-- Other -->
     <script src="./utils/js/getDbData.js"></script>
     <script src="./utils/js/main_page_setup.js"></script>
