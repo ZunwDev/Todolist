@@ -5,7 +5,7 @@
         </div>
         <div id="project_grid" class="flex flex-wrap gap-6 pt-16 w-3/4">
             <?php
-            include "./utils/load/project/loadProjects.php";
+            include "./src/load/project/loadProjects.php";
             ?>
         </div>
     </div>

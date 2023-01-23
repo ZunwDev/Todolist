@@ -1,5 +1,5 @@
 function getColorCode(id) {
-	let data = $.ajax('./utils/scripts/db/getColor.php', {
+	let data = $.ajax('./src/scripts/db/getColor.php', {
 		async: false,
 		type: 'POST',
 		data: {
@@ -10,7 +10,7 @@ function getColorCode(id) {
 }
 
 function getProjectName(id) {
-	let data = $.ajax('./utils/scripts/db/getProjectName.php', {
+	let data = $.ajax('./src/scripts/db/getProjectName.php', {
 		async: false,
 		type: 'POST',
 		data: {
@@ -21,7 +21,7 @@ function getProjectName(id) {
 }
 
 function getProjectIdFromBoardId(id) {
-	let data = $.ajax('../utils/scripts/db/getProjectIdFromBoardId.php', {
+	let data = $.ajax('../src/scripts/db/getProjectIdFromBoardId.php', {
 		async: false,
 		type: 'POST',
 		data: {
@@ -32,7 +32,7 @@ function getProjectIdFromBoardId(id) {
 }
 
 function getBoardNameFromBoardId(id) {
-	let data = $.ajax('../utils/scripts/db/getBoardNameFromBoardId.php', {
+	let data = $.ajax('../src/scripts/db/getBoardNameFromBoardId.php', {
 		async: false,
 		type: 'POST',
 		data: {
@@ -43,7 +43,7 @@ function getBoardNameFromBoardId(id) {
 }
 
 function getTaskNameFromTaskId(id) {
-	let data = $.ajax('../utils/scripts/db/getTaskNameFromTaskId.php', {
+	let data = $.ajax('../src/scripts/db/getTaskNameFromTaskId.php', {
 		async: false,
 		type: 'POST',
 		data: {
@@ -54,7 +54,7 @@ function getTaskNameFromTaskId(id) {
 }
 
 function getBoardIdFromTaskId(id) {
-	let data = $.ajax('../utils/scripts/db/getBoardIdFromTaskId.php', {
+	let data = $.ajax('../src/scripts/db/getBoardIdFromTaskId.php', {
 		async: false,
 		type: 'POST',
 		data: {
@@ -65,7 +65,7 @@ function getBoardIdFromTaskId(id) {
 }
 
 function getBoardNameFromTaskId(id) {
-	let data = $.ajax('../utils/scripts/db/getBoardNameFromTaskId.php', {
+	let data = $.ajax('../src/scripts/db/getBoardNameFromTaskId.php', {
 		async: false,
 		type: 'POST',
 		data: {
@@ -76,7 +76,7 @@ function getBoardNameFromTaskId(id) {
 }
 
 function getProjectIdFromTaskId(id) {
-	let data = $.ajax('../utils/scripts/db/getProjectIdFromTaskId.php', {
+	let data = $.ajax('../src/scripts/db/getProjectIdFromTaskId.php', {
 		async: false,
 		type: 'POST',
 		data: {
@@ -87,7 +87,7 @@ function getProjectIdFromTaskId(id) {
 }
 
 function getBoardData(id, filter = '') {
-	let data = $.ajax('../utils/load/board/loadBoards.php', {
+	let data = $.ajax('../src/load/board/loadBoards.php', {
 		async: false,
 		type: 'post',
 		data: {
@@ -99,7 +99,7 @@ function getBoardData(id, filter = '') {
 }
 
 function getProjectEditPopup(id) {
-	let data = $.ajax('../utils/load/project/loadProjectEdit.php', {
+	let data = $.ajax('../src/load/project/loadProjectEdit.php', {
 		async: false,
 		type: 'POST',
 		data: {
@@ -110,7 +110,7 @@ function getProjectEditPopup(id) {
 }
 
 function getColumnEditPopup(id) {
-	let data = $.ajax('../utils/load/board/loadColumnEdit.php', {
+	let data = $.ajax('../src/load/board/loadColumnEdit.php', {
 		async: false,
 		type: 'post',
 		data: {
@@ -121,7 +121,7 @@ function getColumnEditPopup(id) {
 }
 
 function getTaskEditPopup(id) {
-	const data = $.ajax('../utils/load/task/loadTaskEditPopup.php', {
+	const data = $.ajax('../src/load/task/loadTaskEditPopup.php', {
 		async: false,
 		type: 'post',
 		data: {
@@ -132,7 +132,7 @@ function getTaskEditPopup(id) {
 }
 
 function getPriorityPopup() {
-	const data = $.ajax('../utils/load/other/loadPriorityList.php', {
+	const data = $.ajax('../src/load/other/loadPriorityList.php', {
 		async: false,
 		type: 'post',
 	});
@@ -140,7 +140,7 @@ function getPriorityPopup() {
 }
 
 function getTaskManagePopup(id) {
-	const data = $.ajax('../utils/load/task/loadTaskManage.php', {
+	const data = $.ajax('../src/load/task/loadTaskManage.php', {
 		async: false,
 		type: 'post',
 		data: {
@@ -151,7 +151,7 @@ function getTaskManagePopup(id) {
 }
 
 function getColumnManagePopup(id) {
-	const data = $.ajax('../utils/load/board/loadColumnManage.php', {
+	const data = $.ajax('../src/load/board/loadColumnManage.php', {
 		async: false,
 		type: 'post',
 		data: {
@@ -162,7 +162,7 @@ function getColumnManagePopup(id) {
 }
 
 function getBoardFilterPopup(id) {
-	const data = $.ajax('../utils/load/board/loadBoardFilter.php', {
+	const data = $.ajax('../src/load/board/loadBoardFilter.php', {
 		async: false,
 		type: 'post',
 		data: {
@@ -173,7 +173,7 @@ function getBoardFilterPopup(id) {
 }
 
 function getActivityTimelinePopup(id) {
-	const data = $.ajax('../utils/load/project/loadActivityTimeline.php', {
+	const data = $.ajax('../src/load/project/loadActivityTimeline.php', {
 		async: false,
 		type: 'post',
 		data: {
@@ -184,7 +184,7 @@ function getActivityTimelinePopup(id) {
 }
 
 function getProjectCreatePopup() {
-	const data = $.ajax('./utils/load/project/loadProjectCreate.php', {
+	const data = $.ajax('./src/load/project/loadProjectCreate.php', {
 		async: false,
 		type: 'post',
 	});
@@ -192,7 +192,7 @@ function getProjectCreatePopup() {
 }
 
 function getDeletePopup(id, title, msg, reason) {
-	const data = $.ajax('../utils/load/other/loadDeletePopup.php', {
+	const data = $.ajax('../src/load/other/loadDeletePopup.php', {
 		async: false,
 		type: 'post',
 		data: {
@@ -207,7 +207,7 @@ function getDeletePopup(id, title, msg, reason) {
 
 function getMoveToPopup(id) {
 	const projID = getProjectIdFromTaskId(id);
-	const data = $.ajax('../utils/load/task/loadMoveToPopup.php', {
+	const data = $.ajax('../src/load/task/loadMoveToPopup.php', {
 		async: false,
 		type: 'post',
 		data: {
@@ -219,9 +219,21 @@ function getMoveToPopup(id) {
 }
 
 function getColorSelect() {
-	let data = $.ajax('./utils/load/other/loadColors.php', {
+	let data = $.ajax('./src/load/other/loadColors.php', {
 		async: false,
 		type: 'post',
+	});
+	return data.responseText;
+}
+
+function getPrepHTML(id, name) {
+	let data = $.ajax('./src/load/project/loadPrepHTML.php', {
+		async: false,
+		type: 'post',
+		data: {
+			projectID: id,
+			name: name,
+		},
 	});
 	return data.responseText;
 }

@@ -1,46 +1,21 @@
 function addBoard(id) {
-	const newProjectName = document.getElementById('newBoardInput').value;
-	let finalProjectName = newProjectName.length > 0 ? newProjectName : 'Column';
-	$.post('../utils/scripts/board/addNewBoard.php', {
-		projectID: id,
-		board_name: finalProjectName,
-	}).done((data) => updateBoard(id));
+	let boardManager = new BoardManager();
+	boardManager.addBoard(id);
 }
 
 function expandBoardCreate() {
-	classToggle(document.getElementsByClassName('newBoard')[0], 'h-8', 'h-20', 'bg-slate-100');
-	classToggle(document.getElementsByClassName('newBoardButton')[0], 'w-64', 'w-[13rem]');
-	classToggle(document.getElementsByClassName('acceptBoard')[0], 'w-64', 'w-[13rem]');
-	$('.newBoardButton').toggleClass('hidden');
-	$('.acceptBoard').toggleClass('hidden');
-	$('.newBoardCancel').toggleClass('hidden');
-
-	let input = document.getElementById('newBoardInput');
-	input.classList.toggle('hidden');
-	setTimeout(() => {
-		input.focus();
-		input.select();
-	}, 0);
+	let boardManager = new BoardManager();
+	boardManager.expandNewBoard();
 }
 
 function updateBoard(id) {
-	closeAnyPopup();
-	document.getElementById('boards').innerText = '';
-	const getBoardArea = document.getElementById('boards');
-	getBoardArea.insertAdjacentHTML('afterbegin', getBoardData(id));
+	let boardManager = new BoardManager();
+	boardManager.updateBoard(id);
 }
 
 function resetAllNewTasks() {
-	const existingTasks = document.querySelectorAll(`div.edit`);
-	const addNewTaskButton = document.querySelectorAll(`[id*='_add']`);
-
-	for (var i = 0; i < addNewTaskButton.length; i++) {
-		addNewTaskButton[i].classList.remove('hidden');
-	}
-
-	for (var i = 0; i < existingTasks.length; i++) {
-		existingTasks[i].remove();
-	}
+	let boardManager = new BoardManager();
+	boardManager.resetAllNewTasks();
 }
 
 function showMoveToPopup(dataID) {
@@ -55,28 +30,8 @@ function showMoveToPopup(dataID) {
 }
 
 function savePriority(name) {
-	closePriority();
-	let colors = {
-		High: 'bg-red-100',
-		Medium: 'bg-amber-100',
-		Low: 'bg-slate-100',
-		None: 'bg-transparent',
-	};
-
-	const color = colors[name];
-	const prioritySel = document.getElementById('priorityList');
-	for (let i = 0; i < 2; i++) {
-		prioritySel.classList.remove(prioritySel.classList.toString().split(' ').pop());
-	}
-	prioritySel.classList.add(color);
-	const priorityName = document.getElementById('priorityListText');
-	if (name === 'None') {
-		prioritySel.classList.add('border-transparent');
-		priorityName.innerText = '';
-	} else {
-		prioritySel.classList.add('border-slate-300');
-		priorityName.innerText = name;
-	}
+	let boardManager = new BoardManager();
+	boardManager.savePriority(name);
 }
 
 function showTaskManagePopup(dataID) {
@@ -112,64 +67,16 @@ function showPriorityPopup() {
 function showBoardFilterPopup(projectID) {
 	let boardFilterPopup = new BoardFilterPopup(projectID);
 	boardFilterPopup.showPopup();
-	let checkmarks = document.querySelectorAll('[id*="_priFil"], [id*="_termFil"], [id*="_taskFil"]');
-	let ids = Array.from(checkmarks).map((element) => element.id);
-	for (let i = 0; i < localStorage.length; i++) {
-		let curItem = localStorage.getItem(ids[i].slice(0, ids[i].indexOf('_')));
-		curItem == 'true' ? (checkmarks[i].checked = curItem) : (checkmarks[i].checked = '');
-	}
 }
 
 function confirmMoving(boardID, dataID) {
-	let projectID = getProjectIdFromBoardId(boardID);
-	closeAnyPopup();
-	$.post('../utils/scripts/task/moveToAnotherBoard.php', {
-		boardID: boardID,
-		dataID: dataID,
-	}).done((data) => {
-		updateBoard(projectID);
-	});
+	let boardManager = new BoardManager(boardID);
+	boardManager.moveTask(dataID);
 }
 
 function saveTaskEdit(dataID, boardID) {
-	let projectID = getProjectIdFromBoardId(boardID);
-	let newTaskName = document.getElementById('taskNameEdit').value;
-	let newTaskDescription = document.getElementById('taskDescriptionEdit').value;
-	let newDueTo = document.getElementById('taskDueToEdit').value;
-	let newPriority = document.getElementById('priorityListText').innerText;
-	const board = document.getElementById(`${boardID}_name`);
-	if (newTaskName == '') {
-		let getTaskAmount = board.children.length - 1 + 1;
-		newTaskName = `Task ${getTaskAmount}`;
-	}
-	let finalTaskDescription = newTaskDescription == '' ? '' : newTaskDescription;
-	let finalDueTo = newDueTo == '' ? '0000-00-00' : newDueTo;
-	let finalPriority = newPriority == '' ? 'None' : newPriority;
-
-	let log = new Log(projectID, dataID, boardID);
-	let oldTaskName = getTaskNameFromTaskId(dataID);
-	let boardName = getBoardNameFromBoardId(boardID);
-	$.post('../utils/scripts/task/saveTaskEdit.php', {
-		dataID,
-		task_name: newTaskName,
-		task_description: finalTaskDescription,
-		task_dueTo: finalDueTo,
-		task_priority: finalPriority,
-	}).done((data) => {
-		setTimeout(() => {
-			updateBoard(projectID);
-		}, 30);
-	});
-	log.logTaskUpdate(oldTaskName, boardName, newTaskName);
-}
-
-function postUpdateProject(projectName, projectDescription, colorName, projectID) {
-	$.post('../utils/scripts/project/saveProjectEdit.php', {
-		projectName,
-		projectDescription,
-		color: colorName,
-		projectID: projectID,
-	}).done((data) => window.location.reload());
+	let boardManager = new BoardManager(boardID);
+	boardManager.saveEditedTask(dataID);
 }
 
 function showProjectDeleteWarning(id) {
@@ -194,23 +101,23 @@ function showColumnDeleteWarning(id) {
 
 function confirmDelete(id, delReason) {
 	const links = {
-		projDel: '../utils/scripts/project/deleteProject.php',
-		colCl: '../utils/scripts/board/clearColumn.php',
-		colDel: '../utils/scripts/board/deleteColumn.php',
-		taskDel: '../utils/scripts/task/deleteTask.php',
+		projDel: '../src/scripts/project/deleteProject.php',
+		colCl: '../src/scripts/board/clearColumn.php',
+		colDel: '../src/scripts/board/deleteColumn.php',
+		taskDel: '../src/scripts/task/deleteTask.php',
 	};
 
 	let projectID = delReason == 'taskDel' ? getProjectIdFromTaskId(id) : getProjectIdFromBoardId(id);
 	if (delReason == 'taskDel') {
-		let log = new Log(projectID, id, getBoardIdFromTaskId(id));
+		let log = new LogManager(projectID, id, getBoardIdFromTaskId(id));
 		log.logRemoveTask(getTaskNameFromTaskId(id), getBoardNameFromTaskId(id));
 	}
 	if (delReason == 'colCl') {
-		let log = new Log(projectID, null, id);
+		let log = new LogManager(projectID, null, id);
 		log.logClearColumn(getBoardNameFromBoardId(id));
 	}
 	if (delReason == 'colDel') {
-		let log = new Log(projectID, null, id);
+		let log = new LogManager(projectID, null, id);
 		log.logRemoveColumn(getBoardNameFromBoardId(id));
 	}
 	$.post(links[delReason], {
@@ -220,24 +127,13 @@ function confirmDelete(id, delReason) {
 	});
 }
 
-function saveProjectChanges(id) {
-	let newProjectName = document.getElementById('projectNameEdit').value;
-	let newProjectDescription = document.getElementById('projectDescriptionEdit').value;
-	const newColorName = document.getElementById('currentColorName').innerText;
-
-	let finalName = newProjectName == '' ? 'Project' : newProjectName;
-	let finalDescription = newProjectDescription == '' ? '' : newProjectDescription;
-
-	postUpdateProject(finalName, finalDescription, newColorName, id);
-}
-
 function saveColumnChanges(boardID) {
 	let projectID = getProjectIdFromBoardId(boardID);
 	let newBoardName = document.getElementById('columnNameEdit').value;
 	const newBoardDescription = document.getElementById('columnDescriptionEdit').value;
 	if (newBoardName == '' || newBoardName == null) newBoardName = 'Untitled Column';
-	let log = new Log(projectID, null, boardID);
-	$.post('../utils/scripts/board/saveColumnEdit.php', {
+	let log = new LogManager(projectID, null, boardID);
+	$.post('../src/scripts/board/saveColumnEdit.php', {
 		boardID,
 		board_name: newBoardName,
 		board_description: newBoardDescription,
@@ -248,15 +144,13 @@ function saveColumnChanges(boardID) {
 function addNewTask(boardID) {
 	resetAllNewTasks();
 	const board = document.getElementById(`${boardID}_name`);
-	const existingTasks = board.children.length - 1;
+	const existingTasks = board.children.length;
 	board.insertAdjacentHTML(
 		'beforeend',
 		`
     <div id="board_${boardID}_edit" class="flex flex-col edit gap-2">
     <div class="w-full h-fit mt-1 bg-slate-200 flex-col border border-slate-400 rounded-md">
-      <textarea autofocus autoselect id="task_${boardID}_edit" maxlength="64" class="border-b border-slate-300 flex mt-[0.2px] form-control h-8 resize-none bg-transparent overflow-y-hidden pt-1 pl-2 w-full focus:text-slate-700 focus:bg-slate-50 focus:rounded-tr-md focus:rounded-tl-md focus:border focus:outline-none focus:border-slate-600">Task #${
-			existingTasks + 1
-		}</textarea>
+      <textarea autofocus autoselect id="task_${boardID}_edit" maxlength="64" class="border-b border-slate-300 flex mt-[0.2px] form-control h-8 resize-none bg-transparent overflow-y-hidden pt-1 pl-2 w-full focus:text-slate-700 focus:bg-slate-50 focus:rounded-tr-md focus:rounded-tl-md focus:border focus:outline-none focus:border-slate-600">Task #${existingTasks}</textarea>
       <input id="dueTo" class="flex w-full mt-0.5 mx-[0.1px] form-control px-4 bg-transparent focus:text-slate-700 border-b border-slate-300 focus:bg-slate-50 focus:border focus:outline-none focus:border-slate-600" type="date"></input>
       <div class="flex flex-row w-full h-8">
         <div title="Add priority" id="priorityButton" class="flex ml-1 my-1 h-fit w-fit px-1 py-1 hover:bg-slate-300 rounded-lg cursor-pointer" onclick="showPriorityPopup()">
@@ -290,8 +184,8 @@ function saveData(boardID) {
 	var taskName = document.getElementById(`task_${boardID}_edit`).value;
 	const board = document.getElementById(`${boardID}_name`);
 	if (taskName == '') taskName = `Task #${board.children.length - 1}`;
-	let log = new Log(getProjectIdFromBoardId(boardID), null, boardID);
-	$.post('../utils/scripts/task/addNewTask.php', {
+	let log = new LogManager(getProjectIdFromBoardId(boardID), null, boardID);
+	$.post('../src/scripts/task/addNewTask.php', {
 		boardID,
 		nameOfTask: taskName,
 		date: $('#dueTo').val(),
@@ -315,7 +209,7 @@ function isChecked(taskID) {
 	classToggle(document.getElementById(taskID), 'border-gray-300', 'bg-slate-50', 'border-lime-600', 'bg-lime-500');
 	classToggle(document.getElementById(taskID + '_check'), 'fill-gray-300', 'fill-white');
 	classToggle(document.getElementById(taskID + '_taskChecked'), 'opacity-70');
-	$.post('../utils/scripts/task/updateCheckboxState.php', {
+	$.post('../src/scripts/task/updateCheckboxState.php', {
 		dataID: taskID,
 	});
 }

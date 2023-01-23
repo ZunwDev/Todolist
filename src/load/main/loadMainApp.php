@@ -4,7 +4,7 @@
             <div class="flex text-xs h-fit w-full font-bold">Projects</div>
             <ul id="projectList" class="flex flex-col mt-3 gap-1">
                 <?php
-                include "./utils/load/other/loadSidebar.php";
+                include "./src/load/other/loadSidebar.php";
                 ?>
             </ul>
         </div>

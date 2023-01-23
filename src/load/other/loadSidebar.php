@@ -1,5 +1,5 @@
 <?php
-include "../TodoList/utils/scripts/db/connectToDatabase.php";
+include "../TodoList/src/scripts/db/connectToDatabase.php";
 $q = "select project.project_name, project.projectID, project.project_description, colors.color_name, colors.color_code from project join colors on project.colorID = colors.colorID where userID = '$userID'";
 $result = mysqli_query($conn, $q);
 
