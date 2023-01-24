@@ -30,7 +30,7 @@ if (isset($_SESSION['login_user'])) {
     <script src="./src/class/managers/BoardManager.js"></script>
     <!-- Handlers -->
     <script src="./src/class/handlers/popupHandler.js"></script>
-    <script src="./src/class/handlers/WarningHandler.js"></script>
+    <script src="./src/class/handlers/warningHandler.js"></script>
     <!-- Popups -->
     <script src="./src/class/popups/task/taskManagePopup.js"></script>
     <script src="./src/class/popups/column/columnManagePopup.js"></script>

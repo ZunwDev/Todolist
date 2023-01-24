@@ -4,5 +4,5 @@ function showProfileMenu() {
 
 function userLogOut() {
 	$.post('./src/auth/log_out.php', {});
-	window.location = './index.php';
+	window.location = './src/auth/login.php';
 }
