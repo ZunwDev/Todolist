@@ -82,6 +82,7 @@ class BoardManager {
 		}).done((data) => {
 			this.updateBoard(projectID);
 		});
+		//let log = new LogManager(projectID, this.boardID, dataID);
 	}
 
 	saveEditedTask(dataID) {
