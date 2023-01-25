@@ -12,10 +12,12 @@ class BoardManager {
 	addBoard(projectID) {
 		const newProjectName = $('#newBoardInput').val();
 		let finalProjectName = newProjectName.length > 0 ? newProjectName : 'Column';
+		let log = new LogManager(projectID, null, this.boardID);
+		log.logNewColumn(finalProjectName);
 		$.post('../src/scripts/board/addNewBoard.php', {
 			projectID: projectID,
 			board_name: finalProjectName,
-		}).done((data) => this.updateBoard(this.boardID));
+		}).done((data) => this.updateBoard(projectID));
 	}
 
 	expandNewBoard() {
@@ -76,13 +78,18 @@ class BoardManager {
 		let projectID = getProjectIdFromBoardId(this.boardID);
 		let popupHandler = new PopupHandler();
 		popupHandler.closeAnyPopup();
+		let log = new LogManager(projectID, dataID, this.boardID);
+		log.logTaskMove(
+			getBoardNameFromTaskId(dataID),
+			getBoardNameFromBoardId(this.boardID),
+			getTaskNameFromTaskId(dataID)
+		);
 		$.post('../src/scripts/task/moveToAnotherBoard.php', {
 			boardID: this.boardID,
 			dataID: dataID,
 		}).done((data) => {
 			this.updateBoard(projectID);
 		});
-		//let log = new LogManager(projectID, this.boardID, dataID);
 	}
 
 	saveEditedTask(dataID) {

@@ -23,6 +23,14 @@ class LogManager {
 	logRemoveTask(task_name, column_name) {
 		this.logActivity(`Deleted task „${task_name}” from column „${column_name}”`, null, null, 1);
 	}
+	logTaskMove(column_name, new_column_name, task_name) {
+		this.logActivity(
+			`Moved task „${task_name}” from column „${column_name}” to column „${new_column_name}”`,
+			column_name,
+			new_column_name,
+			4
+		);
+	}
 	logClearColumn(column_name) {
 		this.logActivity(`Cleared column „${column_name}”`, null, null, 1);
 	}
@@ -34,5 +42,8 @@ class LogManager {
 	}
 	logColumnUpdate(column_name, new_val) {
 		this.logActivity(`Updated column „${column_name}”`, column_name, new_val, 3);
+	}
+	logNewColumn(column_name) {
+		this.logActivity(`Added column „${column_name}”`, null, null, 2);
 	}
 }
