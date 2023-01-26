@@ -67,10 +67,6 @@ if (isset($_SESSION['login_user'])) {
     include "./src/load/main/loadMainApp.php";
     include "./src/load/main/loadProjectContainer.php";
     ?>
-
-    <script>
-        localStorage.clear();
-    </script>
 </body>
 
 </html>

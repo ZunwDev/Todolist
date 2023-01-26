@@ -1,153 +1,144 @@
 function addBoard(id) {
-	let boardManager = new BoardManager();
-	boardManager.addBoard(id);
+  let boardManager = new BoardManager();
+  boardManager.addBoard(id);
 }
 
 function expandBoardCreate() {
-	let boardManager = new BoardManager();
-	boardManager.expandNewBoard();
+  let boardManager = new BoardManager();
+  boardManager.expandNewBoard();
 }
 
 function updateBoard(id) {
-	let boardManager = new BoardManager();
-	boardManager.updateBoard(id);
+  let boardManager = new BoardManager();
+  boardManager.updateBoard(id);
 }
 
 function resetAllNewTasks() {
-	let boardManager = new BoardManager();
-	boardManager.resetAllNewTasks();
+  let boardManager = new BoardManager();
+  boardManager.resetAllNewTasks();
 }
 
 function showMoveToPopup(dataID) {
-	let moveToList = getMoveToPopup(dataID);
+  let moveToList = getMoveToPopup(dataID);
 
-	body.insertAdjacentHTML('beforeend', moveToList);
-	const popup = document.getElementById('popupPopupElement');
-	popup.classList.add(`left-[${mouse.x + 64}px]`, `top-[${mouse.y - 128}px]`);
-	classToggle(popup, 'beforeShowUp', 'afterShowUp');
-	const popupOverlay = document.getElementById('popupPopupOverlay');
-	popupOverlay.addEventListener('click', closeModalMoveTo);
+  body.insertAdjacentHTML('beforeend', moveToList);
+  const popup = document.getElementById('popupPopupElement');
+  popup.classList.add(`left-[${mouse.x + 64}px]`, `top-[${mouse.y - 128}px]`);
+  classToggle(popup, 'beforeShowUp', 'afterShowUp');
+  const popupOverlay = document.getElementById('popupPopupOverlay');
+  popupOverlay.addEventListener('click', closeModalMoveTo);
 }
 
 function savePriority(name) {
-	let boardManager = new BoardManager();
-	boardManager.savePriority(name);
+  let boardManager = new BoardManager();
+  boardManager.savePriority(name);
 }
 
 function showTaskManagePopup(dataID) {
-	let taskManagePopup = new TaskManagePopup(dataID);
-	taskManagePopup.showPopup();
+  let taskManagePopup = new TaskManagePopup(dataID);
+  taskManagePopup.showPopup();
 }
 
 function showColumnManagePopup(boardID) {
-	let columnManagePopup = new ColumnManagePopup(boardID);
-	columnManagePopup.showPopup();
+  let columnManagePopup = new ColumnManagePopup(boardID);
+  columnManagePopup.showPopup();
 }
 
 function showTaskEditPopup(dataID) {
-	let taskEditPopup = new TaskEditPopup(dataID);
-	taskEditPopup.showPopup();
+  let taskEditPopup = new TaskEditPopup(dataID);
+  taskEditPopup.showPopup();
 }
 
 function showColumnEdit(boardID) {
-	let columnEditPopup = new ColumnEditPopup(boardID);
-	columnEditPopup.showPopup();
+  let columnEditPopup = new ColumnEditPopup(boardID);
+  columnEditPopup.showPopup();
 }
 
 function showProjectEdit(id) {
-	let projectEditPopup = new ProjectEditPopup(id);
-	projectEditPopup.showPopup();
+  let projectEditPopup = new ProjectEditPopup(id);
+  projectEditPopup.showPopup();
 }
 
 function showPriorityPopup() {
-	let priorityListPopup = new PriorityPopup();
-	priorityListPopup.showPopup();
+  let priorityListPopup = new PriorityPopup();
+  priorityListPopup.showPopup();
 }
 
 function showBoardFilterPopup(projectID) {
-	let boardFilterPopup = new BoardFilterPopup(projectID);
-	boardFilterPopup.showPopup();
+  let boardFilterPopup = new BoardFilterPopup(projectID);
+  boardFilterPopup.showPopup();
 }
 
 function confirmMoving(boardID, dataID) {
-	let boardManager = new BoardManager(boardID);
-	boardManager.moveTask(dataID);
+  let boardManager = new BoardManager(boardID);
+  boardManager.moveTask(dataID);
 }
 
 function saveTaskEdit(dataID, boardID) {
-	let boardManager = new BoardManager(boardID);
-	boardManager.saveEditedTask(dataID);
+  let boardManager = new BoardManager(boardID);
+  boardManager.saveEditedTask(dataID);
 }
 
 function showProjectDeleteWarning(id) {
-	let projectDeleteWarning = new ProjectDeleteWarningPopup(id);
-	projectDeleteWarning.showPopup();
+  let projectDeleteWarning = new ProjectDeleteWarningPopup(id);
+  projectDeleteWarning.showPopup();
 }
 
 function showColumnClearWarning(id) {
-	let columnClearWarning = new ColumnClearWarningPopup(id);
-	columnClearWarning.showPopup();
+  let columnClearWarning = new ColumnClearWarningPopup(id);
+  columnClearWarning.showPopup();
 }
 
 function showTaskDeleteWarning(id) {
-	let taskDeleteWarning = new TaskDeleteWarningPopup(id);
-	taskDeleteWarning.showPopup();
+  let taskDeleteWarning = new TaskDeleteWarningPopup(id);
+  taskDeleteWarning.showPopup();
 }
 
 function showColumnDeleteWarning(id) {
-	let columnDeleteWarning = new ColumnDeleteWarningPopup(id);
-	columnDeleteWarning.showPopup();
+  let columnDeleteWarning = new ColumnDeleteWarningPopup(id);
+  columnDeleteWarning.showPopup();
 }
 
 function confirmDelete(id, delReason) {
-	const links = {
-		projDel: '../src/scripts/project/deleteProject.php',
-		colCl: '../src/scripts/board/clearColumn.php',
-		colDel: '../src/scripts/board/deleteColumn.php',
-		taskDel: '../src/scripts/task/deleteTask.php',
-	};
+  const links = {
+    projDel: '../src/scripts/project/deleteProject.php',
+    colCl: '../src/scripts/board/clearColumn.php',
+    colDel: '../src/scripts/board/deleteColumn.php',
+    taskDel: '../src/scripts/task/deleteTask.php',
+  };
 
-	let projectID = delReason == 'taskDel' ? getProjectIdFromTaskId(id) : getProjectIdFromBoardId(id);
-	if (delReason == 'taskDel') {
-		let log = new LogManager(projectID, id, getBoardIdFromTaskId(id));
-		log.logRemoveTask(getTaskNameFromTaskId(id), getBoardNameFromTaskId(id));
-	}
-	if (delReason == 'colCl') {
-		let log = new LogManager(projectID, null, id);
-		log.logClearColumn(getBoardNameFromBoardId(id));
-	}
-	if (delReason == 'colDel') {
-		let log = new LogManager(projectID, null, id);
-		log.logRemoveColumn(getBoardNameFromBoardId(id));
-	}
-	$.post(links[delReason], {
-		id,
-	}).done((data) => {
-		delReason != 'projDel' ? updateBoard(projectID) : window.location.reload();
-	});
+  let projectID = delReason == 'taskDel' ? getProjectIdFromTaskId(id) : getProjectIdFromBoardId(id);
+  if (delReason == 'taskDel') {
+    let log = new LogManager(projectID, id, getBoardIdFromTaskId(id));
+    log.logRemoveTask(getTaskNameFromTaskId(id), getBoardNameFromTaskId(id));
+  }
+  if (delReason == 'colCl') {
+    let log = new LogManager(projectID, null, id);
+    log.logClearColumn(getBoardNameFromBoardId(id));
+  }
+  if (delReason == 'colDel') {
+    let log = new LogManager(projectID, null, id);
+    log.logRemoveColumn(getBoardNameFromBoardId(id));
+  }
+  $.post(links[delReason], {
+    id,
+  }).done((data) => {
+    delReason != 'projDel' ? updateBoard(projectID) : window.location.reload();
+  });
 }
 
 function saveColumnChanges(boardID) {
-	let projectID = getProjectIdFromBoardId(boardID);
-	let newBoardName = document.getElementById('columnNameEdit').value;
-	const newBoardDescription = document.getElementById('columnDescriptionEdit').value;
-	if (newBoardName == '' || newBoardName == null) newBoardName = 'Untitled Column';
-	let log = new LogManager(projectID, null, boardID);
-	$.post('../src/scripts/board/saveColumnEdit.php', {
-		boardID,
-		board_name: newBoardName,
-		board_description: newBoardDescription,
-	}).done((data) => updateBoard(projectID));
-	log.logColumnUpdate(getBoardNameFromBoardId(boardID), newBoardName);
+  let boardManager = new BoardManager(boardID);
+  boardManager.saveEditedColumn();
 }
 
 function addNewTask(boardID) {
-	resetAllNewTasks();
-	const board = document.getElementById(`${boardID}_name`);
-	const existingTasks = board.children.length;
-	board.insertAdjacentHTML(
-		'beforeend',
-		`
+  resetAllNewTasks();
+  const board = document.getElementById(`${boardID}_name`);
+  const existingTasks = board.children.length;
+  board.insertAdjacentHTML(
+    'beforeend',
+    `
     <div id="board_${boardID}_edit" class="flex flex-col edit gap-2">
     <div class="w-full h-fit mt-1 bg-slate-200 flex-col border border-slate-400 rounded-md">
       <textarea autofocus autoselect id="task_${boardID}_edit" maxlength="64" class="border-b border-slate-300 flex mt-[0.2px] form-control h-8 resize-none bg-transparent overflow-y-hidden pt-1 pl-2 w-full focus:text-slate-700 focus:bg-slate-50 focus:rounded-tr-md focus:rounded-tl-md focus:border focus:outline-none focus:border-slate-600">Task #${existingTasks}</textarea>
@@ -171,141 +162,123 @@ function addNewTask(boardID) {
     </div>
     </div>
     `
-	);
-	const addNewTaskButton = document.getElementById(`${boardID}_add`);
-	addNewTaskButton.classList.add('hidden');
-	const input = document.getElementById(`task_${boardID}_edit`);
-	setTimeout(() => {
-		input.select();
-	}, 0);
+  );
+  const addNewTaskButton = document.getElementById(`${boardID}_add`);
+  addNewTaskButton.classList.add('hidden');
+  const input = document.getElementById(`task_${boardID}_edit`);
+  setTimeout(() => {
+    input.select();
+  }, 0);
 }
 
 function saveData(boardID) {
-	var taskName = document.getElementById(`task_${boardID}_edit`).value;
-	const board = document.getElementById(`${boardID}_name`);
-	if (taskName == '') taskName = `Task #${board.children.length - 1}`;
-	let log = new LogManager(getProjectIdFromBoardId(boardID), null, boardID);
-	$.post('../src/scripts/task/addNewTask.php', {
-		boardID,
-		nameOfTask: taskName,
-		date: $('#dueTo').val(),
-		priority: $('#priorityListText').text(),
-	}).done((data) => {
-		setTimeout(() => {
-			updateBoard(getProjectIdFromBoardId(boardID));
-		}, 20);
-	});
-	log.logNewTask(taskName, getBoardNameFromBoardId(boardID));
+  let boardManager = new BoardManager(boardID);
+  boardManager.saveTask();
 }
 
 function cancelChanges(boardID) {
-	document.getElementById(`board_${boardID}_edit`).remove();
-	const addNewTaskButton = document.getElementById(`${boardID}_add`);
-	addNewTaskButton.classList.remove('hidden');
+  document.getElementById(`board_${boardID}_edit`).remove();
+  const addNewTaskButton = document.getElementById(`${boardID}_add`);
+  addNewTaskButton.classList.remove('hidden');
 }
 
 function isChecked(taskID) {
-	closeAnyPopup();
-	classToggle(document.getElementById(taskID), 'border-gray-300', 'bg-slate-50', 'border-lime-600', 'bg-lime-500');
-	classToggle(document.getElementById(taskID + '_check'), 'fill-gray-300', 'fill-white');
-	classToggle(document.getElementById(taskID + '_taskChecked'), 'opacity-70');
-	$.post('../src/scripts/task/updateCheckboxState.php', {
-		dataID: taskID,
-	});
+  let boardManager = new BoardManager();
+  boardManager.updateCheckbox(taskID);
 }
 
 $(document).keyup((e) => {
-	if (e.key === 'Escape') {
-		resetAllNewTasks();
-		if ($('.newBoard').hasClass('h-20')) {
-			expandBoardCreate();
-		}
-	}
+  if (e.key === 'Escape') {
+    resetAllNewTasks();
+    if ($('.newBoard').hasClass('h-20')) {
+      expandBoardCreate();
+    }
+  }
 });
 
 const mouse = {
-	x: 0,
-	y: 0,
+  x: 0,
+  y: 0,
 };
 document.addEventListener('mousemove', (e) => {
-	mouse.x = e.clientX;
-	mouse.y = e.clientY;
+  mouse.x = e.clientX;
+  mouse.y = e.clientY;
 });
 
 function closePriority() {
-	const getOverlay = document.getElementById('popupOverlayPriority');
-	if (getOverlay != null) {
-		getOverlay.remove();
-	}
+  const getOverlay = document.getElementById('popupOverlayPriority');
+  if (getOverlay != null) {
+    getOverlay.remove();
+  }
 }
 
 function closeMoveTo() {
-	const getOverlay = document.getElementById('popupPopupOverlay');
-	if (getOverlay != null) {
-		getOverlay.remove();
-	}
+  const getOverlay = document.getElementById('popupPopupOverlay');
+  if (getOverlay != null) {
+    getOverlay.remove();
+  }
 }
 
 function closeAnyPopup() {
-	const getOverlay = document.getElementById('popupOverlay');
-	const getSecondLOverlay = document.getElementById('popupPopupOverlay');
-	if (getOverlay != null) {
-		getOverlay.remove();
-	}
-	if (getSecondLOverlay != null) {
-		getSecondLOverlay.remove();
-	}
+  const getOverlay = document.getElementById('popupOverlay');
+  const getSecondLOverlay = document.getElementById('popupPopupOverlay');
+  if (getOverlay != null) {
+    getOverlay.remove();
+  }
+  if (getSecondLOverlay != null) {
+    getSecondLOverlay.remove();
+  }
 }
 
 function closeFilter(id) {
-	if ($('#popupOverlayFilter') != null) {
-		saveFilter(id);
-		$('#popupOverlayFilter').remove();
-	}
+  if ($('#popupOverlayFilter') != null) {
+    saveFilter(id);
+    $('#popupOverlayFilter').remove();
+  }
 }
 
 function saveFilter(id) {
-	const checks = [];
-	const filter = document.querySelectorAll('[id*="_priFil"], [id*="_termFil"], [id*="_taskFil"]');
-	filter.forEach((element) => checks.push(element.id.slice(0, element.id.indexOf('_')) + '-' + element.checked));
-	if ($('#boards') != null) {
-		$('#boards').empty();
-		for (let i = 0; i < checks.length; i++) {
-			localStorage.setItem(
-				checks[i].slice(0, checks[i].indexOf('-')),
-				checks[i].slice(checks[i].indexOf('-') + 1, checks[i].length)
-			);
-		}
-		$('#boards').prepend(getBoardData(id, checks.toString()));
-		if (checks.filter((el) => el.includes(true)).length > 0) {
-			$('.filter-button').addClass('bg-gray-200');
-			if ($('#filter-count') != null) $('#filter-count').remove();
-			if ($('#filter-clear') != null) $('#filter-clear').remove();
-			$('.filter-button').append(
-				`<div class="flex text-sm px-1.5 bg-white rounded-lg" id="filter-count">${
-					checks.filter((el) => el.includes(true)).length
-				}</div>`
-			);
-			$('.filter-button').after(
-				`<div onclick="clearFilter('${id}')" id="filter-clear" class="flex text-sm px-1.5 my-auto cursor-pointer underline transition hover:text-black/50">Clear filters</div>`
-			);
-		} else {
-			$('.filter-button').removeClass('bg-gray-200');
-			if ($('#filter-count') != null) $('#filter-count').remove();
-			if ($('#filter-clear') != null) $('#filter-clear').remove();
-		}
-	}
+  const checks = [];
+  const filter = document.querySelectorAll('[id*="_priFil"], [id*="_termFil"], [id*="_taskFil"]');
+  filter.forEach((element) => checks.push(element.id.slice(0, element.id.indexOf('_')) + '-' + element.checked));
+  if ($('#boards') != null) {
+    $('#boards').empty();
+    for (let i = 0; i < checks.length; i++) {
+      localStorage.setItem(
+        checks[i].slice(0, checks[i].indexOf('-')),
+        checks[i].slice(checks[i].indexOf('-') + 1, checks[i].length)
+      );
+    }
+    $('#boards').prepend(getBoardData(id, checks.toString()));
+    if (checks.filter((el) => el.includes(true)).length > 0) {
+      $('.filter-button').addClass('bg-gray-200');
+      if ($('#filter-count') != null) $('#filter-count').remove();
+      if ($('#filter-clear') != null) $('#filter-clear').remove();
+      $('.filter-button').append(
+        `<div class="flex text-sm px-1.5 bg-white rounded-lg" id="filter-count">${
+          checks.filter((el) => el.includes(true)).length
+        }</div>`
+      );
+      $('.filter-button').after(
+        `<div onclick="clearFilter('${id}')" id="filter-clear" class="flex text-sm px-1.5 my-auto cursor-pointer underline transition hover:text-black/50">Clear filters</div>`
+      );
+    } else {
+      $('.filter-button').removeClass('bg-gray-200');
+      if ($('#filter-count') != null) $('#filter-count').remove();
+      if ($('#filter-clear') != null) $('#filter-clear').remove();
+    }
+  }
 }
 
 function clearFilter(id) {
-	localStorage.clear();
-	if ($('#filter-count') != null) $('#filter-count').remove();
-	if ($('#filter-clear') != null) $('#filter-clear').remove();
-	$('.filter-button').removeClass('bg-gray-200');
-	$('#boards').empty();
-	$('#boards').prepend(getBoardData(id));
+  localStorage.clear();
+  if ($('#filter-count') != null) $('#filter-count').remove();
+  if ($('#filter-clear') != null) $('#filter-clear').remove();
+  $('.filter-button').removeClass('bg-gray-200');
+  $('#boards').empty();
+  $('#boards').prepend(getBoardData(id));
 }
 
 const closeModalMoveTo = (e) => {
-	if (e.target === e.currentTarget) closeMoveTo();
+  if (e.target === e.currentTarget) closeMoveTo();
 };
