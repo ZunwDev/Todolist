@@ -109,6 +109,18 @@ function getProjectEditPopup(id) {
 	return data.responseText;
 }
 
+function getAddNewTask(id, taskCount) {
+	let data = $.ajax('../src/load/task/loadNewTask.php', {
+		async: false,
+		type: 'POST',
+		data: {
+			boardID: id,
+			taskCount: taskCount,
+		},
+	});
+	return data.responseText;
+}
+
 function getColumnEditPopup(id) {
 	let data = $.ajax('../src/load/board/loadColumnEdit.php', {
 		async: false,

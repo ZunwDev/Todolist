@@ -40,6 +40,7 @@ if (isset($_SESSION['login_user'])) {
     <script src="./src/class/popups/board/boardFilterPopup.js"></script>
     <script src="./src/class/popups/other/priorityPopup.js"></script>
     <script src="./src/class/popups/other/activityTimelinePopup.js"></script>
+    <script src="./src/class/popups/other/moveToPopup.js"></script>
     <script src="./src/class/popups/project/projectCreatePopup.js"></script>
     <!-- Popups -> Warnings -->
     <script src="./src/class/popups/warnings/column/columnDelete.js"></script>
