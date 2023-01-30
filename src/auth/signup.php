@@ -128,11 +128,9 @@ if (isset($_SESSION['login_user'])) {
             if (
                 checkUsername() && checkPassword() && checkConfirmPassword()
             ) {
-                var username = $("#nameInput").val();
-                var password = $("#passwordInput").val();
                 $.post("./signup_script.php", {
-                    nameInput: username,
-                    passwordInput: password,
+                    nameInput: $("#nameInput").val(),
+                    passwordInput: $("#passwordInput").val(),
                 }).done(function(data) {
                     if (data.includes("200"))
                         return setTimeout(function() {

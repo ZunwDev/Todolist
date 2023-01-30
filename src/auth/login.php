@@ -17,7 +17,6 @@ if (isset($_SESSION['login_user'])) {
     <LINK REL=StyleSheet HREF="../stylesheet.css" TYPE="text/css" MEDIA=screen>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
-    <script type="text/javascript" src="../src/js/auth_utils.js"></script>
     <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Raleway" />
 </head>
 
@@ -56,6 +55,60 @@ if (isset($_SESSION['login_user'])) {
         </form>
     </div>
     <script>
+        function resetErrorMessage(elementValue) {
+            elementValue.innerText = '';
+        }
+
+        function resetInput(element, elementError) {
+            element.classList.remove('!border-pink-500', '!text-pink-500');
+            resetErrorMessage(elementError);
+        }
+
+        function showError(elementValue, errorMessage) {
+            elementValue.innerText = errorMessage;
+        }
+
+        function flagInput(element) {
+            element.classList.add('!border-pink-500', '!text-pink-500');
+        }
+
+        function passwordVerifyFailed() {
+            const passwordEl = document.getElementById('passwordInput');
+            const passwordError = document.getElementById('passwordError');
+
+            flagInput(passwordEl);
+            showError(passwordError, 'Incorrect password');
+        }
+
+        function userDoesntExist() {
+            const usernameEl = document.getElementById('nameInput');
+            const usernameError = document.getElementById('usernameError');
+
+            flagInput(usernameEl);
+            showError(usernameError, "User doesn't exist/invalid username");
+        }
+
+        function successfulLogin() {
+            resetInput(document.getElementById('nameInput'), document.getElementById('usernameError'));
+            resetInput(document.getElementById('passwordInput'), document.getElementById('passwordError'));
+            setTimeout(() => {
+                window.location = '../index.php';
+            }, 1000);
+        }
+
+        function logIn() {
+            $.post('login_script.php', {
+                nameInput: $('#nameInput').val(),
+                passwordInput: $('#passwordInput').val(),
+            }).done((data) => {
+                if (data.includes('200')) successfulLogin();
+                if (data.includes('403'))
+                    resetInput(document.getElementById('nameInput'), document.getElementById('usernameError'));
+                if (data.includes('403')) return passwordVerifyFailed();
+                if (data.includes('404')) return userDoesntExist();
+            });
+        }
+
         $(".inputData").on({
             keydown: function(e) {
                 if (e.which === 32)

@@ -1,5 +1,5 @@
 <?php
-include '../src/scripts/db/connectToDatabase.php';
+include '../scripts/db/connectToDatabase.php';
 $nameInput = $_POST["nameInput"];
 $passwordInput = $_POST["passwordInput"];
 $password_hash = password_hash($passwordInput, PASSWORD_DEFAULT);
