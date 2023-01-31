@@ -4,7 +4,7 @@ $projectID = $_POST['projectID'];
 $name = $_POST['name'];
 
 echo '<section id="project_opened" class="flex flex-col overflow-x-auto overflow-y-hidden h-full bg-slate-100 w-full">';
-echo '<div id="board_nav" class="flex flex-row h-10 gap-2 w-full border-b border-slate-300 bg-slate-50">';
+echo '<div class="flex flex-row h-10 gap-2 w-full border-b border-slate-300 bg-slate-50">';
 echo '  <div class="flex w-fit h-full px-4">';
 echo '    <div class="flex text-2xl truncate text-gray-700 h-8 mx-2 my-auto">' . $name . '</div>';
 echo '  </div>';
