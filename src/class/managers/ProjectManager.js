@@ -81,7 +81,7 @@ class ProjectManager {
 			projectName: finalName,
 			projectDescription: finalDescription,
 			color: newColorName,
-			projectID: id,
+			projectID: this.projectID,
 		}).done((data) => window.location.reload());
 	}
 }

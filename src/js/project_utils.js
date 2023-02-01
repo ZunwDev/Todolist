@@ -1,26 +1,22 @@
 let projectManagerNoParam = new ProjectManager();
 
-function openProjectCreate() {
+$(document).on('click', '.projectCreate', function () {
 	projectManagerNoParam.projectCreate();
-}
+});
 
-function acceptProjectCreate() {
+$(document).on('click', '.projectCreateAccept', function () {
 	projectManagerNoParam.acceptProjectCreate();
-}
+});
 
-function closeProject() {
-	projectManagerNoParam.closeProject();
-}
-
-function openProject(id) {
-	let projectManager = new ProjectManager(id);
+$(document).on('click', '.openableProject', function () {
+	let projectManager = new ProjectManager($(this).data('project-id'));
 	projectManager.openProject();
-}
+});
 
-function saveProjectChanges(id) {
-	let projectManager = new ProjectManager(id);
+$(document).on('click', '.saveProjectChanges', function () {
+	let projectManager = new ProjectManager($(this).data('project-id'));
 	projectManager.saveProjectEdit();
-}
+});
 
 $(document).on('click', '.filter-button', function () {
 	let boardFilterPopup = new BoardFilterPopup(document.querySelector('.filter-button').getAttribute('data-project-id'));
@@ -36,7 +32,7 @@ $(document).on('click', '.projectLogs', function () {
 
 if (window.history?.pushState) {
 	$(window).on('popstate', () => {
-		closeProject();
+		projectManagerNoParam.closeProject();
 		localStorage.clear();
 	});
 }
