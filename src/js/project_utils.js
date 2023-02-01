@@ -1,45 +1,42 @@
 let projectManagerNoParam = new ProjectManager();
 
 function openProjectCreate() {
-  projectManagerNoParam.projectCreate();
+	projectManagerNoParam.projectCreate();
 }
 
 function acceptProjectCreate() {
-  projectManagerNoParam.acceptProjectCreate();
+	projectManagerNoParam.acceptProjectCreate();
 }
 
 function closeProject() {
-  projectManagerNoParam.closeProject();
+	projectManagerNoParam.closeProject();
 }
 
 function openProject(id) {
-  let projectManager = new ProjectManager(id);
-  projectManager.openProject();
+	let projectManager = new ProjectManager(id);
+	projectManager.openProject();
 }
 
 function saveProjectChanges(id) {
-  let projectManager = new ProjectManager(id);
-  projectManager.saveProjectEdit();
+	let projectManager = new ProjectManager(id);
+	projectManager.saveProjectEdit();
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-  document.querySelector('.app_appProjectsContainer').addEventListener('pointerdown', (event) => {
-    const filterButton = event.target.closest('.filter-button');
-    if (filterButton) {
-      event.stopPropagation();
-      showBoardFilterPopup(filterButton.getAttribute('data-board-id'), event);
-    }
-  });
+$(document).on('click', '.filter-button', function () {
+	let boardFilterPopup = new BoardFilterPopup(document.querySelector('.filter-button').getAttribute('data-project-id'));
+	boardFilterPopup.showPopup();
 });
 
-function showActivityTimeline(projectID) {
-  let activityTimelinePopup = new ActivityTimelinePopup(projectID);
-  activityTimelinePopup.showPopup();
-}
+$(document).on('click', '.projectLogs', function () {
+	let activityTimelinePopup = new ActivityTimelinePopup(
+		document.querySelector('.projectLogs').getAttribute('data-project-id')
+	);
+	activityTimelinePopup.showPopup();
+});
 
 if (window.history?.pushState) {
-  $(window).on('popstate', () => {
-    closeProject();
-    localStorage.clear();
-  });
+	$(window).on('popstate', () => {
+		closeProject();
+		localStorage.clear();
+	});
 }

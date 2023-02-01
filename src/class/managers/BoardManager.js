@@ -23,9 +23,9 @@ class BoardManager {
 	expandNewBoard() {
 		classToggle(document.getElementsByClassName('newBoard')[0], 'h-8', 'h-20', 'bg-slate-100');
 		classToggle(document.getElementsByClassName('newBoardButton')[0], 'w-64', 'w-[13rem]');
-		classToggle(document.getElementsByClassName('acceptBoard')[0], 'w-64', 'w-[13rem]');
+		classToggle(document.getElementsByClassName('acceptNewBoard')[0], 'w-64', 'w-[13rem]');
 		$('.newBoardButton').toggleClass('hidden');
-		$('.acceptBoard').toggleClass('hidden');
+		$('.acceptNewBoard').toggleClass('hidden');
 		$('.newBoardCancel').toggleClass('hidden');
 
 		let input = document.getElementById('newBoardInput');
@@ -50,8 +50,8 @@ class BoardManager {
 	}
 
 	savePriority(name) {
-		let popupHandler = new PopupHandler();
-		popupHandler.closePriority;
+		let priorityPopup = new PriorityPopup();
+		priorityPopup.closePriority();
 		let colors = {
 			High: 'bg-red-100',
 			Medium: 'bg-amber-100',
@@ -144,7 +144,7 @@ class BoardManager {
 			priority: $('#priorityListText').text(),
 		}).done((data) => {
 			setTimeout(() => {
-				updateBoard(getProjectIdFromBoardId(this.boardID));
+				this.updateBoard(getProjectIdFromBoardId(this.boardID));
 			}, 20);
 		});
 		log.logNewTask(taskName, getBoardNameFromBoardId(this.boardID));
@@ -160,7 +160,7 @@ class BoardManager {
 			boardID: this.boardID,
 			board_name: newBoardName,
 			board_description: newBoardDescription,
-		}).done((data) => updateBoard(projectID));
+		}).done((data) => this.updateBoard(projectID));
 		log.logColumnUpdate(getBoardNameFromBoardId(this.boardID), newBoardName);
 	}
 

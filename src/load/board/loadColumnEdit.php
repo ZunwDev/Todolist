@@ -35,7 +35,7 @@ echo '          </div>';
 echo '      </div>';
 echo '      <div class="flex flex-row w-full gap-3 mt-auto px-2 pb-2 pt-4 bg-slate-100 mt-4 rounded-br-lg rounded-bl-lg">';
 echo '          <div class="flex flex-row gap-2 ml-auto">';
-echo '              <div title="Save changes" class="w-fit h-fit px-3 py-1 bg-slate-500 border border-slate-400 hover:bg-slate-600 rounded-lg cursor-pointer text-slate-50" onclick="saveColumnChanges(`' . $boardID . '`)">Save</div>';
+echo '              <div title="Save changes" class="columnSaveBtn w-fit h-fit px-3 py-1 bg-slate-500 border border-slate-400 hover:bg-slate-600 rounded-lg cursor-pointer text-slate-50" data-board-id="' . $boardID . '">Save</div>';
 echo '          </div>';
 echo '      </div>';
 echo '  </div>';

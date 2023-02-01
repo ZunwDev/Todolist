@@ -59,11 +59,11 @@ function loadTasks($board_data)
     $isChecked = $board_data['board_check'] == 0 ? "Mark complete" : "Mark incomplete";
     echo '<section id="' . $board_data['dataID'] . '_taskChecked" class="flex flex-shrink-0 flex-col py-1 rounded-md group ' . $hasOpacity . ' shadow-md relative bg-slate-50">';
     echo '  <div class="flex-shrink-0 flex flex-row px-2">';
-    echo '      <div id="' . $board_data['dataID'] . '" title="' . $isChecked . '" class="flex transition duration-300 h-4 w-4 border-2 flex-shrink-0 rounded-full cursor-pointer ' . $colors . '" onclick="isChecked(`' . $board_data['dataID'] . '`)">';
+    echo '      <div id="' . $board_data['dataID'] . '" title="' . $isChecked . '" class="setCheckmark flex transition duration-300 h-4 w-4 border-2 flex-shrink-0 rounded-full cursor-pointer ' . $colors . '" data-data-id="' . $board_data['dataID'] . '">';
     echo '          <svg id="' . $board_data['dataID'] . '_check" class="h-2 w-2 flex my-auto ' . $checkColor . ' transition duration-300 mx-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>';
     echo '      </div>';
     echo '  <div class="w-full flex text-sm my-auto px-2 pr-8 break-all">' . $board_data['board_data'] . '</div>';
-    echo '      <div title="More actions" class="flex w-fit px-2 left-[14.5rem] absolute opacity-0 cursor-pointer transition ease-in-out hover:bg-slate-200 rounded-lg group-hover:opacity-100" onclick="showTaskManagePopup(`' . $board_data['dataID'] . '`)"><svg class="w-4 px-auto h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M120 256c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm160 0c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm104 56c-30.9 0-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56s-25.1 56-56 56z"/></svg>';
+    echo '      <div title="More actions" class="taskManageBtn flex w-fit px-2 left-[14.5rem] absolute opacity-0 cursor-pointer transition ease-in-out hover:bg-slate-200 rounded-lg group-hover:opacity-100" data-data-id="' . $board_data['dataID'] . '"><svg class="w-4 px-auto h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M120 256c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm160 0c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm104 56c-30.9 0-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56s-25.1 56-56 56z"/></svg>';
     echo '  </div>';
     echo ' </div>';
     //Start of task extra part
@@ -130,7 +130,7 @@ if (mysqli_num_rows($result) > 0) {
         $editColor = "bg-{$split[1]}-{$mod}/50";
         $textColor = $mod > 400 ? "text-{$split[1]}-{$mod}" : "text-{$split[1]}-{$split[2]}";
         echo '<div class="flex h-fit w-fit px-2 text-sm my-auto rounded-full ' . $editColor . " " . $textColor . ' justify-center">' . $f['total'] . '</div>';
-        echo '<div class="flex w-fit px-1 py-1 h-fit py-1 ml-auto my-1 transition ease-in-out hover:bg-slate-200 cursor-pointer rounded-lg" onclick="showColumnManagePopup(`' . $boards['boardID'] . '`)"><svg class="w-4 px-auto h-4 fill-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M120 256c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm160 0c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm104 56c-30.9 0-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56s-25.1 56-56 56z"/></svg></div>';
+        echo '<div class="columnManageBtn flex w-fit px-1 py-1 h-fit py-1 ml-auto my-1 transition ease-in-out hover:bg-slate-200 cursor-pointer rounded-lg" data-board-id="' . $boards['boardID'] . '")"><svg class="w-4 px-auto h-4 fill-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M120 256c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm160 0c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm104 56c-30.9 0-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56s-25.1 56-56 56z"/></svg></div>';
         echo '</div>';
         echo '</div>';
         //Start of boards
@@ -143,7 +143,7 @@ if (mysqli_num_rows($result) > 0) {
             }
         }
         //End of board
-        echo '<div id="' . $boards['boardID'] . '_add" class="flex h-8 hover:bg-slate-200 rounded-md cursor-pointer transition" onclick="addNewTask(`' . $boards['boardID'] . '`)">';
+        echo '<div id="' . $boards['boardID'] . '_add" class="taskAddBtn flex h-8 hover:bg-slate-200 rounded-md cursor-pointer transition" data-board-id="' . $boards['boardID'] . '">';
         echo '<div class="flex mx-auto my-auto text-sm">+ Add task</div>';
         echo '</div>';
         echo '</div>';
@@ -156,13 +156,13 @@ if (mysqli_num_rows($result) > 0) {
 echo '<div class="newBoard flex flex-col flex-shrink-0 transition-[height] ease-in-out duration-200 h-8 w-64 mr-4 rounded-lg">';
 echo '<textarea id="newBoardInput" class="form-control rounded-tr-lg rounded-tl-lg pl-2 pt-1 h-8 transition ease-in-out duration-200 overflow-y-hidden bg-transparent hover:bg-slate-200 truncate focus:text-gray-700 focus:bg-slate-50 focus:border focus:outline-none focus:border-blue-600 hidden resize-none">Column</textarea>';
 echo '<div class="w-full flex flex-row mt-auto mb-1 ml-1 gap-2">';
-echo '<div title="Add a new column" class="newBoardButton flex w-64 transition-[width] ease-in-out h-8 text-gray-400 duration-200 text-lg bg-slate-100 hover:bg-slate-200 rounded-md cursor-pointer" onclick="expandBoardCreate()">';
+echo '<div title="Add a new column" class="newBoardButton flex w-64 transition-[width] ease-in-out h-8 text-gray-400 duration-200 text-lg bg-slate-100 hover:bg-slate-200 rounded-md cursor-pointer">';
 echo '<span class="mx-auto my-auto text-sm">+ Add column</span>';
 echo '</div>';
-echo '<div title="Add a new column" class="acceptBoard flex w-64 transition-[width] ease-in-out duration-200 text-lg bg-lime-400 hover:bg-lime-500 rounded-md cursor-pointer hidden" onclick="addBoard(`' . $projectID . '`)">';
+echo '<div title="Add a new column" class="acceptNewBoard flex w-64 transition-[width] ease-in-out duration-200 text-lg bg-lime-400 hover:bg-lime-500 rounded-md cursor-pointer hidden" data-project-id="' . $projectID . '">';
 echo '<span class="mx-auto my-auto text-sm">Add column</span>';
 echo '</div>';
-echo '<div title="Close" class="newBoardCancel flex w-8 h-8 bg-slate-200 hover:bg-slate-300 rounded-lg transition z-50 ease-in-out duration-200 hidden cursor-pointer" onclick="expandBoardCreate()">';
+echo '<div title="Close" class="newBoardCancel flex w-8 h-8 bg-slate-200 hover:bg-slate-300 rounded-lg transition z-50 ease-in-out duration-200 hidden cursor-pointer">';
 echo '<svg class="flex w-3 h-3 mx-auto my-auto fill-slate-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path d="M310.6 150.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L160 210.7 54.6 105.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L114.7 256 9.4 361.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 301.3 265.4 406.6c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L205.3 256 310.6 150.6z"/></svg></div>';
 echo '</div>';
 //End of new board button

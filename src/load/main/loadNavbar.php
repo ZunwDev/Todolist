@@ -8,7 +8,7 @@ echo '<path d="M0 96C0 78.33 14.33 64 32 64H416C433.7 64 448 78.33 448 96C448 11
 echo '</svg>';
 echo '</button>';
 echo '</div>';
-echo '<div class="app_authNav flex flex-shrink my-auto gap-3 text-xl justify-end">';
+echo '<div class="flex flex-shrink my-auto gap-3 text-xl justify-end">';
 if (!isset($_SESSION['login_user'])) {
     echo '<a href="auth/login.php" type="button" class="h-fit w-fit px-2 py-2 hover:bg-slate-100 transition ease-out duration-200 rounded-lg break-normal font-bold">Log in</a>';
     echo '<a href="auth/signup.php" type="button" class="h-fit w-fit px-2 py-2 min-w-16 bg-blue-500 hover:bg-blue-400 transition ease-out duration-200 rounded-lg break-normal font-bold text-white">Sign Up</a>';

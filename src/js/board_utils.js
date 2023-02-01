@@ -1,92 +1,82 @@
-function addBoard(id) {
+$(document).on('click', '.acceptNewBoard', function () {
 	let boardManager = new BoardManager();
-	boardManager.addBoard(id);
-}
+	boardManager.addBoard($(this).data('project-id'));
+});
 
-function expandBoardCreate() {
+$(document).on('click', '.newBoardButton, .newBoardCancel', function () {
 	let boardManager = new BoardManager();
 	boardManager.expandNewBoard();
-}
+});
 
-function updateBoard(id) {
-	let boardManager = new BoardManager();
-	boardManager.updateBoard(id);
-}
-
-function showMoveToPopup(dataID) {
-	let moveToPopup = new MoveToPopup(dataID);
+$(document).on('click', '.moveTaskPopupBtn', function () {
+	let moveToPopup = new MoveToPopup($(this).data('data-id'));
 	moveToPopup.showPopup();
-}
+});
 
-function savePriority(name) {
+$(document).on('click', '.prioritySaveBtn', function () {
 	let boardManager = new BoardManager();
-	boardManager.savePriority(name);
-}
+	boardManager.savePriority($(this).data('priority-name'));
+});
 
-function showTaskManagePopup(dataID) {
-	let taskManagePopup = new TaskManagePopup(dataID);
-	taskManagePopup.showPopup();
-}
-
-function showColumnManagePopup(boardID) {
-	let columnManagePopup = new ColumnManagePopup(boardID);
+$(document).on('click', '.columnManageBtn', function () {
+	let columnManagePopup = new ColumnManagePopup($(this).data('board-id'));
 	columnManagePopup.showPopup();
-}
+});
 
-function showTaskEditPopup(dataID) {
-	let taskEditPopup = new TaskEditPopup(dataID);
+$(document).on('click', '.taskManageBtn', function () {
+	let taskManagePopup = new TaskManagePopup($(this).data('data-id'));
+	taskManagePopup.showPopup();
+});
+
+$(document).on('click', '.taskEditBtn', function () {
+	let taskEditPopup = new TaskEditPopup($(this).data('data-id'));
 	taskEditPopup.showPopup();
-}
+});
 
-function showColumnEdit(boardID) {
-	let columnEditPopup = new ColumnEditPopup(boardID);
+$(document).on('click', '.columnEditBtn', function () {
+	let columnEditPopup = new ColumnEditPopup($(this).data('board-id'));
 	columnEditPopup.showPopup();
-}
+});
 
-function showProjectEdit(id) {
-	let projectEditPopup = new ProjectEditPopup(id);
+$(document).on('click', '.projectSettings', function () {
+	let projectEditPopup = new ProjectEditPopup($(this).data('project-id'));
 	projectEditPopup.showPopup();
-}
+});
 
-function showPriorityPopup() {
+$(document).on('click', '.priorityMenu', function () {
 	let priorityListPopup = new PriorityPopup();
 	priorityListPopup.showPopup();
-}
+});
 
-function showBoardFilterPopup(projectID) {
-	let boardFilterPopup = new BoardFilterPopup(projectID);
-	boardFilterPopup.showPopup();
-}
+$(document).on('click', '.confirmTaskMove', function () {
+	let boardManager = new BoardManager($(this).data('board-id'));
+	boardManager.moveTask($(this).data('data-id'));
+});
 
-function confirmMoving(boardID, dataID) {
-	let boardManager = new BoardManager(boardID);
-	boardManager.moveTask(dataID);
-}
+$(document).on('click', '.taskEditSaveBtn', function () {
+	let boardManager = new BoardManager($(this).data('board-id'));
+	boardManager.saveEditedTask($(this).data('data-id'));
+});
 
-function saveTaskEdit(dataID, boardID) {
-	let boardManager = new BoardManager(boardID);
-	boardManager.saveEditedTask(dataID);
-}
-
-function showProjectDeleteWarning(id) {
-	let projectDeleteWarning = new ProjectDeleteWarningPopup(id);
+$(document).on('click', '.projectDeleteBtn', function () {
+	let projectDeleteWarning = new ProjectDeleteWarningPopup($(this).data('project-id'));
 	projectDeleteWarning.showPopup();
-}
+});
 
-function showColumnClearWarning(id) {
-	let columnClearWarning = new ColumnClearWarningPopup(id);
+$(document).on('click', '.columnClearBtn', function () {
+	let columnClearWarning = new ColumnClearWarningPopup($(this).data('board-id'));
 	columnClearWarning.showPopup();
-}
+});
 
-function showTaskDeleteWarning(id) {
-	let taskDeleteWarning = new TaskDeleteWarningPopup(id);
-	taskDeleteWarning.showPopup();
-}
-
-function showColumnDeleteWarning(id) {
-	let columnDeleteWarning = new ColumnDeleteWarningPopup(id);
+$(document).on('click', '.columnDeleteBtn', function () {
+	let columnDeleteWarning = new ColumnDeleteWarningPopup($(this).data('board-id'));
 	columnDeleteWarning.showPopup();
-}
+});
+
+$(document).on('click', '.taskDeleteBtn', function () {
+	let taskDeleteWarning = new TaskDeleteWarningPopup($(this).data('data-id'));
+	taskDeleteWarning.showPopup();
+});
 
 function confirmDelete(id, delReason) {
 	const links = {
@@ -112,34 +102,35 @@ function confirmDelete(id, delReason) {
 	$.post(links[delReason], {
 		id,
 	}).done((data) => {
-		delReason != 'projDel' ? updateBoard(projectID) : window.location.reload();
+		let boardManager = new BoardManager();
+		delReason != 'projDel' ? boardManager.updateBoard(projectID) : window.location.reload();
 	});
 }
 
-function saveColumnChanges(boardID) {
-	let boardManager = new BoardManager(boardID);
+$(document).on('click', '.columnSaveBtn', function () {
+	let boardManager = new BoardManager($(this).data('board-id'));
 	boardManager.saveEditedColumn();
-}
+});
 
-function addNewTask(boardID) {
-	let boardManager = new BoardManager(boardID);
+$(document).on('click', '.taskAddBtn', function () {
+	let boardManager = new BoardManager($(this).data('board-id'));
 	boardManager.addNewTaskForm();
-}
+});
 
-function saveData(boardID) {
-	let boardManager = new BoardManager(boardID);
+$(document).on('click', '.saveTaskBtn', function () {
+	let boardManager = new BoardManager($(this).data('board-id'));
 	boardManager.saveTask();
-}
+});
 
-function cancelChanges(boardID) {
-	let boardManager = new BoardManager(boardID);
+$(document).on('click', '.cancelTaskBtn', function () {
+	let boardManager = new BoardManager($(this).data('board-id'));
 	boardManager.cancelTaskAdding();
-}
+});
 
-function isChecked(taskID) {
+$(document).on('click', '.setCheckmark', function () {
 	let boardManager = new BoardManager();
-	boardManager.updateCheckbox(taskID);
-}
+	boardManager.updateCheckbox($(this).data('data-id'));
+});
 
 $(document).keyup((e) => {
 	if (e.key === 'Escape') {

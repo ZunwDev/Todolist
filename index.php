@@ -62,7 +62,7 @@ if (isset($_SESSION['login_user'])) {
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
 </head>
 
-<body id="body" class="flex w-screen h-screen flex-col">
+<body id="body" class="w-screen h-screen flex flex-col">
     <?php
     include "./src/load/main/loadNavbar.php";
     include "./src/load/main/loadMainApp.php";
