@@ -5,22 +5,20 @@ function setClassToBeggining(element, classToAdd) {
 }
 
 function expandSidebar() {
+	let sidebar = document.getElementById('sidebar');
 	if ($('#sidebar').hasClass('shrinkSidebar')) {
-		show('sidebar');
-		let sidebar = document.getElementById('sidebar');
 		sidebar.classList.remove('shrinkSidebar');
 		setClassToBeggining('sidebar', 'expandSidebar');
 		setTimeout(() => {
 			$('.app_appProjectsContainer').addClass('pl-64');
-		}, 200);
+		}, 80);
 		return;
 	}
 	sidebar.classList.remove('expandSidebar');
 	setClassToBeggining('sidebar', 'shrinkSidebar');
 	setTimeout(() => {
 		$('.app_appProjectsContainer').removeClass('pl-64');
-		$('#sidebar').hide();
-	}, 200);
+	}, 150);
 }
 
 function toggleAngle() {

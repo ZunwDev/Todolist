@@ -20,11 +20,13 @@
 
 .expandSidebar {
   width: 16rem;
+  opacity: 1;
   transition: width 0.2s ease-out;
 }
 
 .shrinkSidebar {
   width: 0rem;
+  opacity: 0;
   transition: width 0.2s ease-out;
 }
 
