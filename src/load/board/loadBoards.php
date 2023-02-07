@@ -55,15 +55,15 @@ function loadTasks($board_data)
 {
     $colors = $board_data['board_check'] == 0 ? "border-gray-300 bg-slate-50" : "border-lime-600 bg-lime-500";
     $hasOpacity = $board_data['board_check'] == 0 ? "" : "opacity-70";
-    $checkColor = $board_data['board_check'] == 0 ? "fill-gray-300" : "fill-white";
+    $checkColor = $board_data['board_check'] == 0 ? "fill-transparent hover:fill-gray-300" : "fill-white";
     $isChecked = $board_data['board_check'] == 0 ? "Mark complete" : "Mark incomplete";
-    echo '<section id="' . $board_data['dataID'] . '_taskChecked" class="flex flex-shrink-0 flex-col py-1 rounded-md group ' . $hasOpacity . ' shadow-md relative bg-slate-50">';
+    echo '<section id="' . $board_data['dataID'] . '_taskChecked" class="flex flex-shrink-0 flex-col py-1 rounded-lg group border border-slate-300 ' . $hasOpacity . ' transition hover:shadow-md relative bg-slate-50">';
     echo '  <div class="flex-shrink-0 flex flex-row px-2">';
-    echo '      <div id="' . $board_data['dataID'] . '" title="' . $isChecked . '" class="setCheckmark flex transition duration-300 h-4 w-4 border-2 flex-shrink-0 rounded-full cursor-pointer ' . $colors . '" data-data-id="' . $board_data['dataID'] . '">';
+    echo '      <div id="' . $board_data['dataID'] . '" title="' . $isChecked . '" class="setCheckmark flex transition duration-300 h-4 w-4 border-2 mt-0.5 flex-shrink-0 rounded-full cursor-pointer ' . $colors . '" data-data-id="' . $board_data['dataID'] . '">';
     echo '          <svg id="' . $board_data['dataID'] . '_check" class="h-2 w-2 flex my-auto ' . $checkColor . ' transition duration-300 mx-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>';
     echo '      </div>';
     echo '  <div class="w-full flex text-sm my-auto px-2 pr-8 break-all">' . $board_data['board_data'] . '</div>';
-    echo '      <div title="More actions" class="taskManageBtn flex w-fit px-2 left-[14.5rem] absolute opacity-0 cursor-pointer transition ease-in-out hover:bg-slate-200 rounded-lg group-hover:opacity-100" data-data-id="' . $board_data['dataID'] . '"><svg class="w-4 px-auto h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M120 256c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm160 0c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm104 56c-30.9 0-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56s-25.1 56-56 56z"/></svg>';
+    echo '      <div title="More actions" class="taskManageBtn flex w-fit px-2 left-[14.5rem] absolute opacity-0 cursor-pointer transition duration-700 hover:bg-slate-200 rounded-lg group-hover:opacity-100" data-data-id="' . $board_data['dataID'] . '"><svg class="w-4 px-auto h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M120 256c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm160 0c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm104 56c-30.9 0-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56s-25.1 56-56 56z"/></svg>';
     echo '  </div>';
     echo ' </div>';
     //Start of task extra part
@@ -143,8 +143,14 @@ if (mysqli_num_rows($result) > 0) {
             }
         }
         //End of board
-        echo '<div id="' . $boards['boardID'] . '_add" class="taskAddBtn flex h-8 hover:bg-slate-200 rounded-md cursor-pointer transition" data-board-id="' . $boards['boardID'] . '">';
-        echo '<div class="flex mx-auto my-auto text-sm">+ Add task</div>';
+        $textColorSplit = explode("-", $fc['color_code']);
+        $textColor = 'text-' . $split[1] . '-' . $split[2] . '';
+        $fillColor = 'fill-' . $split[1] . '-' . $split[2] . '';
+        echo '<div id="' . $boards['boardID'] . '_add" class="taskAddBtn flex h-8 rounded-md cursor-pointer transition" data-board-id="' . $boards['boardID'] . '">';
+        echo '<div class="flex flex-row ml-4 my-auto group text-sm gap-3">';
+        echo '<div class="py-0.5 px-0.5 transition rounded-full group-hover:' . $fc['color_code'] . '"><svg class="flex transition mx-auto my-auto w-4 h-4 ' . $fillColor . ' group-hover:fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg></div>';
+        echo '<div class="transition flex text-slate-600 group-hover:' . $textColor . '">Add task</div>';
+        echo '</div>';
         echo '</div>';
         echo '</div>';
         //End of flex area
