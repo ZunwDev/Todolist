@@ -8,10 +8,11 @@ $IDQ = "select * from project where projectID = '$id' and userID = '$userID'";
 $result = mysqli_query($conn, $IDQ);
 
 if (mysqli_num_rows($result) > 0) {
-    $findBoardData = "select dataID from board_data where boardID = '$boardID'";
     $findBoard = "select boardID from board where projectID = '$id'";
+    $fetchBoardID = mysqli_fetch_assoc(mysqli_query($conn, $findBoard));
+    $boardID = $fetchBoardID['boardID'];
+    $findBoardData = "select dataID from board_data where boardID = '$boardID'";
     $findProjectLogs = "select activityID from project_activity where projectID = '$id'";
-
 
     /* Deleting the board data from the project if there is any. */
     if (mysqli_num_rows(mysqli_query($conn, $findBoardData)) > 0 && $dataID != null || !empty($dataID)) {
