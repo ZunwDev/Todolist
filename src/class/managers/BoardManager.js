@@ -134,12 +134,11 @@ class BoardManager {
 
 	saveTask() {
 		var taskName = document.getElementById(`task_${this.boardID}_edit`).value;
-		const board = document.getElementById(`${this.boardID}_name`);
-		if (taskName == '') taskName = `Task #${board.children.length - 1}`;
+		if (!taskName.replace(/\s/g, '').length) return;
 		let log = new LogManager(getProjectIdFromBoardId(this.boardID), null, this.boardID);
 		$.post('../src/scripts/task/addNewTask.php', {
 			boardID: this.boardID,
-			nameOfTask: taskName,
+			nameOfTask: taskName.trim(),
 			date: $('#dueTo').val(),
 			priority: $('#priorityListText').text(),
 		}).done((data) => {
