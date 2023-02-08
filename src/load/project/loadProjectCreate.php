@@ -16,8 +16,8 @@ echo '            <textarea autocomplete="none" id="projectDescriptionCreate" pl
 echo '        </div>';
 echo '        <div class="mt-4 px-6 flex flex-col gap-1">';
 echo '            <label for="colorChoose" class="font-bold">Color</label>';
-echo '            <div id="colorChoose" class="flex flex-col h-[1.7rem] border border-slate-200 bg-slate-50">';
-echo '                <div class="flex flex-row w-full h-[1.7rem] cursor-pointer" onclick="openColorSelectMenu()">';
+echo '            <div id="colorChoose" class="colorSelectMenu flex flex-col h-[1.7rem] border border-slate-200 bg-slate-50">';
+echo '                <div class="flex flex-row w-full h-[1.7rem] cursor-pointer">';
 echo '                    <div id="currentColor" class="flex w-4 h-4 mt-[0.3rem] ml-2 rounded-md bg-red-800"></div>';
 echo '                    <div id="currentColorName" class="flex h-4 mt-[0.1rem] pl-3">Dark Red</div>';
 echo '                    <div class="flex h-4 w-4 ml-auto my-auto mt-1 mr-2">';

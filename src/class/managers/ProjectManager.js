@@ -31,7 +31,7 @@ class ProjectManager {
 	closeProject() {
 		const getSidebar = document.getElementById('sidebar');
 		const lastClass = getSidebar.classList.item(getSidebar.classList.length - 1);
-		getSidebar.classList.replace(lastClass, 'bg-slate-100');
+		getSidebar.classList.replace(lastClass, 'bg-slate-200');
 
 		if (document.querySelector('#project_opened') != null) {
 			document.querySelector('#project_opened').remove();

@@ -25,7 +25,7 @@ echo '          </div>';
 echo '          <div class="wrap mt-4 w-full h-full px-6 space-y-1 flex flex-col">';
 echo '              <label class="font-bold">Color</label>';
 echo '              <div id="colorChoose" class="flex flex-col h-[1.7rem] border border-slate-200 bg-slate-50">';
-echo '                  <div class=" flex flex-row w-full h-[1.7rem] cursor-pointer" onclick="openColorSelectMenu()">';
+echo '                  <div class="colorSelectMenu flex flex-row w-full h-[1.7rem] cursor-pointer">';
 echo '                      <div id="currentColor" class="flex w-4 h-4 mt-[0.3rem] ml-2 rounded-md ' . $f['color_code'] . '"></div>';
 echo '                      <div id="currentColorName" class="flex h-4 mt-[0.1rem] pl-3">' . $f['color_name'] . '</div>';
 echo '                      <div class="flex h-4 w-4 ml-auto my-auto mt-1 mr-2">';
