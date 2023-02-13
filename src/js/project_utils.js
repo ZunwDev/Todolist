@@ -1,21 +1,19 @@
-let projectManagerNoParam = new ProjectManager();
+let projectManager = new ProjectManager();
 
 $(document).on('click', '.projectCreate', function () {
-	projectManagerNoParam.projectCreate();
+	projectManager.projectCreate();
 });
 
 $(document).on('click', '.projectCreateAccept', function () {
-	projectManagerNoParam.acceptProjectCreate();
+	projectManager.acceptProjectCreate();
 });
 
 $(document).on('click', '.openableProject', function () {
-	let projectManager = new ProjectManager($(this).data('project-id'));
-	projectManager.openProject();
+	projectManager.openProject($(this).data('project-id'));
 });
 
 $(document).on('click', '.saveProjectChanges', function () {
-	let projectManager = new ProjectManager($(this).data('project-id'));
-	projectManager.saveProjectEdit();
+	projectManager.saveProjectEdit($(this).data('project-id'));
 });
 
 $(document).on('click', '.filter-button', function () {
@@ -32,7 +30,7 @@ $(document).on('click', '.projectLogs', function () {
 
 if (window.history?.pushState) {
 	$(window).on('popstate', () => {
-		projectManagerNoParam.closeProject();
+		projectManager.closeProject();
 		localStorage.clear();
 		let popupHandler = new PopupHandler();
 		popupHandler.closeAnyPopup();

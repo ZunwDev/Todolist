@@ -17,7 +17,11 @@ class BoardManager {
 		$.post('../src/scripts/board/addNewBoard.php', {
 			projectID: projectID,
 			board_name: finalProjectName,
-		}).done((data) => this.updateBoard(projectID));
+		})
+			.done((data) => this.updateBoard(projectID))
+			.fail((error) => {
+				console.error(`Request failed with error: ${error}`);
+			});
 	}
 
 	expandNewBoard() {
@@ -75,31 +79,27 @@ class BoardManager {
 		}
 	}
 
-	moveTask(dataID) {
-		let projectID = getProjectIdFromBoardId(this.boardID);
+	moveTask(boardID, dataID) {
+		let projectID = getProjectIdFromBoardId(boardID);
 		let popupHandler = new PopupHandler();
 		popupHandler.closeAnyPopup();
-		let log = new LogManager(projectID, dataID, this.boardID);
-		log.logTaskMove(
-			getBoardNameFromTaskId(dataID),
-			getBoardNameFromBoardId(this.boardID),
-			getTaskNameFromTaskId(dataID)
-		);
+		let log = new LogManager(projectID, dataID, boardID);
+		log.logTaskMove(getBoardNameFromTaskId(dataID), getBoardNameFromBoardId(boardID), getTaskNameFromTaskId(dataID));
 		$.post('../src/scripts/task/moveToAnotherBoard.php', {
-			boardID: this.boardID,
+			boardID: boardID,
 			dataID: dataID,
 		}).done((data) => {
 			this.updateBoard(projectID);
 		});
 	}
 
-	saveEditedTask(dataID) {
-		let projectID = getProjectIdFromBoardId(this.boardID);
+	saveEditedTask(boardID, dataID) {
+		let projectID = getProjectIdFromBoardId(boardID);
 		let newTaskName = $('#taskNameEdit').val();
 		let newTaskDescription = $('#taskDescriptionEdit').val();
 		let newDueTo = $('#taskDueToEdit').val();
 		let newPriority = $('#priorityListText').text();
-		const board = document.getElementById(`${this.boardID}_name`);
+		const board = document.getElementById(`${boardID}_name`);
 		if (newTaskName == '') {
 			let getTaskAmount = board.children.length;
 			newTaskName = `Task ${getTaskAmount}`;
@@ -108,7 +108,7 @@ class BoardManager {
 		let finalDueTo = newDueTo == '' ? '0000-00-00' : newDueTo;
 		let finalPriority = newPriority == '' ? 'None' : newPriority;
 
-		let log = new LogManager(projectID, dataID, this.boardID);
+		let log = new LogManager(projectID, dataID, boardID);
 		$.post('../src/scripts/task/saveTaskEdit.php', {
 			dataID,
 			task_name: newTaskName,
@@ -118,7 +118,7 @@ class BoardManager {
 		}).done((data) => {
 			this.updateBoard(projectID);
 		});
-		log.logTaskUpdate(getTaskNameFromTaskId(dataID), getBoardNameFromBoardId(this.boardID), newTaskName);
+		log.logTaskUpdate(getTaskNameFromTaskId(dataID), getBoardNameFromBoardId(boardID), newTaskName);
 	}
 
 	updateCheckbox(dataID) {
@@ -132,50 +132,50 @@ class BoardManager {
 		});
 	}
 
-	saveTask() {
-		var taskName = document.getElementById(`task_${this.boardID}_edit`).value;
+	saveTask(boardID) {
+		var taskName = document.getElementById(`task_${boardID}_edit`).value;
 		if (!taskName.replace(/\s/g, '').length) return;
-		let log = new LogManager(getProjectIdFromBoardId(this.boardID), null, this.boardID);
+		let log = new LogManager(getProjectIdFromBoardId(boardID), null, boardID);
 		$.post('../src/scripts/task/addNewTask.php', {
-			boardID: this.boardID,
+			boardID: boardID,
 			nameOfTask: taskName.trim(),
 			date: $('#dueTo').val(),
 			priority: $('#priorityListText').text(),
 		}).done((data) => {
 			setTimeout(() => {
-				this.updateBoard(getProjectIdFromBoardId(this.boardID));
+				this.updateBoard(getProjectIdFromBoardId(boardID));
 			}, 20);
 		});
-		log.logNewTask(taskName, getBoardNameFromBoardId(this.boardID));
+		log.logNewTask(taskName, getBoardNameFromBoardId(boardID));
 	}
 
-	saveEditedColumn() {
-		let projectID = getProjectIdFromBoardId(this.boardID);
+	saveEditedColumn(boardID) {
+		let projectID = getProjectIdFromBoardId(boardID);
 		let newBoardName = document.getElementById('columnNameEdit').value;
 		const newBoardDescription = document.getElementById('columnDescriptionEdit').value;
 		if (newBoardName == '' || newBoardName == null) newBoardName = 'Untitled Column';
-		let log = new LogManager(projectID, null, this.boardID);
+		let log = new LogManager(projectID, null, boardID);
 		$.post('../src/scripts/board/saveColumnEdit.php', {
-			boardID: this.boardID,
+			boardID: boardID,
 			board_name: newBoardName,
 			board_description: newBoardDescription,
 		}).done((data) => this.updateBoard(projectID));
-		log.logColumnUpdate(getBoardNameFromBoardId(this.boardID), newBoardName);
+		log.logColumnUpdate(getBoardNameFromBoardId(boardID), newBoardName);
 	}
 
-	cancelTaskAdding() {
-		document.getElementById(`board_${this.boardID}_edit`).remove();
-		const addNewTaskButton = document.getElementById(`${this.boardID}_add`);
+	cancelTaskAdding(boardID) {
+		document.getElementById(`board_${boardID}_edit`).remove();
+		const addNewTaskButton = document.getElementById(`${boardID}_add`);
 		addNewTaskButton.classList.remove('hidden');
 	}
 
-	addNewTaskForm() {
+	addNewTaskForm(boardID) {
 		this.resetAllNewTasks();
-		const board = document.getElementById(`${this.boardID}_name`);
-		board.insertAdjacentHTML('beforeend', getAddNewTask(this.boardID, board.children.length));
-		const addNewTaskButton = document.getElementById(`${this.boardID}_add`);
+		const board = document.getElementById(`${boardID}_name`);
+		board.insertAdjacentHTML('beforeend', getAddNewTask(boardID, board.children.length));
+		const addNewTaskButton = document.getElementById(`${boardID}_add`);
 		addNewTaskButton.classList.add('hidden');
-		const input = document.getElementById(`task_${this.boardID}_edit`);
+		const input = document.getElementById(`task_${boardID}_edit`);
 		setTimeout(() => {
 			input.select();
 		}, 0);

@@ -1,10 +1,10 @@
+let boardManager = new BoardManager();
+
 $(document).on('click', '.acceptNewBoard', function () {
-	let boardManager = new BoardManager();
 	boardManager.addBoard($(this).data('project-id'));
 });
 
 $(document).on('click', '.newBoardButton, .newBoardCancel', function () {
-	let boardManager = new BoardManager();
 	boardManager.expandNewBoard();
 });
 
@@ -14,7 +14,6 @@ $(document).on('click', '.moveTaskPopupBtn', function () {
 });
 
 $(document).on('click', '.prioritySaveBtn', function () {
-	let boardManager = new BoardManager();
 	boardManager.savePriority($(this).data('priority-name'));
 });
 
@@ -49,13 +48,11 @@ $(document).on('click', '.priorityMenu', function () {
 });
 
 $(document).on('click', '.confirmTaskMove', function () {
-	let boardManager = new BoardManager($(this).data('board-id'));
-	boardManager.moveTask($(this).data('data-id'));
+	boardManager.moveTask($(this).data('board-id'), $(this).data('data-id'));
 });
 
 $(document).on('click', '.taskEditSaveBtn', function () {
-	let boardManager = new BoardManager($(this).data('board-id'));
-	boardManager.saveEditedTask($(this).data('data-id'));
+	boardManager.saveEditedTask($(this).data('board-id'), $(this).data('data-id'));
 });
 
 $(document).on('click', '.projectDeleteBtn', function () {
@@ -102,29 +99,24 @@ function confirmDelete(id, delReason) {
 	$.post(links[delReason], {
 		id,
 	}).done((data) => {
-		let boardManager = new BoardManager();
 		delReason != 'projDel' ? boardManager.updateBoard(projectID) : window.location.reload();
 	});
 }
 
 $(document).on('click', '.columnSaveBtn', function () {
-	let boardManager = new BoardManager($(this).data('board-id'));
-	boardManager.saveEditedColumn();
+	boardManager.saveEditedColumn($(this).data('board-id'));
 });
 
 $(document).on('click', '.taskAddBtn', function () {
-	let boardManager = new BoardManager($(this).data('board-id'));
-	boardManager.addNewTaskForm();
+	boardManager.addNewTaskForm($(this).data('board-id'));
 });
 
 $(document).on('click', '.saveTaskBtn', function () {
-	let boardManager = new BoardManager($(this).data('board-id'));
-	boardManager.saveTask();
+	boardManager.saveTask($(this).data('board-id'));
 });
 
 $(document).on('click', '.cancelTaskBtn', function () {
-	let boardManager = new BoardManager($(this).data('board-id'));
-	boardManager.cancelTaskAdding();
+	boardManager.cancelTaskAdding($(this).data('board-id'));
 });
 
 $(document).on('click', '.setCheckmark', function () {

@@ -41,35 +41,35 @@ class ProjectManager {
 		title('TodoList');
 	}
 
-	insertPreparedHTML(name, lightlow) {
+	insertPreparedHTML(projectID, name, lightlow) {
 		const getSidebar = document.getElementById('sidebar');
 		const lastClass = getSidebar.classList.item(getSidebar.classList.length - 1);
 		getSidebar.classList.replace(lastClass, lightlow);
-		return getPrepHTML(this.projectID, name);
+		return getPrepHTML(projectID, name);
 	}
 
-	openProject() {
+	openProject(projectID) {
 		if (document.querySelector('#project_opened') != null) {
-			this.closeProject(this.projectID);
-			this.openProject(this.projectID);
+			this.closeProject(projectID);
+			this.openProject(projectID);
 			return;
 		}
 		//Data
-		let projectName = getProjectName(this.projectID);
-		const colorClass = new Color(getColorCode(this.projectID));
+		let projectName = getProjectName(projectID);
+		const colorClass = new Color(getColorCode(projectID));
 		//Hiding projects
 		$('#project_grid, #projects_nameEl, .project_wrapper').hide();
 		//New window
-		$('.app_appProjectsContainer').prepend(this.insertPreparedHTML(projectName, colorClass.getLighter(400)));
+		$('.app_appProjectsContainer').prepend(this.insertPreparedHTML(projectID, projectName, colorClass.getLighter(400)));
 		setTimeout(() => {
 			$('#boards').text('');
-			$('#boards').append(getBoardData(this.projectID));
+			$('#boards').append(getBoardData(projectID));
 		}, 50);
-		URL(`${this.projectID}/${projectName}`);
+		URL(`${projectID}/${projectName}`);
 		title(`TodoList: ${projectName}`);
 	}
 
-	saveProjectEdit() {
+	saveProjectEdit(projectID) {
 		let newProjectName = $('#projectNameEdit').val();
 		let newProjectDescription = $('#projectDescriptionEdit').val();
 		const newColorName = $('#currentColorName').text();
@@ -81,7 +81,7 @@ class ProjectManager {
 			projectName: finalName,
 			projectDescription: finalDescription,
 			color: newColorName,
-			projectID: this.projectID,
+			projectID: projectID,
 		}).done((data) => window.location.reload());
 	}
 }
