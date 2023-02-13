@@ -42,6 +42,7 @@ if (isset($_SESSION['login_user'])) {
     <script src="./src/class/popups/other/activityTimelinePopup.js"></script>
     <script src="./src/class/popups/other/moveToPopup.js"></script>
     <script src="./src/class/popups/project/projectCreatePopup.js"></script>
+    <script src="./src/class/popups/other/profileMenuPopup.js"></script>
     <!-- Popups -> Warnings -->
     <script src="./src/class/popups/warnings/column/columnDelete.js"></script>
     <script src="./src/class/popups/warnings/column/columnClear.js"></script>

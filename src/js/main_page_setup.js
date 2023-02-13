@@ -21,16 +21,6 @@ function expandSidebar() {
 	}, 150);
 }
 
-function toggleAngle() {
-	const upClass = 'toggle-up';
-	const downClass = 'toggle-down';
-
-	const angle = document.querySelector('.angle');
-	angle.className = angle.classList.contains('toggle-down')
-		? angle.classList.replace(downClass, upClass)
-		: angle.classList.replace(upClass, downClass);
-}
-
 function show(element) {
 	document.getElementById(element).style.display = 'block';
 }

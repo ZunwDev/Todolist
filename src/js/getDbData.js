@@ -109,6 +109,18 @@ function getProjectEditPopup(id) {
 	return data.responseText;
 }
 
+function getProfileMenuPopup(isAdmin) {
+	let data = $.ajax('./src/load/other/loadProfileMenu.php', {
+		async: false,
+		type: 'POST',
+		data: {
+			adminState: isAdmin,
+		},
+	});
+
+	return data.responseText;
+}
+
 function getAddNewTask(id, taskCount) {
 	let data = $.ajax('../src/load/task/loadNewTask.php', {
 		async: false,

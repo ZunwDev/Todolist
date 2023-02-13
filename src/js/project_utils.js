@@ -34,5 +34,7 @@ if (window.history?.pushState) {
 	$(window).on('popstate', () => {
 		projectManagerNoParam.closeProject();
 		localStorage.clear();
+		let popupHandler = new PopupHandler();
+		popupHandler.closeAnyPopup();
 	});
 }

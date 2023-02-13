@@ -1,8 +1,9 @@
-function showProfileMenu() {
-	$('#profile_dropdown').css('display') == 'none' ? show('profile_dropdown') : $('#profile_dropdown').hide();
-}
+$(document).on('click', '.profileMenu', function () {
+	let profileMenuPopup = new ProfileMenuPopup($(this).data('admin'));
+	profileMenuPopup.showPopup();
+});
 
-function userLogOut() {
+$(document).on('click', '.logOut', function () {
 	$.post('./src/auth/log_out.php', {});
 	window.location = './src/auth/login.php';
-}
+});

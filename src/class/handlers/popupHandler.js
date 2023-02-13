@@ -38,6 +38,9 @@ class PopupHandler {
 		if (document.getElementById('popupPopupOverlay') != null) {
 			document.getElementById('popupPopupOverlay').remove();
 		}
+		if (document.getElementById('popupOverlayPriority') != null) {
+			document.getElementById('popupOverlayPriority').remove();
+		}
 	}
 
 	closeModal(e) {
