@@ -160,7 +160,7 @@ if (mysqli_num_rows($result) > 0) {
     }
 }
 echo '<div class="newBoard flex flex-col flex-shrink-0 transition-[height] ease-in-out duration-200 h-8 w-64 mr-4 rounded-lg">';
-echo '<textarea id="newBoardInput" class="form-control rounded-tr-lg rounded-tl-lg pl-2 pt-1 h-8 transition ease-in-out duration-200 overflow-y-hidden bg-transparent hover:bg-slate-200 truncate focus:text-gray-700 focus:bg-slate-50 focus:border focus:outline-none focus:border-blue-600 hidden resize-none">Column</textarea>';
+echo '<textarea id="newBoardInput" placeholder="Column name" class="form-control rounded-tr-lg rounded-tl-lg pl-2 pt-1 h-8 transition ease-in-out duration-200 overflow-y-hidden bg-transparent hover:bg-slate-200 truncate focus:text-gray-700 focus:bg-slate-50 focus:border focus:outline-none focus:border-blue-600 hidden resize-none"></textarea>';
 echo '<div class="w-full flex flex-row mt-auto mb-1 ml-1 gap-2">';
 echo '<div title="Add a new column" class="newBoardButton flex w-64 transition-[width] ease-in-out h-8 text-gray-400 duration-200 text-lg bg-slate-100 hover:bg-slate-200 rounded-md cursor-pointer">';
 echo '<span class="mx-auto my-auto text-sm">+ Add column</span>';

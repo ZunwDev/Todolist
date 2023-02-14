@@ -17,7 +17,7 @@ $f = mysqli_fetch_assoc(mysqli_query($conn, $q));
 $board_name = $f['board_name'];
 $board_description = $f['board_description'];
 
-echo '<div id="popupOverlay" class="w-screen h-screen absolute bg-slate-50/25">';
+echo '<div id="popupOverlay" class="w-screen h-screen z-50 absolute bg-slate-50/25">';
 echo '  <div id="popupElement" class="absolute flex left-0 right-0 ml-auto mr-auto beforeShowUp top-28 border border-slate-300 flex-col h-fit w-80 shadow-lg bg-slate-50 rounded-lg">';
 echo '      <div class="deleteHeader flex flex-row w-full h-8 border-b border-slate-200 gap-4">';
 echo '          <div class="my-1 ml-4 w-full h-full font-bold">Column edit</div>';

@@ -4,7 +4,7 @@ include "../../scripts/db/connectToDatabase.php";
 
 $projectID = $_POST['projectID'];
 
-echo '<div id="popupOverlayFilter" class="w-screen h-screen absolute">';
+echo '<div id="popupOverlayFilter" class="w-screen z-50 h-screen absolute">';
 echo '  <div id="popupElement" class="absolute flex beforeShowUp flex-col h-fit w-56 pb-4 shadow-lg bg-slate-50 border border-slate-300 rounded-lg">';
 echo '      <div class="filterHeader flex flex-row w-full h-8 border-b border-slate-200 gap-4">';
 echo '          <div class="my-1 ml-4 w-full h-full font-bold">Filter</div>';

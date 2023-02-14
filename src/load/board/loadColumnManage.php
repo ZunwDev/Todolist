@@ -5,7 +5,7 @@ include "../../scripts/db/connectToDatabase.php";
 $boardID = $_POST['boardID'];
 
 //Start of overlay
-echo '<div id="popupOverlay" class="w-screen h-screen absolute">';
+echo '<div id="popupOverlay" class="w-screen z-50 h-screen absolute">';
 echo '    <div id="popupElement" class="absolute flex beforeShowUp flex-col h-fit shadow-lg py-1 bg-slate-50 border border-slate-300">';
 echo '    <div class="flex flex-col w-40">';
 echo '      <div class="columnEditBtn flex flex-row py-0.5 bg-slate-50 hover:bg-slate-200 cursor-pointer" data-board-id="' . $boardID . '">';

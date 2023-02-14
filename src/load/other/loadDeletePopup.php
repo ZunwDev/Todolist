@@ -5,7 +5,7 @@ $title  = $_POST['title'];
 $msg = $_POST['msg'];
 $reason = $_POST['reason'];
 
-echo '<div id="popupOverlay" class="flex w-screen h-screen absolute bg-white/25">';
+echo '<div id="popupOverlay" class="flex w-screen h-screen z-50 absolute bg-white/25">';
 echo ' <div id="popupElement" class="flex flex-col w-80 h-fit top-28 bg-slate-50 shadow-xl absolute border border-slate-300 left-0 right-0 ml-auto mr-auto rounded-lg">';
 echo '  <div class="deleteHeader flex flex-row w-full h-8 border-b border-slate-200 gap-4">';
 echo '    <div class="my-1 ml-4 w-full h-full font-bold">' . $title . '</div>';

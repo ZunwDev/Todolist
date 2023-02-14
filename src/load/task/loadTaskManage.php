@@ -8,7 +8,7 @@ $q = "SELECT board_check FROM board_data WHERE dataID = '$dataID'";
 $f = mysqli_fetch_assoc(mysqli_query($conn, $q));
 
 //Start of overlay
-echo '<div id="popupOverlay" class="w-screen h-screen absolute">';
+echo '<div id="popupOverlay" class="w-screen h-screen z-50 absolute">';
 echo '    <div id="popupElement" class="absolute flex beforeShowUp flex-col h-fit shadow-lg py-1 bg-slate-50 border border-slate-300">';
 echo '    <div class="setCheckmark flex flex-row py-0.5 w-48 bg-slate-50 hover:bg-slate-200 cursor-pointer" data-data-id="' . $dataID . '">';
 echo '        <svg class="my-auto ml-2 w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>';

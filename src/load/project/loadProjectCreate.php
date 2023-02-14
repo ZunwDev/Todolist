@@ -1,5 +1,5 @@
 <?php
-echo '<section id="popupOverlay" class="w-screen h-screen absolute bg-slate-50/25">';
+echo '<section id="popupOverlay" class="w-screen z-50 h-screen absolute bg-slate-50/25">';
 echo '    <div id="popupElement" class="absolute flex left-0 right-0 ml-auto mr-auto top-28 border border-slate-300 flex-col h-fit w-80 shadow-lg bg-slate-50 rounded-lg beforeShowUp">';
 echo '      <div class="deleteHeader flex flex-row w-full h-8 border-b border-slate-200 gap-4">';
 echo '        <div class="my-1 ml-4 w-full h-full font-bold">New project</div>';
