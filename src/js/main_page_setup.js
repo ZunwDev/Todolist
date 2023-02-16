@@ -25,6 +25,26 @@ function show(element) {
 	document.getElementById(element).style.display = 'block';
 }
 
+const mouse = {
+	x: 0,
+	y: 0,
+};
+document.addEventListener('mousemove', (e) => {
+	mouse.x = e.clientX;
+	mouse.y = e.clientY;
+});
+
+function closeAnyPopup() {
+	const getOverlay = document.getElementById('popupOverlay');
+	const getSecondLOverlay = document.getElementById('popupPopupOverlay');
+	if (getOverlay != null) {
+		getOverlay.remove();
+	}
+	if (getSecondLOverlay != null) {
+		getSecondLOverlay.remove();
+	}
+}
+
 function showFlex(element) {
 	document.getElementById(element).style.display = 'flex';
 }

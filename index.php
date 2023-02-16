@@ -66,7 +66,7 @@ if (isset($_SESSION['login_user'])) {
 <body id="body" class="w-screen h-screen flex flex-col">
     <?php
     include "./src/load/main/loadNavbar.php";
-    include "./src/load/main/loadMainApp.php";
+    include "./src/load/main/loadSidebarElement.php";
     include "./src/load/main/loadProjectContainer.php";
     ?>
 </body>

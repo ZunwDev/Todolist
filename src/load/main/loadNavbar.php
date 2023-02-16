@@ -10,10 +10,12 @@ echo '</button>';
 echo '</div>';
 echo '<div class="flex flex-shrink my-auto gap-3 text-xl justify-end">';
 if (!isset($_SESSION['login_user'])) {
-    echo '<a href="auth/login.php" type="button" class="h-fit w-fit px-2 py-2 hover:bg-slate-100 transition ease-out duration-200 rounded-lg break-normal font-bold">Log in</a>';
-    echo '<a href="auth/signup.php" type="button" class="h-fit w-fit px-2 py-2 min-w-16 bg-blue-500 hover:bg-blue-400 transition ease-out duration-200 rounded-lg break-normal font-bold text-white">Sign Up</a>';
+    echo '<a href="auth/login.php" type="button" class="h-fit w-fit px-1 py-1 hover:bg-slate-100 transition ease-out duration-200 rounded-lg break-normal font-bold">Log in</a>';
+    echo '<a href="auth/signup.php" type="button" class="h-fit w-fit px-1 py-1 bg-blue-500 hover:bg-blue-400 transition ease-out duration-200 rounded-lg break-normal font-bold text-white">Sign Up</a>';
 } else {
-    echo '<div class="profileMenu flex flex-row gap-2 h-fit w-fit px-1 py-1 text-sm hover:bg-slate-100 transition ease-out duration-200 rounded-lg break-normal font-bold cursor-pointer" data-admin="' . $adminState . '">';
+    if ($adminState != null) {
+        echo '<div class="profileMenu flex flex-row gap-2 h-fit w-fit px-1 py-1 text-sm hover:bg-slate-100 transition ease-out duration-200 rounded-lg break-normal font-bold cursor-pointer" data-admin="' . $adminState . '">';
+    }
     echo '<div class="flex">' . $_SESSION['login_user'] . '</div>';
     echo '</div>';
 }

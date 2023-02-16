@@ -23,7 +23,7 @@ if (isset($_SESSION['login_user'])) {
 
 <body class="flex w-screen h-screen bg-slate-100">
     <div class="app_appSignupFormContainer w-[24rem] mx-auto my-auto flex flex-col">
-        <div class="app_appMoreInfoBox flex flex-col h-[6rem] my-auto shadow-xl rounded-t-lg" style="background-image: url('../assets/sign-up-background.webp')">
+        <div class="app_appMoreInfoBox flex flex-col h-[6rem] my-auto shadow-xl rounded-t-lg" style="background-image: url('../../assets/sign-up-background.webp')">
             <div class="flex flex-col w-full h-full text-white ml-8 my-6 pr-24">
                 <div class="flex w-full text-4xl text-white h-12 font-bold">
                     Sign up

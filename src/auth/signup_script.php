@@ -8,7 +8,7 @@ $q = "select username from user where username = '$nameInput'";
 $result = mysqli_query($conn, $q);
 
 if ((mysqli_num_rows($result) === 0)) {
-    $q = "insert into user (username, password, roleID) values ('$nameInput', '$password_hash', 1)";
+    $q = "insert into user (username, password, roleID, createdAt) values ('$nameInput', '$password_hash', 0, " . date("Y-m-d") . ")";
     $result = mysqli_query($conn, $q);
     if ($result) {
         echo "200"; //Account created
