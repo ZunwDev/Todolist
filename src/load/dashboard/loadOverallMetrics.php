@@ -38,7 +38,7 @@ function loadData($dataType, $conn)
     }
     $f = mysqli_query($conn, $q);
     $v = mysqli_num_rows($f);
-    echo '<div class="flex h-fit w-48 px-4 py-2 shadow-2xl ' . $colors[$dataType] . ' items-center justify-center">';
+    echo '<div class="flex h-fit w-48 px-4 py-2 shadow-2xl ' . $colors[$dataType] . ' items-center justify-center flex-shrink-0">';
     echo '<div class="flex flex-col justify-center items-center text-center">';
     if ($dataType != 4) echo '    <span class="flex text-xs sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl">' . $v . '</span>';
     else echo '    <span class="flex text-xs sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl 2xl:text-6xl">' . $data1 . "/" . $data2 . '</span>';
@@ -48,7 +48,7 @@ function loadData($dataType, $conn)
 }
 ?>
 
-<div class="flex flex-row gap-2 py-8 px-32">
+<div class="flex flex-col md:flex-row gap-4 py-8 px-4 md:px-32">
     <div class="overallMetrics flex flex-col gap-4">
         <div class="flex font-bold text-md text-gray-500 uppercase">Overall Metrics</div>
         <div class="overallWrap flex flex-row gap-4 flex-wrap">
@@ -62,7 +62,7 @@ function loadData($dataType, $conn)
     </div>
     <div class="userList flex flex-col gap-4">
         <div class="flex font-bold text-md text-gray-500 uppercase">Manage Users</div>
-        <div class="userWrap flex flex-row">
+        <div class="userWrap flex flex-col md:flex-row">
             <?php
             $q = "select * from user";
             $r = mysqli_query($conn, $q);
