@@ -48,10 +48,10 @@ function loadData($dataType, $conn)
 }
 ?>
 
-<div class="flex flex-col md:flex-row gap-4 py-8 px-4 md:px-32">
-    <div class="overallMetrics flex flex-col gap-4">
+<div class="flex flex-col gap-8 py-8 px-4 w-full">
+    <div class="flex-1 overallMetrics flex flex-col gap-4 mx-auto">
         <div class="flex font-bold text-md text-gray-500 uppercase">Overall Metrics</div>
-        <div class="overallWrap flex flex-row gap-4 flex-wrap">
+        <div class="overallWrap flex-row flex gap-2">
             <?php
             $dataList = [1, 2, 3, 4, 5];
             foreach ($dataList as $data) {
@@ -60,25 +60,38 @@ function loadData($dataType, $conn)
             ?>
         </div>
     </div>
-    <div class="userList flex flex-col gap-4">
+    <div class="flex-1 userList flex flex-col gap-4 mx-auto w-1/2 flex-shrink-0">
         <div class="flex font-bold text-md text-gray-500 uppercase">Manage Users</div>
-        <div class="userWrap flex flex-col md:flex-row">
-            <?php
-            $q = "select * from user";
-            $r = mysqli_query($conn, $q);
-            echo '<div class="overflow-auto">';
-            echo '<table class="text-sm text-left text-gray-500 w-full table-auto">';
-            echo '<thead><tr class="text-xs text-gray-700 uppercase bg-gray-50"><th scope="col" class="px-6 py-3">user_ID</th><th scope="col" class="px-6 py-3">Username</th><th scope="col" class="px-6 py-3">role_ID</th><th scope="col" class="px-6 py-3">Created at</th><th scope="col" class="px-6 py-3">Action</th></tr></thead>';
-            echo '<tbody>';
-            while ($row = mysqli_fetch_assoc($r)) {
-                echo '<tr class="border-b odd:bg-white even:bg-slate-100">';
-                echo '<td class="text-center px-6 py-1">' . $row["userID"] . '</td><td class="text-center px-6 py-1">' . $row["username"] . '</td><td class="text-center px-6 py-1">' . $row["roleID"] . '</td><td class="text-center px-6 py-1">' . $row["createdAt"] . '</td><td class="text-center px-6 py-1"><a class="text-sky-700 hover:text-sky-800">Del</a>/<a class="text-sky-700 hover:text-sky-800">P</a></td>';
-                echo '</tr>';
-            }
-            echo '</tbody>';
-            echo '</table>';
-            echo '</div>';
-            ?>
+        <div class="userWrap flex flex-col gap-4">
+            <div class="overflow-auto bg-white shadow-md rounded-lg">
+                <table class="table-auto text-sm leading-normal w-full">
+                    <thead class="bg-gray-100 border-b border-gray-300">
+                        <tr>
+                            <th class="py-3 px-6 text-gray-700 uppercase text-xs font-medium text-left">user_ID</th>
+                            <th class="py-3 px-6 text-gray-700 uppercase text-xs font-medium text-left">Username</th>
+                            <th class="py-3 px-6 text-gray-700 uppercase text-xs font-medium text-left">role_ID</th>
+                            <th class="py-3 px-6 text-gray-700 uppercase text-xs font-medium text-left">Created at</th>
+                            <th class="py-3 px-6 text-gray-700 uppercase text-xs font-medium text-center">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $q = "select * from user";
+                        $r = mysqli_query($conn, $q);
+                        while ($row = mysqli_fetch_assoc($r)) {
+                            $rowBgColor = ($row['userID'] % 2 === 0) ? 'bg-gray-100' : '';
+                            echo '<tr class="text-gray-700 ' . $rowBgColor . '">';
+                            echo '<td class="py-2 px-6 border-b border-gray-300">' . $row["userID"] . '</td>';
+                            echo '<td class="py-2 px-6 border-b border-gray-300">' . $row["username"] . '</td>';
+                            echo '<td class="py-2 px-6 border-b border-gray-300">' . $row["roleID"] . '</td>';
+                            echo '<td class="py-2 px-6 border-b border-gray-300">' . $row["createdAt"] . '</td>';
+                            echo '<td class="py-2 px-6 border-b border-gray-300 text-center"><button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 rounded">Edit</button> <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-1 px-4 rounded">Delete</button></td>';
+                            echo '</tr>';
+                        }
+                        ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
