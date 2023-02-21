@@ -7,6 +7,12 @@ if (isset($_SESSION['login_user'])) {
     $q = "SELECT roleID FROM user WHERE username = '$username'";
     $f = mysqli_fetch_assoc(mysqli_query($conn, $q));
     $adminState = $f['roleID'];
+} else {
+    header("Location: http://localhost/TodoList/src/auth/login.php");
+}
+
+if ($adminState != 1) {
+    header("Location: http://localhost/TodoList/index.php");
 }
 ?>
 
@@ -24,6 +30,8 @@ if (isset($_SESSION['login_user'])) {
     <script src="./src/class/handlers/popupHandler.js"></script>
     <script src="./src/class/popups/other/profileMenuPopup.js"></script>
     <script src="./src/js/getDbData.js"></script>
+    <script src="./src/class/managers/DashboardManager.js"></script>
+    <script src="./src/js/dashboard_utils.js"></script>
     <!-- Links -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

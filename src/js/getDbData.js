@@ -261,3 +261,14 @@ function getPrepHTML(id, name) {
 	});
 	return data.responseText;
 }
+
+function getOverallMetrics(userID) {
+	let data = $.ajax('http://localhost/TodoList/src/load/dashboard/loadOverallMetrics.php', {
+		async: false,
+		type: 'post',
+		data: {
+			userID: userID,
+		},
+	});
+	return data.responseText;
+}
