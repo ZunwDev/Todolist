@@ -62,7 +62,7 @@ function loadTasks($board_data)
     echo '      <div id="' . $board_data['dataID'] . '" title="' . $isChecked . '" class="setCheckmark flex transition duration-300 h-4 w-4 border-2 mt-0.5 flex-shrink-0 rounded-full cursor-pointer ' . $colors . '" data-data-id="' . $board_data['dataID'] . '">';
     echo '          <svg id="' . $board_data['dataID'] . '_check" class="h-2 w-2 flex my-auto ' . $checkColor . ' transition duration-300 mx-auto" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M470.6 105.4c12.5 12.5 12.5 32.8 0 45.3l-256 256c-12.5 12.5-32.8 12.5-45.3 0l-128-128c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0L192 338.7 425.4 105.4c12.5-12.5 32.8-12.5 45.3 0z"/></svg>';
     echo '      </div>';
-    echo '  <div class="w-full flex text-sm my-auto px-2 pr-8 break-all">' . $board_data['board_data'] . '</div>';
+    echo '  <div class="w-full flex text-sm my-auto px-2 pr-8 break-words">' . $board_data['board_data'] . '</div>';
     echo '      <div title="More actions" class="taskManageBtn flex w-fit px-2 left-[14.5rem] absolute opacity-0 cursor-pointer transition duration-700 hover:bg-slate-200 rounded-lg group-hover:opacity-100" data-data-id="' . $board_data['dataID'] . '"><svg class="w-4 px-auto h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M120 256c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm160 0c0 30.9-25.1 56-56 56s-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56zm104 56c-30.9 0-56-25.1-56-56s25.1-56 56-56s56 25.1 56 56s-25.1 56-56 56z"/></svg>';
     echo '  </div>';
     echo ' </div>';

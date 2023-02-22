@@ -10,5 +10,5 @@ $colorIDQuery = "select colorID from colors where color_name = '$color'";
 $colorIDFetch = mysqli_fetch_assoc(mysqli_query($conn, $colorIDQuery));
 $colorID = $colorIDFetch['colorID'];
 
-$q = "insert into project (userID, project_name, colorID, project_description, isFavorite) values ('$userID', '$projectName', '$colorID', '$projectDescription', 0)";
+$q = "insert into project (userID, project_name, colorID, project_description) values ('$userID', '$projectName', '$colorID', '$projectDescription')";
 mysqli_query($conn, $q);
