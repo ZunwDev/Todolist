@@ -16,3 +16,7 @@ $(document).keyup((e) => {
 		dashBoardManager.searchUsers($('.search').val());
 	}
 });
+
+function hideSidebarBtn() {
+	document.querySelector('#opensidebar').style.display = 'none';
+}

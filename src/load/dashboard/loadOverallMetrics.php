@@ -92,7 +92,7 @@ function loadData($dataType, $conn)
             $f = mysqli_fetch_assoc(mysqli_query($conn, $q));
             $username = $f['username'];
         }
-        echo !isset($_POST["userID"]) ? "Overall Metrics" : "Overall Metrics of" . ' ' . $username . '';
+        echo !isset($_POST["userID"]) ? "Overall Metrics" : "Overall Metrics of" . '<i><u class="text-gray-700 ml-2"> ' . $username . '</u></i>';
         if (isset($_POST["userID"])) echo '<button title="Go back to overall metrics" class="goBackBtn ml-auto px-2 text-gray-300 rounded-xl bg-red-500 hover:bg-red-600 hover:text-white transition">Go back</button>';
         echo "</div>"
         ?>
