@@ -1,8 +1,4 @@
 class ProjectManager {
-	constructor(projectID = null) {
-		this.projectID = projectID;
-	}
-
 	projectCreate() {
 		let projectCreatePopup = new ProjectCreatePopup();
 		projectCreatePopup.showPopup();

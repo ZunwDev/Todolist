@@ -36,11 +36,8 @@ function get_data_count($dataType, $conn)
             return null;
     }
 
-    if (isset($_POST["userID"])) {
-        $query = 'SELECT ' . $search_columns . $complete_column . $incomplete_column . ' FROM ' . $table_name . ' WHERE userID = ' . $_POST["userID"] . '';
-    } else {
-        $query = "SELECT $search_columns $complete_column $incomplete_column FROM $table_name";
-    }
+    if (isset($_POST["userID"])) $query = 'SELECT ' . $search_columns . $complete_column . $incomplete_column . ' FROM ' . $table_name . ' WHERE userID = ' . $_POST["userID"] . '';
+    else $query = "SELECT $search_columns $complete_column $incomplete_column FROM $table_name";
     $result = mysqli_query($conn, $query);
 
     if ($complete_column !== '' && $incomplete_column !== '') {
@@ -95,11 +92,8 @@ function loadData($dataType, $conn)
             $f = mysqli_fetch_assoc(mysqli_query($conn, $q));
             $username = $f['username'];
         }
-        $text = !isset($_POST["userID"]) ? "Overall Metrics" : "Overall Metrics of" . ' ' . $username . '';
-        echo $text;
-        if (isset($_POST["userID"])) {
-            echo '<button title="Go back to overall metrics" class="goBackBtn ml-auto px-2 text-gray-300 rounded-xl bg-red-500 hover:bg-red-600 hover:text-white transition">Go back</button>';
-        }
+        echo !isset($_POST["userID"]) ? "Overall Metrics" : "Overall Metrics of" . ' ' . $username . '';
+        if (isset($_POST["userID"])) echo '<button title="Go back to overall metrics" class="goBackBtn ml-auto px-2 text-gray-300 rounded-xl bg-red-500 hover:bg-red-600 hover:text-white transition">Go back</button>';
         echo "</div>"
         ?>
         <div class="overallWrap flex-row flex gap-2 flex-wrap">

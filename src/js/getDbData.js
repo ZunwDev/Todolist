@@ -272,3 +272,14 @@ function getOverallMetrics(userID) {
 	});
 	return data.responseText;
 }
+
+function getUserList(searchData) {
+	let data = $.ajax('http://localhost/TodoList/src/load/dashboard/loadUserList.php', {
+		async: false,
+		type: 'post',
+		data: {
+			searchData: searchData,
+		},
+	});
+	return data.responseText;
+}
