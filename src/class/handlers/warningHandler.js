@@ -1,7 +1,6 @@
 class WarningHandler extends PopupHandler {
 	constructor(id) {
 		super();
-		this.id = id;
 	}
 
 	closeAnyPopup() {

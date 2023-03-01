@@ -3,6 +3,7 @@ include '../TodoList/src/scripts/db/connectToDatabase.php';
 include "../TodoList/src/scripts/db/getUserID.php";
 
 /* It checks if the user is logged in. If not, it redirects to the login page. */
+//session_destroy();
 if (!isset($_SESSION['login_user'])) {
     header("Location: src/auth/login.php");
 }

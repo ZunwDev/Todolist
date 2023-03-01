@@ -81,6 +81,7 @@ function confirmDelete(id, delReason) {
 		colCl: 'http://localhost/TodoList/src/scripts/board/clearColumn.php',
 		colDel: 'http://localhost/TodoList/src/scripts/board/deleteColumn.php',
 		taskDel: 'http://localhost/TodoList/src/scripts/task/deleteTask.php',
+		usDel: 'http://localhost/TodoList/src/scripts/dashboard/deleteUser.php',
 	};
 
 	let projectID = delReason == 'taskDel' ? getProjectIdFromTaskId(id) : getProjectIdFromBoardId(id);
@@ -99,7 +100,11 @@ function confirmDelete(id, delReason) {
 	$.post(links[delReason], {
 		id,
 	}).done((data) => {
-		delReason != 'projDel' ? boardManager.updateBoard(projectID) : window.location.reload();
+		delReason == 'usDel'
+			? window.location.reload()
+			: delReason != 'projDel'
+			? boardManager.updateBoard(projectID)
+			: window.location.reload();
 	});
 }
 
@@ -120,13 +125,11 @@ $(document).on('click', '.cancelTaskBtn', function () {
 });
 
 $(document).on('click', '.setCheckmark', function () {
-	let boardManager = new BoardManager();
 	boardManager.updateCheckbox($(this).data('data-id'));
 });
 
 $(document).keyup((e) => {
 	if (e.key === 'Escape') {
-		let boardManager = new BoardManager();
 		boardManager.resetAllNewTasks();
 		if ($('.newBoard').hasClass('h-20')) {
 			expandBoardCreate();
@@ -156,8 +159,7 @@ function saveFilter(id) {
 		$('#boards').prepend(getBoardData(id, checks.toString()));
 		if (checks.filter((el) => el.includes(true)).length > 0) {
 			$('.filter-button').addClass('bg-gray-200');
-			if ($('#filter-count') != null) $('#filter-count').remove();
-			if ($('#filter-clear') != null) $('#filter-clear').remove();
+			if ($('#filter-count', '#filter-clear') != null) $('#filter-count', '#filter-clear').remove();
 			$('.filter-button').append(
 				`<div class="flex text-sm px-1.5 bg-white rounded-lg" id="filter-count">${
 					checks.filter((el) => el.includes(true)).length
@@ -168,8 +170,7 @@ function saveFilter(id) {
 			);
 		} else {
 			$('.filter-button').removeClass('bg-gray-200');
-			if ($('#filter-count') != null) $('#filter-count').remove();
-			if ($('#filter-clear') != null) $('#filter-clear').remove();
+			if ($('#filter-count', '#filter-clear') != null) $('#filter-count', '#filter-clear').remove();
 		}
 	}
 }

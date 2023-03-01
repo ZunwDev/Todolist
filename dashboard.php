@@ -25,11 +25,15 @@ if ($adminState != 1) {
     <LINK REL=StyleSheet HREF="stylesheet.css" TYPE="text/css" MEDIA=screen>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="./src/class/managers/BoardManager.js"></script>
+    <script src="./src/js/board_utils.js"></script>
     <script src="./src/js/main_page_setup.js"></script>
     <script src="./src/js/profile_utils.js"></script>
     <script src="./src/class/handlers/popupHandler.js"></script>
-    <script src="./src/class/popups/other/profileMenuPopup.js"></script>
     <script src="./src/js/getDbData.js"></script>
+    <script src="./src/class/handlers/warningHandler.js"></script>
+    <script src="./src/class/popups/warnings/dashboard/userDelete.js"></script>
+    <script src="./src/class/popups/other/profileMenuPopup.js"></script>
     <script src="./src/class/managers/DashboardManager.js"></script>
     <script src="./src/js/dashboard_utils.js"></script>
     <!-- Links -->

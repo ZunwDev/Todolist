@@ -20,3 +20,8 @@ $(document).keyup((e) => {
 function hideSidebarBtn() {
 	document.querySelector('#opensidebar').style.display = 'none';
 }
+
+$(document).on('click', '.deleteUserBtn', function () {
+	let userDeleteWarningPopup = new UserDeleteWarningPopup($(this).data('user-id'));
+	userDeleteWarningPopup.showPopup();
+});

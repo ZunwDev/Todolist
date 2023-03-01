@@ -146,8 +146,8 @@ if (mysqli_num_rows($result) > 0) {
         $textColorSplit = explode("-", $fc['color_code']);
         $textColor = 'text-' . $split[1] . '-' . $split[2] . '';
         $fillColor = 'fill-' . $split[1] . '-' . $split[2] . '';
-        echo '<div id="' . $boards['boardID'] . '_add" class="taskAddBtn flex h-8 rounded-md cursor-pointer transition" data-board-id="' . $boards['boardID'] . '">';
-        echo '<div class="flex flex-row ml-4 my-auto group text-sm gap-3">';
+        echo '<div id="' . $boards['boardID'] . '_add" class="taskAddBtn flex group h-8 rounded-md cursor-pointer transition" data-board-id="' . $boards['boardID'] . '">';
+        echo '<div class="flex flex-row ml-4 my-auto text-sm gap-3">';
         echo '<div class="py-0.5 px-0.5 transition rounded-full group-hover:' . $fc['color_code'] . '"><svg class="flex transition mx-auto my-auto w-4 h-4 ' . $fillColor . ' group-hover:fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. --><path d="M256 80c0-17.7-14.3-32-32-32s-32 14.3-32 32V224H48c-17.7 0-32 14.3-32 32s14.3 32 32 32H192V432c0 17.7 14.3 32 32 32s32-14.3 32-32V288H400c17.7 0 32-14.3 32-32s-14.3-32-32-32H256V80z"/></svg></div>';
         echo '<div class="transition flex text-slate-600 group-hover:' . $textColor . '">Add task</div>';
         echo '</div>';
