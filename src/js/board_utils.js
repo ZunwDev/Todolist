@@ -159,7 +159,8 @@ function saveFilter(id) {
 		$('#boards').prepend(getBoardData(id, checks.toString()));
 		if (checks.filter((el) => el.includes(true)).length > 0) {
 			$('.filter-button').addClass('bg-gray-200');
-			if ($('#filter-count', '#filter-clear') != null) $('#filter-count', '#filter-clear').remove();
+			if ($('#filter-count') != null) $('#filter-count').remove();
+			if ($('#filter-clear') != null) $('#filter-clear').remove();
 			$('.filter-button').append(
 				`<div class="flex text-sm px-1.5 bg-white rounded-lg" id="filter-count">${
 					checks.filter((el) => el.includes(true)).length
@@ -170,7 +171,8 @@ function saveFilter(id) {
 			);
 		} else {
 			$('.filter-button').removeClass('bg-gray-200');
-			if ($('#filter-count', '#filter-clear') != null) $('#filter-count', '#filter-clear').remove();
+			if ($('#filter-count') != null) $('#filter-count').remove();
+			if ($('#filter-clear') != null) $('#filter-clear').remove();
 		}
 	}
 }
