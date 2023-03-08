@@ -88,8 +88,8 @@ if (isset($_SESSION['login_user'])) {
                 if (data.includes('200')) successfulLogin();
                 if (data.includes('403'))
                     resetInput(document.getElementById('nameInput'), document.getElementById('usernameError'));
-                if (data.includes('403')) return passwordVerifyFailed();
-                if (data.includes('404')) return userDoesntExist();
+                if (data.includes('403')) passwordVerifyFailed();
+                if (data.includes('404')) userDoesntExist();
             });
         }
 

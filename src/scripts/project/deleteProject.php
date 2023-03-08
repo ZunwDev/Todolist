@@ -15,7 +15,8 @@ if (mysqli_num_rows($result) > 0) {
     $findProjectLogs = "select activityID from project_activity where projectID = '$id'";
 
     /* Deleting the board data from the project if there is any. */
-    if (mysqli_num_rows(mysqli_query($conn, $findBoardData)) > 0 && $dataID != null || !empty($dataID)) {
+    $q = mysqli_query($conn, $findBoardData);
+    if (mysqli_num_rows($q) > 0) {
         $sql = "DELETE board_data FROM board_data JOIN board ON board_data.boardID = board.boardID WHERE board.projectID = '$id'";
         mysqli_query($conn, $sql);
     }

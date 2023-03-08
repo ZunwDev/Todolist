@@ -136,8 +136,8 @@ if (isset($_SESSION['login_user'])) {
                         return setTimeout(function() {
                             window.location = "../index.php";
                         }, 500);
-                    if (data.includes("500")) return console.log("Server side issue");
-                    if (data.includes("404")) return userExists();
+                    if (data.includes("500")) console.log("Server side issue");
+                    if (data.includes("404")) userExists();
                 });
             }
         }
