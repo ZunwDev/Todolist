@@ -1,8 +1,7 @@
-<?php 
+<?php
 include '../db/connectToDatabase.php';
 
 $dataID = $_POST['dataID'];
-
 $q = "SELECT board_check FROM board_data WHERE dataID = '$dataID'";
 $f = mysqli_fetch_assoc(mysqli_query($conn, $q));
 $state = $f['board_check'] == 0 ? 1 : 0;
