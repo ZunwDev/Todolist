@@ -49,16 +49,16 @@ function showFlex(element) {
 	document.getElementById(element).style.display = 'flex';
 }
 
-function URL(url) {
+/* function URL(url) {
 	history.pushState(
 		{
 			id: 'TodoList',
 			source: 'web',
 		},
 		`TodoList`,
-		`http://localhost/TodoList/${url}`
+		`http://xtodolist.tode.cz/${url}`
 	);
-}
+} */
 
 function title(title) {
 	document.title = title;

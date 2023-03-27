@@ -1,5 +1,5 @@
 function getColorCode(id) {
-	let data = $.ajax('http://localhost/TodoList/src/scripts/db/getColor.php', {
+	let data = $.ajax('http://xtodolist.tode.cz/src/scripts/db/getColor.php', {
 		async: false,
 		type: 'POST',
 		data: {
@@ -10,7 +10,7 @@ function getColorCode(id) {
 }
 
 function getProjectName(id) {
-	let data = $.ajax('http://localhost/TodoList/src/scripts/db/getProjectName.php', {
+	let data = $.ajax('http://xtodolist.tode.cz/src/scripts/db/getProjectName.php', {
 		async: false,
 		type: 'POST',
 		data: {
@@ -21,7 +21,7 @@ function getProjectName(id) {
 }
 
 function getProjectIdFromBoardId(id) {
-	let data = $.ajax('http://localhost/TodoList/src/scripts/db/getProjectIdFromBoardId.php', {
+	let data = $.ajax('http://xtodolist.tode.cz/src/scripts/db/getProjectIdFromBoardId.php', {
 		async: false,
 		type: 'POST',
 		data: {
@@ -32,7 +32,7 @@ function getProjectIdFromBoardId(id) {
 }
 
 function getBoardNameFromBoardId(id) {
-	let data = $.ajax('http://localhost/TodoList/src/scripts/db/getBoardNameFromBoardId.php', {
+	let data = $.ajax('http://xtodolist.tode.cz/src/scripts/db/getBoardNameFromBoardId.php', {
 		async: false,
 		type: 'POST',
 		data: {
@@ -43,7 +43,7 @@ function getBoardNameFromBoardId(id) {
 }
 
 function getTaskNameFromTaskId(id) {
-	let data = $.ajax('http://localhost/TodoList/src/scripts/db/getTaskNameFromTaskId.php', {
+	let data = $.ajax('http://xtodolist.tode.cz/src/scripts/db/getTaskNameFromTaskId.php', {
 		async: false,
 		type: 'POST',
 		data: {
@@ -54,7 +54,7 @@ function getTaskNameFromTaskId(id) {
 }
 
 function getBoardIdFromTaskId(id) {
-	let data = $.ajax('http://localhost/TodoList/src/scripts/db/getBoardIdFromTaskId.php', {
+	let data = $.ajax('http://xtodolist.tode.cz/src/scripts/db/getBoardIdFromTaskId.php', {
 		async: false,
 		type: 'POST',
 		data: {
@@ -65,7 +65,7 @@ function getBoardIdFromTaskId(id) {
 }
 
 function getBoardNameFromTaskId(id) {
-	let data = $.ajax('http://localhost/TodoList/src/scripts/db/getBoardNameFromTaskId.php', {
+	let data = $.ajax('http://xtodolist.tode.cz/src/scripts/db/getBoardNameFromTaskId.php', {
 		async: false,
 		type: 'POST',
 		data: {
@@ -76,7 +76,7 @@ function getBoardNameFromTaskId(id) {
 }
 
 function getProjectIdFromTaskId(id) {
-	let data = $.ajax('http://localhost/TodoList/src/scripts/db/getProjectIdFromTaskId.php', {
+	let data = $.ajax('http://xtodolist.tode.cz/src/scripts/db/getProjectIdFromTaskId.php', {
 		async: false,
 		type: 'POST',
 		data: {
@@ -87,7 +87,7 @@ function getProjectIdFromTaskId(id) {
 }
 
 function getBoardData(id, filter = '') {
-	let data = $.ajax('http://localhost/TodoList/src/load/board/loadBoards.php', {
+	let data = $.ajax('http://xtodolist.tode.cz/src/load/board/loadBoards.php', {
 		async: false,
 		type: 'post',
 		data: {
@@ -99,7 +99,7 @@ function getBoardData(id, filter = '') {
 }
 
 function getProjectEditPopup(id) {
-	let data = $.ajax('http://localhost/TodoList/src/load/project/loadProjectEdit.php', {
+	let data = $.ajax('http://xtodolist.tode.cz/src/load/project/loadProjectEdit.php', {
 		async: false,
 		type: 'POST',
 		data: {
@@ -110,7 +110,7 @@ function getProjectEditPopup(id) {
 }
 
 function getProfileMenuPopup(isAdmin) {
-	let data = $.ajax('http://localhost/TodoList/src/load/other/loadProfileMenu.php', {
+	let data = $.ajax('http://xtodolist.tode.cz/src/load/other/loadProfileMenu.php', {
 		async: false,
 		type: 'POST',
 		data: {
@@ -122,7 +122,7 @@ function getProfileMenuPopup(isAdmin) {
 }
 
 function getAddNewTask(id, taskCount) {
-	let data = $.ajax('http://localhost/TodoList/src/load/task/loadNewTask.php', {
+	let data = $.ajax('http://xtodolist.tode.cz/src/load/task/loadNewTask.php', {
 		async: false,
 		type: 'POST',
 		data: {
@@ -134,7 +134,7 @@ function getAddNewTask(id, taskCount) {
 }
 
 function getColumnEditPopup(id) {
-	let data = $.ajax('http://localhost/TodoList/src/load/board/loadColumnEdit.php', {
+	let data = $.ajax('http://xtodolist.tode.cz/src/load/board/loadColumnEdit.php', {
 		async: false,
 		type: 'post',
 		data: {
@@ -145,7 +145,7 @@ function getColumnEditPopup(id) {
 }
 
 function getTaskEditPopup(id) {
-	const data = $.ajax('http://localhost/TodoList/src/load/task/loadTaskEditPopup.php', {
+	const data = $.ajax('http://xtodolist.tode.cz/src/load/task/loadTaskEditPopup.php', {
 		async: false,
 		type: 'post',
 		data: {
@@ -156,7 +156,7 @@ function getTaskEditPopup(id) {
 }
 
 function getPriorityPopup() {
-	const data = $.ajax('http://localhost/TodoList/src/load/other/loadPriorityList.php', {
+	const data = $.ajax('http://xtodolist.tode.cz/src/load/other/loadPriorityList.php', {
 		async: false,
 		type: 'post',
 	});
@@ -164,7 +164,7 @@ function getPriorityPopup() {
 }
 
 function getTaskManagePopup(id) {
-	const data = $.ajax('http://localhost/TodoList/src/load/task/loadTaskManage.php', {
+	const data = $.ajax('http://xtodolist.tode.cz/src/load/task/loadTaskManage.php', {
 		async: false,
 		type: 'post',
 		data: {
@@ -175,7 +175,7 @@ function getTaskManagePopup(id) {
 }
 
 function getColumnManagePopup(id) {
-	const data = $.ajax('http://localhost/TodoList/src/load/board/loadColumnManage.php', {
+	const data = $.ajax('http://xtodolist.tode.cz/src/load/board/loadColumnManage.php', {
 		async: false,
 		type: 'post',
 		data: {
@@ -186,7 +186,7 @@ function getColumnManagePopup(id) {
 }
 
 function getBoardFilterPopup(id) {
-	const data = $.ajax('http://localhost/TodoList/src/load/board/loadBoardFilter.php', {
+	const data = $.ajax('http://xtodolist.tode.cz/src/load/board/loadBoardFilter.php', {
 		async: false,
 		type: 'post',
 		data: {
@@ -197,7 +197,7 @@ function getBoardFilterPopup(id) {
 }
 
 function getActivityTimelinePopup(id) {
-	const data = $.ajax('http://localhost/TodoList/src/load/project/loadActivityTimeline.php', {
+	const data = $.ajax('http://xtodolist.tode.cz/src/load/project/loadActivityTimeline.php', {
 		async: false,
 		type: 'post',
 		data: {
@@ -208,7 +208,7 @@ function getActivityTimelinePopup(id) {
 }
 
 function getProjectCreatePopup() {
-	const data = $.ajax('./src/load/project/loadProjectCreate.php', {
+	const data = $.ajax('http://xtodolist.tode.cz/src/load/project/loadProjectCreate.php', {
 		async: false,
 		type: 'post',
 	});
@@ -216,7 +216,7 @@ function getProjectCreatePopup() {
 }
 
 function getDeletePopup(id, title, msg, reason) {
-	const data = $.ajax('http://localhost/TodoList/src/load/other/loadDeletePopup.php', {
+	const data = $.ajax('http://xtodolist.tode.cz/src/load/other/loadDeletePopup.php', {
 		async: false,
 		type: 'post',
 		data: {
@@ -231,7 +231,7 @@ function getDeletePopup(id, title, msg, reason) {
 
 function getMoveToPopup(id) {
 	const projID = getProjectIdFromTaskId(id);
-	const data = $.ajax('http://localhost/TodoList/src/load/task/loadMoveToPopup.php', {
+	const data = $.ajax('http://xtodolist.tode.cz/src/load/task/loadMoveToPopup.php', {
 		async: false,
 		type: 'post',
 		data: {
@@ -243,7 +243,7 @@ function getMoveToPopup(id) {
 }
 
 function getColorSelect() {
-	let data = $.ajax('http://localhost/TodoList/src/load/other/loadColors.php', {
+	let data = $.ajax('http://xtodolist.tode.cz/src/load/other/loadColors.php', {
 		async: false,
 		type: 'post',
 	});
@@ -251,7 +251,7 @@ function getColorSelect() {
 }
 
 function getPrepHTML(id, name) {
-	let data = $.ajax('http://localhost/TodoList/src/load/project/loadPrepHTML.php', {
+	let data = $.ajax('http://xtodolist.tode.cz/src/load/project/loadPrepHTML.php', {
 		async: false,
 		type: 'post',
 		data: {
@@ -263,7 +263,7 @@ function getPrepHTML(id, name) {
 }
 
 function getOverallMetrics(userID) {
-	let data = $.ajax('http://localhost/TodoList/src/load/dashboard/loadOverallMetrics.php', {
+	let data = $.ajax('http://xtodolist.tode.cz/src/load/dashboard/loadOverallMetrics.php', {
 		async: false,
 		type: 'post',
 		data: {
@@ -274,7 +274,7 @@ function getOverallMetrics(userID) {
 }
 
 function getUserList(searchData) {
-	let data = $.ajax('http://localhost/TodoList/src/load/dashboard/loadUserList.php', {
+	let data = $.ajax('http://xtodolist.tode.cz/src/load/dashboard/loadUserList.php', {
 		async: false,
 		type: 'post',
 		data: {

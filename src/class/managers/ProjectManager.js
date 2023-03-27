@@ -13,7 +13,7 @@ class ProjectManager {
 		if (!projectName.replace(/\s/g, '').length) return;
 		let finalDescription = projectDescription == '' ? '' : projectDescription;
 
-		$.post('http://localhost/TodoList/src/scripts/project/createProject.php', {
+		$.post('http://xtodolist.tode.cz/src/scripts/project/createProject.php', {
 			projectName: projectName,
 			projectDescription: finalDescription,
 			color: colorName,
@@ -33,7 +33,6 @@ class ProjectManager {
 			document.querySelector('#project_opened').remove();
 		}
 		$('#project_grid, #projects_nameEl, .project_wrapper').show();
-		URL('index.php');
 		title('TodoList');
 	}
 
@@ -61,7 +60,6 @@ class ProjectManager {
 			$('#boards').text('');
 			$('#boards').append(getBoardData(projectID));
 		}, 50);
-		URL(`${projectID}/${projectName}`);
 		title(`TodoList: ${projectName}`);
 	}
 
@@ -73,7 +71,7 @@ class ProjectManager {
 		let finalName = newProjectName == '' ? 'Project' : newProjectName;
 		let finalDescription = newProjectDescription == '' ? '' : newProjectDescription;
 
-		$.post('http://localhost/TodoList/src/scripts/project/saveProjectEdit.php', {
+		$.post('http://xtodolist.tode.cz/src/scripts/project/saveProjectEdit.php', {
 			projectName: finalName,
 			projectDescription: finalDescription,
 			color: newColorName,

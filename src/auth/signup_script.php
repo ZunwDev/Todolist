@@ -15,7 +15,6 @@ if (mysqli_num_rows($result) === 0) {
         session_start();
         $_SESSION['login_user'] = $nameInput;
     } else {
-        echo $q;
         echo "500"; //An error occured when creating new user
     }
 } else {

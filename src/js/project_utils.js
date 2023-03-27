@@ -28,11 +28,11 @@ $(document).on('click', '.projectLogs', function () {
 	activityTimelinePopup.showPopup();
 });
 
-if (window.history?.pushState) {
+/* if (window.history?.pushState) {
 	$(window).on('popstate', () => {
 		projectManager.closeProject();
 		localStorage.clear();
 		let popupHandler = new PopupHandler();
 		popupHandler.closeAnyPopup();
 	});
-}
+} */

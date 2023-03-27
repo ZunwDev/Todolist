@@ -4,10 +4,10 @@ $(document).on('click', '.profileMenu', function () {
 });
 
 $(document).on('click', '.logOut', function () {
-	$.post('http://localhost/TodoList/src/auth/log_out.php', {});
-	window.location = 'http://localhost/TodoList/src/auth/login.php';
+	$.post('http://xtodolist.tode.cz/src/auth/log_out.php', {});
+	window.location = 'http://xtodolist.tode.cz/TodoList/src/auth/login.php';
 });
 
 $(document).on('click', '.dashboardBtn', function () {
-	window.open('http://localhost/TodoList/dashboard.php');
+	window.open('http://xtodolist.tode.cz/dashboard.php');
 });

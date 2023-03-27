@@ -2,7 +2,7 @@
 session_start();
 
 if (isset($_SESSION['login_user'])) {
-    header("location: ../index.php");
+    header("location: http://xtodolist.tode.cz/index.php");
 };
 
 ?>
@@ -128,13 +128,13 @@ if (isset($_SESSION['login_user'])) {
             if (
                 checkUsername() && checkPassword() && checkConfirmPassword()
             ) {
-                $.post("./signup_script.php", {
+                $.post("http://xtodolist.tode.cz/src/auth/signup_script.php", {
                     nameInput: $("#nameInput").val(),
                     passwordInput: $("#passwordInput").val(),
                 }).done(function(data) {
                     if (data.includes("200"))
                         return setTimeout(function() {
-                            window.location = "../index.php";
+                            window.location = "http://xtodolist.tode.cz/index.php";
                         }, 500);
                     if (data.includes("500")) console.log("Server side issue");
                     if (data.includes("404")) userExists();

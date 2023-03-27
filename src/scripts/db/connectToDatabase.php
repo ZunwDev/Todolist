@@ -1,8 +1,10 @@
 <?php
-//$host = "192.168.1.104";
-$host = "localhost";
-$user = "myuser";
+$host = "sql.endora.cz:3307";
+$user = "xtodolisttodecz";
 $password = "abc";
-$databaseName = "todolist";
-$conn = mysqli_connect($host, $user, $password, $databaseName) or die("Error");
+$databaseName = "xtodolist";
+$conn = mysqli_connect($host, $user, $password, $databaseName);
 
+if (!$conn) {
+    die('Could not connect: ' . mysqli_connect_error());
+}

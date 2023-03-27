@@ -77,11 +77,11 @@ $(document).on('click', '.taskDeleteBtn', function () {
 
 function confirmDelete(id, delReason) {
 	const links = {
-		projDel: 'http://localhost/TodoList/src/scripts/project/deleteProject.php',
-		colCl: 'http://localhost/TodoList/src/scripts/board/clearColumn.php',
-		colDel: 'http://localhost/TodoList/src/scripts/board/deleteColumn.php',
-		taskDel: 'http://localhost/TodoList/src/scripts/task/deleteTask.php',
-		usDel: 'http://localhost/TodoList/src/scripts/dashboard/deleteUser.php',
+		projDel: 'http://xtodolist.tode.cz/src/scripts/project/deleteProject.php',
+		colCl: 'http://xtodolist.tode.cz/src/scripts/board/clearColumn.php',
+		colDel: 'http://xtodolist.tode.cz/src/scripts/board/deleteColumn.php',
+		taskDel: 'http://xtodolist.tode.cz/src/scripts/task/deleteTask.php',
+		usDel: 'http://xtodolist.tode.cz/src/scripts/dashboard/deleteUser.php',
 	};
 
 	let projectID = delReason == 'taskDel' ? getProjectIdFromTaskId(id) : getProjectIdFromBoardId(id);

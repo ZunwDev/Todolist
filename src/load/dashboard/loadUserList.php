@@ -21,7 +21,7 @@ if (!isset($conn)) {
                 </svg></button>
         </div>
     </div>
-    <div class="userWrap flex flex-col gap-4">
+    <div class="userWrap flex flex-col gap-4 overflow-y-auto h-64">
         <div class="bg-white shadow-md rounded-lg flex-shrink-0">
             <table class="table-auto text-sm leading-normal w-full">
                 <thead class="bg-gray-100 border-b border-gray-300">

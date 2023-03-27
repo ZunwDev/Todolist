@@ -11,7 +11,7 @@ class BoardManager {
     if (!newBoardName.replace(/\s/g, '').length) return;
     let log = new LogManager(projectID, null, this.boardID);
     log.logNewColumn(newBoardName);
-    $.post('http://localhost/TodoList/src/scripts/board/addNewBoard.php', {
+    $.post('http://xtodolist.tode.cz/src/scripts/board/addNewBoard.php', {
       projectID: projectID,
       board_name: newBoardName,
     })
@@ -79,7 +79,7 @@ class BoardManager {
     popupHandler.closeAnyPopup();
     let log = new LogManager(projectID, dataID, boardID);
     log.logTaskMove(getBoardNameFromTaskId(dataID), getBoardNameFromBoardId(boardID), getTaskNameFromTaskId(dataID));
-    $.post('http://localhost/TodoList/src/scripts/task/moveToAnotherBoard.php', {
+    $.post('http://xtodolist.tode.cz/src/scripts/task/moveToAnotherBoard.php', {
       boardID: boardID,
       dataID: dataID,
     }).done((data) => {
@@ -99,7 +99,7 @@ class BoardManager {
     let finalPriority = newPriority == '' ? 'None' : newPriority;
 
     let log = new LogManager(projectID, dataID, boardID);
-    $.post('http://localhost/TodoList/src/scripts/task/saveTaskEdit.php', {
+    $.post('http://xtodolist.tode.cz/src/scripts/task/saveTaskEdit.php', {
       dataID,
       task_name: newTaskName,
       task_description: finalTaskDescription,
@@ -117,7 +117,7 @@ class BoardManager {
     classToggle(document.getElementById(dataID), 'border-gray-300', 'bg-slate-50', 'border-lime-600', 'bg-lime-500');
     classToggle(document.getElementById(dataID + '_check'), 'fill-gray-300', 'fill-white');
     classToggle(document.getElementById(dataID + '_taskChecked'), 'opacity-70');
-    $.post('http://localhost/TodoList/src/scripts/task/updateCheckboxState.php', {
+    $.post('http://xtodolist.tode.cz/src/scripts/task/updateCheckboxState.php', {
       dataID: dataID,
     });
   }
@@ -126,7 +126,7 @@ class BoardManager {
     var taskName = document.getElementById(`task_${boardID}_edit`).value;
     if (!taskName.replace(/\s/g, '').length) return;
     let log = new LogManager(getProjectIdFromBoardId(boardID), null, boardID);
-    $.post('http://localhost/TodoList/src/scripts/task/addNewTask.php', {
+    $.post('http://xtodolist.tode.cz/src/scripts/task/addNewTask.php', {
       boardID: boardID,
       nameOfTask: taskName.trim(),
       date: $('#dueTo').val(),
@@ -145,7 +145,7 @@ class BoardManager {
     const newBoardDescription = document.getElementById('columnDescriptionEdit').value;
     if (!newBoardName.replace(/\s/g, '').length) return;
     let log = new LogManager(projectID, null, boardID);
-    $.post('http://localhost/TodoList/src/scripts/board/saveColumnEdit.php', {
+    $.post('http://xtodolist.tode.cz/src/scripts/board/saveColumnEdit.php', {
       boardID: boardID,
       board_name: newBoardName,
       board_description: newBoardDescription,
