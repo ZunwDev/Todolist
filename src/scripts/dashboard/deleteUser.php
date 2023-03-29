@@ -9,7 +9,7 @@ mysqli_query($conn, $sql);
 $sql = "delete from board where userID = '$id'";
 mysqli_query($conn, $sql);
 // Deleting the project activity logs. */
-$sql = "delete from project_activity join project on project.projectID = project_activity_projectID where project.userID = '$id'";
+$sql = "delete project_activity from project_activity join project on project.projectID = project_activity.projectID where project.userID = '$id'";
 mysqli_query($conn, $sql);
 //Deleting project data
 $sql = "delete from project where userID = '$id'";

@@ -6,9 +6,8 @@ include "src/scripts/db/getUserID.php";
 session_start();
 if (!isset($_SESSION['login_user'])) {
     header("Location: http://xtodolist.tode.cz/src/auth/login.php");
-}
-/* Checking if the user is an admin or not. */
-if (isset($_SESSION['login_user'])) {
+} else {
+    /* Checking if the user is an admin or not. */
     $username = $_SESSION['login_user'];
     $q = "SELECT roleID FROM user WHERE username = '$username'";
     $f = mysqli_fetch_assoc(mysqli_query($conn, $q));
