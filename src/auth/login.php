@@ -64,6 +64,18 @@ if (isset($_SESSION['login_user'])) {
             showError(passwordError, 'Incorrect password');
         }
 
+        function passwordOrUsernameIncorrect() {
+            const passwordEl = document.getElementById('passwordInput');
+            const passwordError = document.getElementById('passwordError');
+            const usernameEl = document.getElementById('nameInput');
+            const usernameError = document.getElementById('usernameError');
+            flagInput(passwordEl);
+            showError(passwordError, 'Incorrect password');
+            flagInput(usernameEl);
+            showError(usernameError, "User doesn't exist/invalid username");
+
+        }
+
         function userDoesntExist() {
             const usernameEl = document.getElementById('nameInput');
             const usernameError = document.getElementById('usernameError');
@@ -86,11 +98,16 @@ if (isset($_SESSION['login_user'])) {
                 passwordInput: $('#passwordInput').val(),
             }).done((data) => {
                 //console.log(data);
-                if (data.includes('200')) successfulLogin();
-                if (data.includes('403'))
+                if (data.includes("200")) {
+                    successfulLogin();
+                } else if (data.includes("401")) {
+                    passwordOrUsernameIncorrect();
+                } else if (data.includes("403")) {
                     resetInput(document.getElementById('nameInput'), document.getElementById('usernameError'));
-                if (data.includes('403')) passwordVerifyFailed();
-                if (data.includes('404')) userDoesntExist();
+                    passwordVerifyFailed();
+                } else if (data.includes("404")) {
+                    userDoesntExist();
+                }
             });
         }
 

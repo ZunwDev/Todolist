@@ -116,6 +116,14 @@ if (isset($_SESSION['login_user'])) {
             }
         }
 
+        function validateForm() {
+            let isUsernameValid = checkUsername();
+            let isPasswordValid = checkPassword();
+            let isConfirmPasswordValid = checkConfirmPassword();
+
+            return isUsernameValid && isPasswordValid && isConfirmPasswordValid;
+        }
+
         function userExists() {
             let usernameEl = document.getElementById("nameInput");
             let usernameError = document.getElementById("usernameError");
@@ -125,9 +133,7 @@ if (isset($_SESSION['login_user'])) {
         }
 
         function signupCheckValues() {
-            if (
-                checkUsername() && checkPassword() && checkConfirmPassword()
-            ) {
+            if (validateForm()) {
                 $.post("http://xtodolist.tode.cz/src/auth/signup_script.php", {
                     nameInput: $("#nameInput").val(),
                     passwordInput: $("#passwordInput").val(),
