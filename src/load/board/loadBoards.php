@@ -5,7 +5,7 @@ include "../../scripts/db/getUserID.php";
 $projectID = $_POST['projectID'];
 $filter = $_POST['filter'];
 
-$q = "SELECT project.project_name, board.boardID, board.board_name, board.board_description FROM board JOIN project ON project.projectID = board.projectID WHERE board.projectID = '$projectID'";
+$q = "SELECT project.project_name, board.boardID, board.board_name, board.board_description FROM board JOIN project ON project.projectID = board.projectID WHERE board.projectID = '$projectID' ORDER BY board.boardID ASC";
 $result = mysqli_query($conn, $q);
 
 function loadExtra($board_data)
