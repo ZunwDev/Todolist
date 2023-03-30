@@ -6,7 +6,7 @@ function setBeginningClass() {
 	findElements[findElements.length - 1].classList.add('rounded-full');
 }
 
-$(document).on('click', '.colorSelectMenu', function () {
+function toggleColorMenu() {
 	let angleColor = document.getElementById('angleColor');
 	let colorSelect = document.getElementById('colorSelect');
 	if (colorSelect.style.display === 'none') {
@@ -22,6 +22,10 @@ $(document).on('click', '.colorSelectMenu', function () {
 			colorSelect.style.display = 'none';
 		}, 50);
 	}
+}
+
+$(document).on('click', '.colorSelectMenu', function () {
+	toggleColorMenu();
 });
 
 $(document).on('click', '.saveColor', function () {
@@ -30,9 +34,7 @@ $(document).on('click', '.saveColor', function () {
 	$('#currentColor').removeClass(currentColor.classList.toString().split(' ').pop());
 	$('#currentColor').addClass($(this).data('color-code'));
 	$('#currentColorName').text($(this).data('color-name'));
-	setTimeout(() => {
-		document.querySelector('#colorSelect').style.display = 'none';
-	}, 50);
+	toggleColorMenu();
 });
 
 function resetAllColorsAndAddNew(name) {
