@@ -10,7 +10,7 @@ class ProjectManager {
     const projectDescription = $('#projectDescriptionCreate').val();
     const colorID = document.querySelector('.currentColorName').id;
 
-    if (!projectName.replace(/\s/g, '').length) return;
+    if (!projectName.replace(/\s/g, '').length) return $(`#nameInputCreate`).addClass('!border-red-500');
     let finalDescription = projectDescription == '' ? '' : projectDescription;
 
     $.post('http://xtodolist.tode.cz/src/scripts/project/createProject.php', {

@@ -47,31 +47,31 @@ class BoardManager {
     }
   }
 
-  savePriority(id, name) {
+  savePriority(priorityID, name) {
     let priorityPopup = new PriorityPopup();
     priorityPopup.closePriority();
-    let colors = {
+    const PRIORITY_COLORS = {
       1: 'bg-red-100',
       2: 'bg-amber-100',
       3: 'bg-slate-100',
       4: 'bg-transparent',
     };
 
-    const color = colors[id];
+    const color = PRIORITY_COLORS[priorityID];
     const prioritySel = document.getElementById('priorityList');
     for (let i = 0; i < 2; i++) {
       prioritySel.classList.remove(prioritySel.classList.toString().split(' ').pop());
     }
     prioritySel.classList.add(color);
     const priorityName = document.getElementById('priorityListText');
-    if (id == 4) {
+    if (priorityID == 4) {
       prioritySel.classList.add('border-transparent');
       priorityName.innerText = '';
       priorityName.setAttribute('data-priority-id', 4);
     } else {
       prioritySel.classList.add('border-slate-300');
       priorityName.innerText = name;
-      priorityName.setAttribute('data-priority-id', id);
+      priorityName.setAttribute('data-priority-id', priorityID);
     }
   }
 
@@ -89,28 +89,33 @@ class BoardManager {
     });
   }
 
-  saveEditedTask(boardID, dataID) {
-    let projectID = getProjectIdFromBoardId(boardID);
-    let newTaskName = $('#taskNameEdit').val();
-    let newTaskDescription = $('#taskDescriptionEdit').val();
-    let newDueTo = $('#taskDueToEdit').val();
-    let newPriority = $('#priorityListText').data('priority-id');
-    if (!newTaskName.replace(/\s/g, '').length) return;
-    let finalTaskDescription = newTaskDescription == '' ? '' : newTaskDescription;
-    let finalDueTo = newDueTo == '' ? '0000-00-00' : newDueTo;
-    let finalPriority = newPriority == '' ? 4 : newPriority;
+  saveEditedTask(boardId, dataId) {
+    const projectId = getProjectIdFromBoardId(boardId);
+    const newTaskName = $('#taskNameEdit').val();
+    const newTaskDescription = $('#taskDescriptionEdit').val();
+    const newDueTo = $('#taskDueToEdit').val();
+    const newPriority = $('#priorityListText').data('priority-id');
+    if (!newTaskName.replace(/\s/g, '').length) {
+      $('#taskNameEdit').addClass('border-red-500');
+      return;
+    }
+    const finalTaskDescription = newTaskDescription || '';
+    const finalDueTo = newDueTo || '0000-00-00';
+    const finalPriority = newPriority || 4;
 
-    let log = new LogManager(projectID, dataID, boardID);
+    const log = new LogManager(projectId, dataId, boardId);
     $.post('http://xtodolist.tode.cz/src/scripts/task/saveTaskEdit.php', {
-      dataID,
+      dataID: dataId,
       task_name: newTaskName,
       task_description: finalTaskDescription,
       task_dueTo: finalDueTo,
       task_priority: finalPriority,
     }).done((data) => {
-      this.updateBoard(projectID);
+      this.updateBoard(projectId);
     });
-    log.logTaskUpdate(getTaskNameFromTaskId(dataID), getBoardNameFromBoardId(boardID), newTaskName);
+    const taskName = getTaskNameFromTaskId(dataId);
+    const boardName = getBoardNameFromBoardId(boardId);
+    log.logTaskUpdate(taskName, boardName, newTaskName);
   }
 
   updateCheckbox(dataID) {
@@ -126,7 +131,8 @@ class BoardManager {
 
   saveTask(boardID) {
     var taskName = document.getElementById(`task_${boardID}_edit`).value;
-    if (!taskName.replace(/\s/g, '').length) return;
+    if (!taskName.replace(/\s/g, '').length)
+      return $(`#task_${boardID}_edit`).addClass('border border-red-500 rounded-tl-md rounded-tr-md');
     let log = new LogManager(getProjectIdFromBoardId(boardID), null, boardID);
     $.post('http://xtodolist.tode.cz/src/scripts/task/addNewTask.php', {
       boardID: boardID,
@@ -145,7 +151,7 @@ class BoardManager {
     let projectID = getProjectIdFromBoardId(boardID);
     let newBoardName = document.getElementById('columnNameEdit').value;
     const newBoardDescription = document.getElementById('columnDescriptionEdit').value;
-    if (!newBoardName.replace(/\s/g, '').length) return;
+    if (!newBoardName.replace(/\s/g, '').length) return $('#columnNameEdit').addClass('!border-red-500');
     let log = new LogManager(projectID, null, boardID);
     $.post('http://xtodolist.tode.cz/src/scripts/board/saveColumnEdit.php', {
       boardID: boardID,
@@ -167,9 +173,5 @@ class BoardManager {
     board.insertAdjacentHTML('beforeend', getAddNewTask(boardID, board.children.length));
     const addNewTaskButton = document.getElementById(`${boardID}_add`);
     addNewTaskButton.classList.add('hidden');
-    const input = document.getElementById(`task_${boardID}_edit`);
-    setTimeout(() => {
-      input.select();
-    }, 0);
   }
 }

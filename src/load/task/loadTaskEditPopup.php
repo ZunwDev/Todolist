@@ -47,11 +47,11 @@ echo '                  <svg class="flex w-4 h-4 fill-black" xmlns="http://www.w
                     </div>';
 if ($priority !== "None") {
     echo '              <div id="priorityList" class="priorityMenu flex w-fit ml-2 h-fit rounded-lg border border-transparent ' . $priority_color . '">';
-    echo '                  <div id="priorityListText" class="flex mx-auto px-2 cursor-pointer">' . $priority . '</div>';
+    echo '                  <div id="priorityListText" class="flex mx-auto px-2 cursor-pointer" data-priority-id=' . $priorityID . '>' . $priority . '</div>';
     echo '              </div>';
 } else {
     echo '              <div id="priorityList" class="priorityMenu flex w-fit ml-2 h-fit rounded-lg border border-transparent bg-transparent">';
-    echo '                  <div id="priorityListText" class="flex mx-auto px-2 cursor-pointer"></div>';
+    echo '                  <div id="priorityListText" class="flex mx-auto px-2 cursor-pointer" data-priority-id="4"></div>';
     echo '              </div>';
 }
 echo '          </div>';
