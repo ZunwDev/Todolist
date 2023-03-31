@@ -2,7 +2,7 @@
 
 include "../../scripts/db/connectToDatabase.php";
 
-$q = "select priority_name from priority";
+$q = "select priorityID, priority_name from priority";
 $result = mysqli_query($conn, $q);
 
 echo '<div id="popupOverlayPriority" class="w-screen z-50 h-screen absolute">';
@@ -10,7 +10,7 @@ echo '  <div id="popupElementPriority" class="absolute h-fit beforeShowUp flex f
 echo '      <div class="flex flex-col w-32">';
 while ($priorities = mysqli_fetch_assoc($result)) {
     //Start of list
-    echo '<div class="prioritySaveBtn flex pl-2 py-1 text-sm bg-slate-50 hover:bg-slate-200 cursor-pointer" data-priority-name="' . $priorities['priority_name'] . '">' . $priorities['priority_name'] . '</div>';
+    echo '<div class="prioritySaveBtn flex pl-2 py-1 text-sm bg-slate-50 hover:bg-slate-200 cursor-pointer" data-priority-id="' . $priorities['priorityID'] . '" data-priority-name="' . $priorities['priority_name'] . '">' . $priorities['priority_name'] . '</div>';
     //End of list
 }
 echo '      </div>';

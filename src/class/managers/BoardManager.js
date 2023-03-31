@@ -47,29 +47,31 @@ class BoardManager {
     }
   }
 
-  savePriority(name) {
+  savePriority(id, name) {
     let priorityPopup = new PriorityPopup();
     priorityPopup.closePriority();
     let colors = {
-      High: 'bg-red-100',
-      Medium: 'bg-amber-100',
-      Low: 'bg-slate-100',
-      None: 'bg-transparent',
+      1: 'bg-red-100',
+      2: 'bg-amber-100',
+      3: 'bg-slate-100',
+      4: 'bg-transparent',
     };
 
-    const color = colors[name];
+    const color = colors[id];
     const prioritySel = document.getElementById('priorityList');
     for (let i = 0; i < 2; i++) {
       prioritySel.classList.remove(prioritySel.classList.toString().split(' ').pop());
     }
     prioritySel.classList.add(color);
     const priorityName = document.getElementById('priorityListText');
-    if (name === 'None') {
+    if (id == 4) {
       prioritySel.classList.add('border-transparent');
       priorityName.innerText = '';
+      priorityName.setAttribute('data-priority-id', 4);
     } else {
       prioritySel.classList.add('border-slate-300');
       priorityName.innerText = name;
+      priorityName.setAttribute('data-priority-id', id);
     }
   }
 
@@ -130,7 +132,7 @@ class BoardManager {
       boardID: boardID,
       nameOfTask: taskName.trim(),
       date: $('#dueTo').val(),
-      priority: $('#priorityListText').text(),
+      priorityID: $('#priorityListText').data('priority-id'),
     }).done((data) => {
       setTimeout(() => {
         this.updateBoard(getProjectIdFromBoardId(boardID));
