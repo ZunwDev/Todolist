@@ -78,7 +78,7 @@ if (isset($_SESSION['login_user'])) {
                 flagInput(usernameEl);
                 showError(
                     usernameError,
-                    "Your username should be within 4-30 characters"
+                    "Your username must be within 4-30 characters"
                 );
             } else {
                 resetInput(usernameEl, usernameError);

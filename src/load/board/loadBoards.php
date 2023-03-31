@@ -53,10 +53,11 @@ function loadExtra($board_data)
 
 function loadTasks($board_data)
 {
-    $colors = $board_data['board_check'] == 0 ? "border-gray-300 bg-slate-50" : "border-lime-600 bg-lime-500";
-    $hasOpacity = $board_data['board_check'] == 0 ? "" : "opacity-70";
-    $checkColor = $board_data['board_check'] == 0 ? "fill-transparent hover:fill-gray-300" : "fill-white";
-    $isChecked = $board_data['board_check'] == 0 ? "Mark complete" : "Mark incomplete";
+    $isCompleted = $board_data['board_check'] == 0;
+    $colors = $isCompleted ? "border-gray-300 bg-slate-50" : "border-lime-600 bg-lime-500";
+    $hasOpacity = $isCompleted ? "" : "opacity-70";
+    $checkColor = $isCompleted ? "fill-transparent hover:fill-gray-300" : "fill-white";
+    $isChecked = $isCompleted ? "Mark complete" : "Mark incomplete";
     echo '<section id="' . $board_data['dataID'] . '_taskChecked" class="flex flex-shrink-0 flex-col py-1 rounded-lg group border border-slate-300 ' . $hasOpacity . ' transition hover:shadow-md relative bg-slate-50">';
     echo '  <div class="flex-shrink-0 flex flex-row px-2">';
     echo '      <div id="' . $board_data['dataID'] . '" title="' . $isChecked . '" class="setCheckmark flex transition duration-300 h-4 w-4 border-2 mt-0.5 flex-shrink-0 rounded-full cursor-pointer ' . $colors . '" data-data-id="' . $board_data['dataID'] . '">';
