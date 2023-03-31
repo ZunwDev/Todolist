@@ -94,11 +94,11 @@ class BoardManager {
     let newTaskName = $('#taskNameEdit').val();
     let newTaskDescription = $('#taskDescriptionEdit').val();
     let newDueTo = $('#taskDueToEdit').val();
-    let newPriority = $('#priorityListText').text();
+    let newPriority = $('#priorityListText').data('priority-id');
     if (!newTaskName.replace(/\s/g, '').length) return;
     let finalTaskDescription = newTaskDescription == '' ? '' : newTaskDescription;
     let finalDueTo = newDueTo == '' ? '0000-00-00' : newDueTo;
-    let finalPriority = newPriority == '' ? 'None' : newPriority;
+    let finalPriority = newPriority == '' ? 4 : newPriority;
 
     let log = new LogManager(projectID, dataID, boardID);
     $.post('http://xtodolist.tode.cz/src/scripts/task/saveTaskEdit.php', {
