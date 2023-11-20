@@ -1,3 +1,4 @@
 .vscode/
 .env
 config.php
+src/scripts/db/connectToDatabase.php
