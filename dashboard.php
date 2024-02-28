@@ -8,11 +8,11 @@ if (isset($_SESSION['login_user'])) {
     $f = mysqli_fetch_assoc(mysqli_query($conn, $q));
     $adminState = $f['roleID'];
 } else {
-    header("Location: http://xtodolist.tode.cz/src/auth/login.php");
+    header("Location: https://xtodolist.tode.cz/src/auth/login.php");
 }
 
 if ($adminState != 1) {
-    header("Location: http://xtodolist.tode.cz/index.php");
+    header("Location: https://xtodolist.tode.cz/index.php");
 }
 ?>
 

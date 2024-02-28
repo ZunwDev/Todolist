@@ -5,7 +5,7 @@ include "src/scripts/db/getUserID.php";
 /* It checks if the user is logged in. If not, it redirects to the login page. */
 session_start();
 if (!isset($_SESSION['login_user'])) {
-    header("Location: http://xtodolist.tode.cz/src/auth/login.php");
+    header("Location: https://xtodolist.tode.cz/src/auth/login.php");
 } else {
     /* Checking if the user is an admin or not. */
     $username = $_SESSION['login_user'];

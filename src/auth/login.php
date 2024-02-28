@@ -2,7 +2,7 @@
 session_start();
 
 if (isset($_SESSION['login_user'])) {
-    header("location: http://xtodolist.tode.cz/index.php");
+    header("location: https://xtodolist.tode.cz/index.php");
 };
 
 ?>
@@ -93,7 +93,7 @@ if (isset($_SESSION['login_user'])) {
         }
 
         function logIn() {
-            $.post('http://xtodolist.tode.cz/src/auth/login_script.php', {
+            $.post('https://xtodolist.tode.cz/src/auth/login_script.php', {
                 nameInput: $('#nameInput').val(),
                 passwordInput: $('#passwordInput').val(),
             }).done((data) => {
